@@ -1,0 +1,34 @@
+
+@startuml customerpage
+  left to right direction
+
+  rectangle Customer_Page {
+    usecase "Provide data for the website" as us1
+    usecase "Authenticate user" as us2
+    usecase "Login" as us3
+    usecase "Logout" as us4
+    usecase "Choose custom carport type" as us5
+    usecase "Fill out custom carport inquiry form" as us6
+    usecase "Send custom carport inquiry form" as us7
+  }
+
+  us1 .> us5 : <<include>>
+  us2 .> us3 : <<include>>
+  us5 .> us6 : <<include>>
+  us6 .> us7 : <<include>>
+
+  actor "Customer with account" as CustomerWithAcc
+  actor "Customer" as Customer
+  actor "MySql Database" as DB
+
+  Customer <|-- CustomerWithAcc
+
+  DB --> us1
+  DB --> us2
+  CustomerWithAcc --> us3
+  CustomerWithAcc --> us4
+  Customer --> us5
+  Customer --> us6
+  Customer --> us7
+
+@enduml

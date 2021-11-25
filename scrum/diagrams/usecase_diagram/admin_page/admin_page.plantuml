@@ -1,0 +1,67 @@
+
+@startuml adminpage
+  left to right direction
+
+  rectangle Admin_Page {
+    usecase "Connect to database" as us1
+    usecase "Provide data for the website" as us2
+    usecase "Authenticate user" as us3
+    usecase "Login" as us4
+    usecase "Logout" as us5
+    usecase "Type in carport dimensions" as us6
+    usecase "Type in carport roof settings" as us7
+    usecase "Type in carport toolshed settings" as us8
+    usecase "Generate a parts list" as us9
+    usecase "Calculate total price" as us10
+    usecase "Calculate sell price" as us11
+    usecase "Calculate profit in percentage" as us12
+    usecase "Adjust sell price" as us13
+    usecase "Generate carport illustration" as us14
+    usecase "View carport" as us15
+    usecase "Add new data to database" as us16
+    usecase "Update data on database" as us17
+    usecase "Delete old data from database" as us18
+  }
+
+  us1 .> us2 : <<include>>
+  us3 .> us4 : <<include>>
+  us6 .> us9 : <<include>>
+  us7 .> us9 : <<include>>
+  us8 .> us9 : <<include>>
+  us6 .> us10 : <<include>>
+  us7 .> us10 : <<include>>
+  us8 .> us10 : <<include>>
+  us6 .> us11 : <<include>>
+  us7 .> us11 : <<include>>
+  us8 .> us11 : <<include>>
+  us6 .> us12 : <<include>>
+  us7 .> us12 : <<include>>
+  us8 .> us12 : <<include>>
+  us6 .> us14 : <<include>>
+  us8 .> us14 : <<include>>
+  us15 .> us14 : <<extends>>
+
+  actor "MySql Database" as DB
+  actor "Employee" as Employee
+  actor "System" as System
+
+  System -> us1
+  DB -> us2
+  DB -> us3
+  Employee -> us4
+  Employee -> us5
+  Employee -> us6
+  Employee -> us7
+  Employee -> us8
+  System -> us9
+  System -> us10
+  System -> us11
+  System -> us12
+  Employee -> us13
+  System -> us14
+  Employee -> us15
+  Employee -> us16
+  Employee -> us17
+  Employee -> us18
+
+@enduml
