@@ -1,0 +1,226 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+
+<footer>
+    <div id="footerContentTop_container">
+       <div id="footerTopSection_container" class="flexRow">
+          <section class="footerTop_section">
+             <div class="footerTopSectionTitle_container">
+                <h2 class="footerTopSection_title">Hvordan køber jeg?</h2>
+             </div>
+
+             <div class="footerLink_container flexColumn">
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Ofte stillede spørgsmål</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Fragt</a>
+                </div>
+
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Fortrydelse & Returnering</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Reklamation & Klage</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">E-mærket</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Købs- og leveringsvilkår online</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Alm. salgs- og leveringsbetingelser</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Bliv kunde i Fog</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Fog konto</a>
+                </div>
+             </div> <!-- .footerLink_container .flexColumn END -->
+          </section>
+
+          <section class="footerTop_section">
+             <div class="footerTopSectionTitle_container">
+                <h2 class="footerTopSection_title">Aktuelt</h2>
+             </div>
+
+             <div class="footerLink_container flexColumn">
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Tilbudsavis</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Blog</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Nej tak+</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Tilbudsmail</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Konkurrencer</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Facebook</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Instagram</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">LinkedIn</a>
+                </div>
+             </div> <!-- .footerLink_container .flexColumn END -->
+          </section>
+
+          <section class="footerTop_section">
+             <div class="footerTopSectionTitle_container">
+                <h2 class="footerTopSection_title">Om Fog</h2>
+             </div>
+
+             <div class="footerLink_container flexColumn">
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Åbningstider</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Om Fog</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Fog's fond</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Job</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">CSR</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Cookie-politik</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Persondata</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Prismatch</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Spørg Fog</a>
+                </div>
+
+                <div class="footerLink_container">
+                   <a href="" class="footer_link">Kontakt Fog</a>
+                </div>
+             </div> <!-- .footerLink_container .flexColumn END -->
+          </section>
+
+          <section id="footerContactInfo_section" class="footerTop_section">
+             <div class="footerTopSectionTitle_container">
+                <h2 class="footerTopSection_title">Kontakt</h2>
+             </div>
+
+             <section class="footerContact_container">
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-comment-dots"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      Webshop
+                   </div>
+                </div>
+
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-phone-alt"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      47 16 08 00
+                   </div>
+                </div>
+
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-envelope"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      <a href="" class="footer_link contactInfo_link">Send e-mail</a>
+                   </div>
+                </div>
+             </section>
+
+             <section class="footerContact_container">
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-comment-dots"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      Johannes Fog
+                   </div>
+                </div>
+
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-phone-alt"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      45 87 10 01
+                   </div>
+                </div>
+
+                <div class="contactInfo_container flexRow">
+                   <div class="contactInfoIcon_container">
+                      <i class="fas fa-envelope"></i>
+                   </div>
+
+                   <div class="contactInfo">
+                      <a href="" class="footer_link contactInfo_link">Send e-mail</a>
+                   </div>
+                </div>
+             </section>
+
+             <section id="paymentImg_container">
+                <img src="<%=request.getContextPath()%>/assets/images/footer/cards-logos.png" alt="Logos of all the accepted cards for online payment">
+             </section>
+          </section>
+       </div> <!-- #footerTopSection_container .flexRow END -->
+    </div> <!-- #footerContentTop_container .flexRow END -->
+
+    <div id="footerContentBtm_container">
+       <div id="footerBtmSection_container" class="flexRow">
+          <section id="businessInfo">
+             Johannes Fog A/S - Firskovvej 20 - 2800 Lyngby - CVR-nr. 16314439
+          </section>
+
+          <section id="priceInfo">
+             Alle priser er inkl. moms
+          </section>
+       </div>
+    </div>
+ </footer>
