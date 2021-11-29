@@ -106,6 +106,8 @@
                            <option value="Eternittag B6- Grå">Eternittag B6- Grå</option>
                         </select>
 
+                        <input type="hidden" id="roofAngle" name="roofAngle" value="180">
+
                         <div class="formDivAsLabel">Tilføj redskabsrum:</div>
 
                         <div id="radioBtns_container" class="flexRow">
