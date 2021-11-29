@@ -1,0 +1,164 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*--------------------------------- Global variables --------------------------------*/
+:root{
+  /* Colors */
+  --black: #000; /* used at txt color */
+  --white: #fff; /* used as txt and bg color */
+  --darkGrey: #555; /* placeholder txt color */
+  --lightGrey: #f8f8f8; /* used as bg color */
+  --darkBlue: #0c2069; /* used as bg color */
+  --middleBlue: #003d76; /* used as bg color */
+  --lightBlue: #004687; /* Logo blue, used as hover color */
+  --turquoise: #02829e;
+  --orange: #ff7f08; /* btn hover color, current page lines */
+  --yellow: #fc0; /* used for btn */
+}
+/*------------------------------- Global variables END ------------------------------*/
+
+
+/*-------------------------------------- Fonts --------------------------------------*/
+@font-face{
+  font-family: roboto;
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@font-face{
+  font-family: chaletComprime;
+  src: url("../fonts/ChaletComprime/ChaletComprime-CologneEighty_10033.ttf");
+}
+/*------------------------------------ Fonts END ------------------------------------*/
+
+
+/*-------------------------------- Set default stuff --------------------------------*/
+html{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -moz-scrollbars: vertical;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  max-width: 2000px;
+  margin: 0 auto;
+  background-color: var(--white);
+  font-family: roboto;
+  color: var(--black);
+}
+
+#wrapper{
+  width: 100%;
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+}
+
+a{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+p{
+  padding-bottom: .5em;
+  line-height: 25px;
+}
+
+ul{
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+button{
+  font-family: roboto;
+  cursor: pointer;
+  border: none;
+}
+
+button:focus, input:focus, textarea{
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+input{
+  background-color: var(--white);
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--darkGrey);
+  opacity: 1; /* Firefox */
+    /* Add font family later!!! */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: var(--darkGrey);
+    /* Add font family later!!! */
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--darkGrey);
+  /* Add font family later!!! */
+}
+
+img{
+  width: 100%;
+}
+
+address{
+  font-style: normal;
+}
+
+textarea{
+  resize: none;
+}
+/*------------------------------ Set default stuff END ------------------------------*/
+
+
+/*----------------------------------- Common classes --------------------------------*/
+.absolute_element_centered{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  /*Add an element height on the specific element*/
+}
+
+.flexRow{
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn{
+  display: flex;
+  flex-direction: column;
+}
+
+.posAbsolute{
+  position: absolute;
+}
+
+.posRelative{
+  position: relative;
+}
+
+.posSticky{
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
+}
+
+.posFixed{
+  position: fixed;
+}
+/*--------------------------------- Common classes END ------------------------------*/

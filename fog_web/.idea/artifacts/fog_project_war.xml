@@ -9,7 +9,7 @@
         <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
-    <root id="archive" name="sem2-startcode-1.0.war">
+    <root id="archive" name="fog_project-1.0.war">
       <element id="artifact" artifact-name="fog_project:war exploded" />
     </root>
   </artifact>

@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="fog_project" options="-endorseddirs &quot;C:\Users\enjay\Desktop\original sem2-startcode-main - Copy\target/endorsed&quot;" />
+      <module name="fog_project" options="-endorseddirs C:\Users\enjay\Desktop\fog_project\FogProject\fog_web\target/endorsed" />
     </option>
   </component>
 </project>
