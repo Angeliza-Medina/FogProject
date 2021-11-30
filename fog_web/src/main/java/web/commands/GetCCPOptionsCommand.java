@@ -23,7 +23,7 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
 
       try {
          ArrayList<RoofTypeOption> roofTypeOptions = cCPOptionFacade.getCCPRoofTypeOptions();
-//         ArrayList<RoofAngleOption> roofAngleOptions = cCPOptionFacade.getCCPRoofAngleOptions();
+         ArrayList<RoofAngleOption> roofAngleOptions = cCPOptionFacade.getCCPRoofAngleOptions();
 //         ArrayList<RoofMaterialOption> roofMaterialOptions = cCPOptionFacade.getCCPRoofMaterialOptions();
 //         ArrayList<CCPWidthOption> cCPWidthOptions = cCPOptionFacade.getCCPWidthOptions();
 //         ArrayList<CCPLengthOption> cCPLengthOptions = cCPOptionFacade.getCCPLengthOptions();
@@ -31,16 +31,11 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
 //         ArrayList<CTSWidthOption> cTSWidthOptions = cCPOptionFacade.getCTSWidthOptions();
 //         ArrayList<CTSLengthOption> cTSLengthOptions = cCPOptionFacade.getCTSLengthOptions();
 
+//         CCPOptionListContainer cCPOptionListContainer = new CCPOptionListContainer(roofTypeOptions);
+
          HttpSession session = request.getSession();
 
-         session.setAttribute("roofTypeOptions", roofTypeOptions);
-//         session.setAttribute("roofAngleOptions", roofAngleOptions);
-//         session.setAttribute("roofMaterialOptions", roofMaterialOptions);
-//         session.setAttribute("cCPWidthOptions", cCPWidthOptions);
-//         session.setAttribute("cCPLengthOptions", cCPLengthOptions);
-//         session.setAttribute("cCPHeightOptions", cCPHeightOptions);
-//         session.setAttribute("cTSWidthOptions", cTSWidthOptions);
-//         session.setAttribute("cTSLengthOptions", cTSLengthOptions);
+//         session.setAttribute("cCPOptionListContainer", cCPOptionListContainer);
 
          return REDIRECT_INDICATOR + pageToGo;
       } catch (UserException ex) {

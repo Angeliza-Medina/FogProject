@@ -41,9 +41,33 @@ public class CustomCarportOptionMapper {
       }
    }
 
-//   public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException {
-//   }
-//
+   public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException {
+      ArrayList<RoofAngleOption> roofAngleOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM carport_roof_angle_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("roofAngleOption_id");
+               int angle = rs.getInt("angle");
+
+               RoofAngleOption roofAngleOption = new RoofAngleOption(id, angle);
+               roofAngleOptions.add(roofAngleOption);
+            } while (rs.next());
+
+            return roofAngleOptions;
+         } else {
+            throw new UserException("Could retrieve roof angle options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
 //   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() throws UserException {
 //   }
 //

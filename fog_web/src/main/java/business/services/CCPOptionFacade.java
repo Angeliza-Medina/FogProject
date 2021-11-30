@@ -23,9 +23,9 @@ public class CCPOptionFacade {
       return customCarportOptionMapper.getCCPRoofTypeOptions();
    }
 
-//   public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException{
-//      return customCarportOptionMapper.getCCPRoofAngleOptions();
-//   }
+   public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException{
+      return customCarportOptionMapper.getCCPRoofAngleOptions();
+   }
 //
 //   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() {
 //      return customCarportOptionMapper.getCCPRoofMaterialOptions();
