@@ -20,9 +20,14 @@ public abstract class Command
     private static void initCommands(Database database)
     {
         commands = new HashMap<>();
+
+        /* Pages commands */
         commands.put("index", new CommandUnprotectedPage("index"));
         commands.put("customCarportST", new CommandUnprotectedPage("customCarportST"));
         commands.put("customCarportFT", new CommandUnprotectedPage("customCarportFT"));
+
+        /* Functionality commands */
+        commands.put("getAllCustomCarportOptionsCommand", new LoginCommand(""));
 
 
         /* Delete later */

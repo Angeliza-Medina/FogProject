@@ -1,18 +1,22 @@
 package business.services;
 
-import business.entities.CustomCaportInquiry;
 import business.exceptions.UserException;
+import business.persistence.CustomCarportMapper;
 import business.persistence.Database;
 
-import static web.commands.Command.database;
 public class CustomCarportFacade {
-    CustomCarportMapper CustomCarportMapper;
+    CustomCarportMapper customCarportMapper;
 
     public CustomCarportFacade(Database database){
-        CustomCarportMapper = new CustomCarportMapper(database);
+        customCarportMapper = new CustomCarportMapper(database);
     }
 
     public void sendInquiryToDB(CustomCarportInquiry cpi) throws UserException{
-        CustomCarportMapper.sendInquiryToDatabase(cpi);
+        customCarportMapper.sendInquiryToDatabase(cpi);
     }
+
+    public void getAllCustomCarportOptions() throws UserException{
+        customCarportMapper.getAllCustomCarportOptions();
+    }
+
 }
