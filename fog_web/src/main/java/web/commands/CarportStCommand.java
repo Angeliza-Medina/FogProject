@@ -11,15 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CarportStCommand extends CommandUnprotectedPage{
-
+    // Tilføj en ikke-instantieret CustomCarportFacade variabel her
 
     public CarportStCommand(String pageToShow) {
         super(pageToShow);
+        // Instantiér CustomCarportFacade her og gem den i den ikke-instantierede CustomCarportFacade foroven
     }
 
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         // - User info-
+        // Tilføj en int som skal indeholde et evt. userId. Hvis kunden ikke er logget på skal den sættes til null
+        // userId hentes fra request.getSession, som bliver sat når brugeren logger ind (har vi ikke lavet endnu)
+        // Indtil videre så bare sæt den til null. Når vi får lavet login, kan vi justere den :)
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
@@ -28,8 +32,6 @@ public class CarportStCommand extends CommandUnprotectedPage{
         String email = request.getParameter("email");
         int phoneNum = Integer.parseInt(request.getParameter("phoneNum"));
         String note = request.getParameter("note");
-
-
 
         // - Carport dimensions -
         int carportWidth = Integer.parseInt(request.getParameter("carportWidth"));
@@ -47,7 +49,13 @@ public class CarportStCommand extends CommandUnprotectedPage{
 
         CustomCaportInquiry cpi = new CustomCaportInquiry(carportWidth, carportLength, carportHeight, carportRoof, roofAngle, contanctInfo, toolInfo);
 
+        // Tror den brokker sig, fordi metoden ikke er statisk (hvilket den heller ikke skal være)
+        // Men her kalder du den som en statisk metode, fordi du kalder den på selve klassen
+        // Hvis du i stedet kalder metoden på den instans af CustomCarportFacade (den du laver i constructor), burde den være glad :)
         CustomCarportFacade.sendInquiryToDatabase(cpi);
+
+        // God idé at pakke det hele ind i en try/catch for at fange en evt. UserException
+        // Se evt. på LoginCommand for at se et eksempel
     }
 
 }
