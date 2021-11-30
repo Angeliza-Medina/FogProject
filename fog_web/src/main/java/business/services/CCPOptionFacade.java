@@ -43,10 +43,10 @@ public class CCPOptionFacade {
       return customCarportOptionMapper.getCCPHeightOptions();
    }
 
-//   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException{
-//      return customCarportOptionMapper.getCTSWidthOptions();
-//   }
-//
+   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException{
+      return customCarportOptionMapper.getCTSWidthOptions();
+   }
+
 //   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException{
 //      return customCarportOptionMapper.getCTSLengthOptions();
 //   }

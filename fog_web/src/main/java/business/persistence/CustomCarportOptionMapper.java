@@ -177,9 +177,33 @@ public class CustomCarportOptionMapper {
       }
    }
 
-//   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException {
-//   }
-//
+   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException {
+      ArrayList<CTSWidthOption> cTSWidthOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM toolshed_width_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("toolshedWidthOption_id");
+               int width = rs.getInt("width");
+
+               CTSWidthOption cCPWidthOption = new CTSWidthOption(id, width);
+               cTSWidthOptions.add(cCPWidthOption);
+            } while (rs.next());
+
+            return cTSWidthOptions;
+         } else {
+            throw new UserException("Could retrieve custom toolshed width options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
 //   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException {
 //   }
 }
