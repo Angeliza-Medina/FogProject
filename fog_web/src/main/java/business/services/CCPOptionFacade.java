@@ -47,8 +47,8 @@ public class CCPOptionFacade {
       return customCarportOptionMapper.getCTSWidthOptions();
    }
 
-//   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException{
-//      return customCarportOptionMapper.getCTSLengthOptions();
-//   }
+   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException{
+      return customCarportOptionMapper.getCTSLengthOptions();
+   }
 
 }
