@@ -24,9 +24,9 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
       try {
          ArrayList<RoofTypeOption> roofTypeOptions = cCPOptionFacade.getCCPRoofTypeOptions();
          ArrayList<RoofAngleOption> roofAngleOptions = cCPOptionFacade.getCCPRoofAngleOptions();
-//         ArrayList<RoofMaterialOption> roofMaterialOptions = cCPOptionFacade.getCCPRoofMaterialOptions();
-//         ArrayList<CCPWidthOption> cCPWidthOptions = cCPOptionFacade.getCCPWidthOptions();
-//         ArrayList<CCPLengthOption> cCPLengthOptions = cCPOptionFacade.getCCPLengthOptions();
+         ArrayList<RoofMaterialOption> roofMaterialOptions = cCPOptionFacade.getCCPRoofMaterialOptions();
+         ArrayList<CCPWidthOption> cCPWidthOptions = cCPOptionFacade.getCCPWidthOptions();
+         ArrayList<CCPLengthOption> cCPLengthOptions = cCPOptionFacade.getCCPLengthOptions();
 //         ArrayList<CCPHeightOption> cCPHeightOptions = cCPOptionFacade.getCCPHeightOptions();
 //         ArrayList<CTSWidthOption> cTSWidthOptions = cCPOptionFacade.getCTSWidthOptions();
 //         ArrayList<CTSLengthOption> cTSLengthOptions = cCPOptionFacade.getCTSLengthOptions();

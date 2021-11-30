@@ -68,15 +68,88 @@ public class CustomCarportOptionMapper {
       }
    }
 
-//   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() throws UserException {
-//   }
-//
-//   public ArrayList<CCPWidthOption> getCCPWidthOptions() throws UserException {
-//   }
-//
-//   public ArrayList<CCPLengthOption> getCCPLengthOptions() throws UserException {
-//   }
-//
+   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() throws UserException {
+      ArrayList<RoofMaterialOption> roofMaterialOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM carport_roof_material_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("roofMaterial_id");
+               int roofType = rs.getInt("fk_roofType_id");
+               String material = rs.getString("material");
+
+               RoofMaterialOption roofMaterialOption = new RoofMaterialOption(id, roofType, material);
+               roofMaterialOptions.add(roofMaterialOption);
+            } while (rs.next());
+
+            return roofMaterialOptions;
+         } else {
+            throw new UserException("Could retrieve roof material options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
+   public ArrayList<CCPWidthOption> getCCPWidthOptions() throws UserException {
+      ArrayList<CCPWidthOption> cCPWidthOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM carport_width_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("carportWidthOption_id");
+               int width = rs.getInt("width");
+
+               CCPWidthOption cCPWidthOption = new CCPWidthOption(id, width);
+               cCPWidthOptions.add(cCPWidthOption);
+            } while (rs.next());
+
+            return cCPWidthOptions;
+         } else {
+            throw new UserException("Could retrieve custom carport width options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
+   public ArrayList<CCPLengthOption> getCCPLengthOptions() throws UserException {
+      ArrayList<CCPLengthOption> cCPLengthOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM carport_length_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("carportLengthOption_id");
+               int length = rs.getInt("length");
+
+               CCPLengthOption cCPLengthOption = new CCPLengthOption(id, length);
+               cCPLengthOptions.add(cCPLengthOption);
+            } while (rs.next());
+
+            return cCPLengthOptions;
+         } else {
+            throw new UserException("Could retrieve custom carport length options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
 //   public ArrayList<CCPHeightOption> getCCPHeightOptions() throws UserException {
 //   }
 //

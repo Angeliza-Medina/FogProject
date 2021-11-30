@@ -26,28 +26,28 @@ public class CCPOptionFacade {
    public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException{
       return customCarportOptionMapper.getCCPRoofAngleOptions();
    }
-//
-//   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() {
-//      return customCarportOptionMapper.getCCPRoofMaterialOptions();
-//   }
-//
-//   public ArrayList<CCPWidthOption> getCCPWidthOptions() {
-//      return customCarportOptionMapper.getCCPWidthOptions();
-//   }
-//
-//   public ArrayList<CCPLengthOption> getCCPLengthOptions() {
-//      return customCarportOptionMapper.getCCPLengthOptions();
-//   }
-//
-//   public ArrayList<CCPHeightOption> getCCPHeightOptions() {
+
+   public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() throws UserException{
+      return customCarportOptionMapper.getCCPRoofMaterialOptions();
+   }
+
+   public ArrayList<CCPWidthOption> getCCPWidthOptions() throws UserException{
+      return customCarportOptionMapper.getCCPWidthOptions();
+   }
+
+   public ArrayList<CCPLengthOption> getCCPLengthOptions() throws UserException{
+      return customCarportOptionMapper.getCCPLengthOptions();
+   }
+
+//   public ArrayList<CCPHeightOption> getCCPHeightOptions() throws UserException{
 //      return customCarportOptionMapper.getCCPHeightOptions();
 //   }
 //
-//   public ArrayList<CTSWidthOption> getCTSWidthOptions() {
+//   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException{
 //      return customCarportOptionMapper.getCTSWidthOptions();
 //   }
 //
-//   public ArrayList<CTSLengthOption> getCTSLengthOptions() {
+//   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException{
 //      return customCarportOptionMapper.getCTSLengthOptions();
 //   }
 
