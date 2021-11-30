@@ -150,9 +150,33 @@ public class CustomCarportOptionMapper {
       }
    }
 
-//   public ArrayList<CCPHeightOption> getCCPHeightOptions() throws UserException {
-//   }
-//
+   public ArrayList<CCPHeightOption> getCCPHeightOptions() throws UserException {
+      ArrayList<CCPHeightOption> cCPHeightOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM carport_height_options";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int id = rs.getInt("carportHeightOption_id");
+               int height = rs.getInt("height");
+
+               CCPHeightOption cCPHeightOption = new CCPHeightOption(id, height);
+               cCPHeightOptions.add(cCPHeightOption);
+            } while (rs.next());
+
+            return cCPHeightOptions;
+         } else {
+            throw new UserException("Could retrieve custom carport height options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
 //   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException {
 //   }
 //
