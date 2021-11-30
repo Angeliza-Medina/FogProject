@@ -27,7 +27,7 @@ public abstract class Command
         commands.put("customCarportFT", new CommandUnprotectedPage("customCarportFT"));
 
         /* Functionality commands */
-        commands.put("getAllCustomCarportOptionsCommand", new LoginCommand(""));
+        commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
 
 
         /* Delete later */
@@ -47,8 +47,7 @@ public abstract class Command
         String action = request.getPathInfo().replaceAll("^/+", "");
         System.out.println("--> " + action);
 
-        if (commands == null)
-        {
+        if (commands == null) {
             database = db;
             initCommands(database);
         }

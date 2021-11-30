@@ -51,26 +51,38 @@
 
                <div id="customCarportImgs_container" class="flexColumn">
                   <div class="customCarportImg_container posRelative">
-                     <img src="<%=request.getContextPath()%>/assets/images/carport/ccpft.jpg" alt="Image of a carport with a flat roof">
-                     <a href="${pageContext.request.contextPath}/fc/customCarportFT" class="posAbsolute customCarportImg_link"></a>
+                     <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                        <input type="hidden" name="pageToGo" value="customCarportFT">
+                        <img src="<%=request.getContextPath()%>/assets/images/carport/ccpft.jpg" alt="Image of a carport with a flat roof">
+                        <button type="submit" class="posAbsolute customCarportImg_btn"></button>
+                     </form>
                   </div>
 
                   <div class="customCarportImg_container posRelative">
-                     <img src="<%=request.getContextPath()%>/assets/images/carport/ccpst.jpg" alt="Image of a carport with an angled roof">
-                     <a href="${pageContext.request.contextPath}/fc/customCarportST" class="posAbsolute customCarportImg_link"></a>
+                     <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                        <input type="hidden" name="pageToGo" value="customCarportST">
+                        <img src="<%=request.getContextPath()%>/assets/images/carport/ccpst.jpg" alt="Image of a carport with an angled roof">
+                        <button type="submit" class="posAbsolute customCarportImg_btn"></button>
+                     </form>
                   </div>
                </div>
             </div> <!-- #customCarportDesc_container .flexRow -->
 
-            <div id="customCarportLinks_container">
+            <div id="customCarportLinkBtns_container">
                <div class="customCarportLink_container">
-                  <a href="${pageContext.request.contextPath}/fc/customCarportFT" class="customCarport_link">Carport med fladt tag</a>
+                  <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                     <input type="hidden" name="pageToGo" value="customCarportFT">
+                     <button type="submit" class="customCarport_linkBtn">Carport med fladt tag</button>
+                  </form>
                </div>
 
                <div class="customCarportLink_container">
-                  <a href="${pageContext.request.contextPath}/fc/customCarportST" class="customCarport_link">Carport med rejsning</a>
+                  <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                     <input type="hidden" name="pageToGo" value="customCarportST">
+                     <button type="submit" class="customCarport_linkBtn">Carport med rejsning</button>
+                  </form>
                </div>
-            </div>
+            </div> <!-- #customCarportLinkBtns_container END -->
          </main>
 
          <!-- footer include -->

@@ -40,32 +40,46 @@ main{
 
 
 /*----------------------------------- Carport links ---------------------------------*/
-#customCarportLinks_container{
+#customCarportLinkBtns_container{
   width: 250px;
+  font-family: chaletComprime;
+  text-transform: uppercase;
+}
+
+#customCarportLinkBtns_container div:nth-child(2){
+  border-top: 1px solid var(--turquoise);
+  border-bottom: 1px solid var(--turquoise);
+}
+
+#customCarportST_linkBtn{
+  color: var(--darkGrey);
+}
+
+#customCarportFT_linkBtn{
+  color: var(--darkGrey);
+}
+
+.customCarportLinkBtn_container{
+  padding: 10px 0;
+}
+
+.customCarport_linkBtn{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--darkBlue);
   font-family: chaletComprime;
   text-transform: uppercase;
   font-size: 1.4em;
 }
 
-#customCarportLinks_container div:nth-child(2){
-  border-top: 1px solid var(--turquoise);
-  border-bottom: 1px solid var(--turquoise);
-}
-
-#customCarportST_link{
-  color: var(--darkGrey);
-}
-
-#customCarportFT_link{
-  color: var(--darkGrey);
-}
-
-.customCarportLink_container{
-  padding: 10px 0;
+.customCarport_linkBtn:hover{
+  color: var(--orange);
 }
 
 .customCarport_link{
   color: var(--darkBlue);
+  font-size: 1.4em;
 }
 
 .customCarport_link:visited{

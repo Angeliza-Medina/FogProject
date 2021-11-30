@@ -41,19 +41,25 @@
                      <img src="<%=request.getContextPath()%>/assets/images/carport/ccpft.jpg" alt="Image of a carport with a fladt roof">
                   </div>
 
-                  <div id="customCarportLinks_container">
-                     <div class="customCarportLink_container">
-                        <a id="customCarportFT_link" href="${pageContext.request.contextPath}/fc/customCarportFT" class="customCarport_link">Carport med fladt tag</a>
+                  <div id="customCarportLinkBtns_container">
+                     <div class="customCarportLinkBtn_container">
+                        <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                           <input type="hidden" name="pageToGo" value="customCarportFT">
+                           <button type="submit" id="customCarportFT_linkBtn" class="customCarport_linkBtn">Carport med fladt tag</button>
+                        </form>
                      </div>
 
-                     <div class="customCarportLink_container">
-                        <a href="${pageContext.request.contextPath}/fc/customCarportST" class="customCarport_link">Carport med rejsning</a>
+                     <div class="customCarportLinkBtn_container">
+                        <form action = "${pageContext.request.contextPath}/fc/getAllCCPOptionsCommand">
+                           <input type="hidden" name="pageToGo" value="customCarportST">
+                           <button type="submit" class="customCarport_linkBtn">Carport med rejsning</button>
+                        </form>
                      </div>
 
-                     <div class="customCarportLink_container">
-                        <a id="standardCarport_link" href="" class="customCarport_link">Standard carporte</a>
+                     <div class="customCarportLinkBtn_container">
+                        <a href="" class="customCarport_link">Standard carporte</a>
                      </div>
-                  </div>
+                  </div> <!-- #customCarportLinkBtns_container -->
                </section> <!-- .flexColumn END -->
 
                <section id="customCarportForm_section">

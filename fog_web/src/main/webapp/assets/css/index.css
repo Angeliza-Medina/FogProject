@@ -46,39 +46,42 @@ main{
   margin: 15px auto;
 }
 
-.customCarportImg_link{
+.customCarportImg_btn{
   z-index: 1;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
-#customCarportLinks_container{
+#customCarportLinkBtns_container{
   width: 250px;
+}
+
+#customCarportLinkBtns_container div:nth-child(1){
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--turquoise);
+}
+
+.customCarportLinkBtn_container{
+  padding: 10px 0;
+}
+
+.customCarport_linkBtn{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--darkBlue);
   font-family: chaletComprime;
   text-transform: uppercase;
   font-size: 1.4em;
 }
 
-#customCarportLinks_container div:nth-child(1){
-  border-bottom: 1px solid var(--turquoise);
-}
-
-.customCarportLink_container{
-  padding: 10px 0;
-}
-
-.customCarport_link{
-  color: var(--darkBlue);
-}
-
-.customCarport_link:visited{
-  color: var(--darkBlue);
-}
-
-.customCarport_link:hover{
+.customCarport_linkBtn:hover{
   color: var(--orange);
 }
 /*-------------------------------------- Divider ------------------------------------*/

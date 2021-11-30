@@ -1,6 +1,6 @@
 package business.entities;
 
-public class CustomCaportInquiry {
+public class CustomCarportInquiry {
 
     // - Carport dimensions -
   private  int carportWidth;
@@ -10,7 +10,7 @@ public class CustomCaportInquiry {
   private  int roofAngle;
 
 
-    public CustomCaportInquiry(int carportWidth, int carportLength, int carportHeight, int carportRoof, int roofAngle, ContanctInfo contanctInfo, ToolInfo toolInfo) {
+    public CustomCarportInquiry(int carportWidth, int carportLength, int carportHeight, int carportRoof, int roofAngle, ContanctInfo contanctInfo, ToolInfo toolInfo) {
 
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
