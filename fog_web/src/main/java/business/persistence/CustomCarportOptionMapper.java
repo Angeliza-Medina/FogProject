@@ -18,7 +18,7 @@ public class CustomCarportOptionMapper {
       ArrayList<RoofTypeOption> roofTypeOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_roof_type_options";
+         String sql = "SELECT * FROM carport_roof_type_options ORDER BY roofType_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -45,7 +45,7 @@ public class CustomCarportOptionMapper {
       ArrayList<RoofAngleOption> roofAngleOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_roof_angle_options";
+         String sql = "SELECT * FROM carport_roof_angle_options ORDER BY angle";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -72,7 +72,7 @@ public class CustomCarportOptionMapper {
       ArrayList<RoofMaterialOption> roofMaterialOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_roof_material_options";
+         String sql = "SELECT * FROM carport_roof_material_options ORDER BY roofMaterial_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -100,7 +100,7 @@ public class CustomCarportOptionMapper {
       ArrayList<CCPWidthOption> cCPWidthOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_width_options";
+         String sql = "SELECT * FROM carport_width_options ORDER BY carportWidthOption_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -127,7 +127,7 @@ public class CustomCarportOptionMapper {
       ArrayList<CCPLengthOption> cCPLengthOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_length_options";
+         String sql = "SELECT * FROM carport_length_options ORDER BY carportLengthOption_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -154,7 +154,7 @@ public class CustomCarportOptionMapper {
       ArrayList<CCPHeightOption> cCPHeightOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM carport_height_options";
+         String sql = "SELECT * FROM carport_height_options ORDER BY carportHeightOption_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -181,7 +181,7 @@ public class CustomCarportOptionMapper {
       ArrayList<CTSWidthOption> cTSWidthOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM toolshed_width_options";
+         String sql = "SELECT * FROM toolshed_width_options ORDER BY toolshedWidthOption_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -208,7 +208,7 @@ public class CustomCarportOptionMapper {
       ArrayList<CTSLengthOption> cTSLengthOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM toolshed_length_options";
+         String sql = "SELECT * FROM toolshed_length_options ORDER BY toolshedLengthOption_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);

@@ -31,11 +31,19 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
          ArrayList<CTSWidthOption> cTSWidthOptions = cCPOptionFacade.getCTSWidthOptions();
          ArrayList<CTSLengthOption> cTSLengthOptions = cCPOptionFacade.getCTSLengthOptions();
 
-//         CCPOptionListContainer cCPOptionListContainer = new CCPOptionListContainer(roofTypeOptions);
+         CCPOptionListContainer cCPOptionListContainer = new CCPOptionListContainer(
+                roofTypeOptions,
+                roofAngleOptions,
+                roofMaterialOptions,
+                cCPWidthOptions,
+                cCPLengthOptions,
+                cCPHeightOptions,
+                cTSWidthOptions,
+                cTSLengthOptions);
 
          HttpSession session = request.getSession();
 
-//         session.setAttribute("cCPOptionListContainer", cCPOptionListContainer);
+         session.setAttribute("cCPOptionListContainer", cCPOptionListContainer);
 
          return REDIRECT_INDICATOR + pageToGo;
       } catch (UserException ex) {

@@ -48,9 +48,6 @@ public class CarportStCommand extends CommandUnprotectedPage{
 
         CustomCarportInquiry cpi = new CustomCarportInquiry(carportWidth, carportLength, carportHeight, carportRoof, roofAngle, contanctInfo, toolInfo);
 
-        // Tror den brokker sig, fordi metoden ikke er statisk (hvilket den heller ikke skal være)
-        // Men her kalder du den som en statisk metode, fordi du kalder den på selve klassen
-        // Hvis du i stedet kalder metoden på den instans af CustomCarportFacade (den du laver i constructor), burde den være glad :)
         customCarportFacade.sendInquiryToDB(cpi);
 
         // God idé at pakke det hele ind i en try/catch for at fange en evt. UserException

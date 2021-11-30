@@ -78,48 +78,46 @@
                         <label for="carportWidth" class="formLabel">Carport bredde:</label>
                         <select name="carportWidth" id="carportWidth" class="formSelect_element">
                            <option value="" disabled selected>Vælg bredde i cm</option>
-                           <option value="270">270 cm</option>
-                           <option value="300">300 cm</option>
-                           <option value="330">330 cm</option>
-                           <option value="360">360 cm</option>
+
+                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPWidthOptions}" var="widthOption">
+                              <option value="${widthOption.id}">${widthOption.width} cm</option>
+                           </c:forEach>
                         </select>
 
                         <label for="carportLength" class="formLabel">Carport længde:</label>
                         <select name="carportLength" id="carportLength" class="formSelect_element">
                            <option value="" disabled selected>Vælg længde i cm</option>
-                           <option value="270">270 cm</option>
-                           <option value="300">300 cm</option>
-                           <option value="330">330 cm</option>
-                           <option value="360">360 cm</option>
+                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPLengthOptions}" var="lengthOption">
+                              <option value="${lengthOption.id}">${lengthOption.length} cm</option>
+                           </c:forEach>
                         </select>
 
                         <label for="carportHeight" class="formLabel">Carport højde:</label>
                         <select name="carportHeight" id="carportHeight" class="formSelect_element">
                            <option value="" disabled selected>Vælg højde i cm</option>
-                           <option value="270">270 cm</option>
-                           <option value="300">300 cm</option>
-                           <option value="330">330 cm</option>
-                           <option value="360">360 cm</option>
+                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPHeightOptions}" var="heightOption">
+                              <option value="${heightOption.id}">${heightOption.height} cm</option>
+                           </c:forEach>
                         </select>
 
                         <label for="carportRoof" class="formLabel">Tag:</label>
                         <select name="carportRoof" id="carportRoof" class="formSelect_element">
                            <option value="" disabled selected>Vælg materiale og farve</option>
-                           <option value="Betontagsten - Rød">Betontagsten - Rød</option>
-                           <option value="Betontagsten - Teglrød">Betontagsten - Teglrød</option>
-                           <option value="Betontagsten - Brun">Betontagsten - Brun</option>
-                           <option value="Betontagsten - Sort">Betontagsten - Sort</option>
-                           <option value="Eternittag B6- Grå">Eternittag B6- Grå</option>
+                           <c:forEach items="${sessionScope.cCPOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
+                              <c:if test="${roofMaterialOption.roofType == 2}">
+                                 <option value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
+                              </c:if>
+                           </c:forEach>
                         </select>
 
                         <label for="roofAngle" class="formLabel">Taghældning:</label>
                         <select name="roofAngle" id="roofAngle" class="formSelect_element">
                            <option value="" disabled selected>Vælg taghældning i grader</option>
-                           <option value="15">15 grader</option>
-                           <option value="20">20 grader</option>
-                           <option value="25">25 grader</option>
-                           <option value="30">30 grader</option>
-                           <option value="35">35 grader</option>
+                           <c:forEach items="${sessionScope.cCPOptionListContainer.roofAngleOptions}" var="roofAngleOption">
+                              <c:if test="${roofAngleOption.angle != 180}">
+                                 <option value="${roofAngleOption.id}">${roofAngleOption.angle} grader</option>
+                              </c:if>
+                           </c:forEach>
                         </select>
 
                         <div class="formDivAsLabel">Tilføj redskabsrum:</div>
@@ -144,21 +142,33 @@
                            <label for="toolshedWidth" class="formLabel">Redskabsrum bredde:</label>
                            <select name="toolshedWidth" id="toolshedWidth" class="formSelect_element">
                               <option value="" disabled selected>Vælg bredde i cm</option>
-                              <option hidden value="0"></option>
-                              <option value="270">270 cm</option>
-                              <option value="300">300 cm</option>
-                              <option value="330">330 cm</option>
-                              <option value="360">360 cm</option>
+                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSWidthOptions}" var="cTSWidthOption">
+                                 <c:if test="${cTSWidthOption.width == 0}">
+                                    <option hidden value="${cTSWidthOption.id}"></option>
+                                 </c:if>
+                              </c:forEach>
+
+                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSWidthOptions}" var="cTSWidthOption">
+                                 <c:if test="${cTSWidthOption.width != 0}">
+                                    <option value="${cTSWidthOption.id}">${cTSWidthOption.width} cm</option>
+                                 </c:if>
+                              </c:forEach>
                            </select>
 
                            <label for="toolshedLength" class="formLabel">Redskabsrum længde:</label>
                            <select name="toolshedLength" id="toolshedLength" class="formSelect_element">
                               <option value="" disabled selected>Vælg længde i cm</option>
-                              <option hidden value="0"></option>
-                              <option value="270">270 cm</option>
-                              <option value="300">300 cm</option>
-                              <option value="330">330 cm</option>
-                              <option value="360">360 cm</option>
+                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSLengthOptions}" var="cTLengthOption">
+                                 <c:if test="${cTLengthOption.length == 0}">
+                                    <option hidden value="${cTLengthOption.id}"></option>
+                                 </c:if>
+                              </c:forEach>
+
+                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSLengthOptions}" var="cTLengthOption">
+                                 <c:if test="${cTLengthOption.length != 0}">
+                                    <option value="${cTLengthOption.id}">${cTLengthOption.length} cm</option>
+                                 </c:if>
+                              </c:forEach>
                            </select>
                         </div> <!-- #toolshedOptions_container END -->
 

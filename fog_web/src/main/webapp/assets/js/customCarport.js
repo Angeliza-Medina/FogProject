@@ -21,7 +21,6 @@ addToolshedFalseBtn_element.addEventListener("click", (event) => {
   // Set value for the select box to 0 on both width and length
   toolshedWidthSelect_element.selectedIndex = "1";
   toolshedLengthSelect_element.selectedIndex = "1";
-
 });
 
 
