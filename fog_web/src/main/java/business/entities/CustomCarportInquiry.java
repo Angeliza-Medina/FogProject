@@ -2,33 +2,41 @@ package business.entities;
 
 public class CustomCarportInquiry {
 
-    // - Carport dimensions -
+   // - Carport dimensions -
+  private int userId;
   private  int carportWidth;
   private  int carportLength;
   private  int carportHeight;
-  private  int carportRoof;
+   private int roofType;
   private  int roofAngle;
-  private int roofType;
   private int roofMaterial;
-  private ContanctInfo contanctInfo;
+  private ContactInfo contactInfo;
   private ToolInfo toolInfo;
+  private String note;
 
 
-    public CustomCarportInquiry(int carportWidth, int carportLength, int carportHeight, int carportRoof, int roofAngle, int roofType, int roofMaterial, ContanctInfo contanctInfo, ToolInfo toolInfo) {
-
+    public CustomCarportInquiry(
+           int userId, int carportWidth, int carportLength, int carportHeight, int roofType, int roofAngle,
+           int roofMaterial, ContactInfo contactInfo, ToolInfo toolInfo, String note) {
+       this.userId = userId;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.carportHeight = carportHeight;
-        this.carportRoof = carportRoof;
+       this.roofType = roofType;
         this.roofAngle = roofAngle;
-        this.contanctInfo = contanctInfo;
+       this.roofMaterial = roofMaterial;
+        this.contactInfo = contactInfo;
         this.toolInfo = toolInfo;
-        this.roofType = roofType;
-        this.roofMaterial = roofMaterial;
-
-
-
+        this.note = note;
     }
+
+   public int getUserId() {
+      return userId;
+   }
+
+   public void setUserId(int userId) {
+      this.userId = userId;
+   }
 
     public int getCarportWidth() {
         return carportWidth;
@@ -54,13 +62,13 @@ public class CustomCarportInquiry {
         this.carportHeight = carportHeight;
     }
 
-    public int getCarportRoof() {
-        return carportRoof;
-    }
+      public int getRoofType() {
+         return roofType;
+      }
 
-    public void setCarportRoof(int carportRoof) {
-        this.carportRoof = carportRoof;
-    }
+      public void setRoofType(int roofType) {
+         this.roofType = roofType;
+      }
 
     public int getRoofAngle() {
         return roofAngle;
@@ -70,13 +78,13 @@ public class CustomCarportInquiry {
         this.roofAngle = roofAngle;
     }
 
-    public ContanctInfo getContanctInfo() {
-        return contanctInfo;
-    }
+   public ContactInfo getContactInfo() {
+      return contactInfo;
+   }
 
-    public void setContanctInfo(ContanctInfo contanctInfo) {
-        this.contanctInfo = contanctInfo;
-    }
+   public void setContactInfo(ContactInfo contactInfo) {
+      this.contactInfo = contactInfo;
+   }
 
     public ToolInfo getToolInfo() {
         return toolInfo;
@@ -86,14 +94,6 @@ public class CustomCarportInquiry {
         this.toolInfo = toolInfo;
     }
 
-    public int getRoofType() {
-        return roofType;
-    }
-
-    public void setRoofType(int roofType) {
-        this.roofType = roofType;
-    }
-
     public int getRoofMaterial() {
         return roofMaterial;
     }
@@ -101,4 +101,12 @@ public class CustomCarportInquiry {
     public void setRoofMaterial(int roofMaterial) {
         this.roofMaterial = roofMaterial;
     }
+
+   public String getNote() {
+      return note;
+   }
+
+   public void setNote(String note) {
+      this.note = note;
+   }
 }

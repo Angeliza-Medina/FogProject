@@ -1,17 +1,17 @@
 package business.entities;
 
-public class ContanctInfo {
+public class ContactInfo {
     private  String firstName;
     private  String lastName;
     private  String address ;
     private  int postalCode;
     private  String town;
     private  String email;
-    private  int phoneNum;
+    private  String phoneNum;
     private  String note;
 
 
-    public ContanctInfo(String firstName, String lastName, String address, int postalCode, String town, String email, int phoneNum, String note) {
+    public ContactInfo(String firstName, String lastName, String address, int postalCode, String town, String email, String phoneNum, String note) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -71,11 +71,11 @@ public class ContanctInfo {
         this.email = email;
     }
 
-    public int getPhoneNum() {
+    public String getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
 

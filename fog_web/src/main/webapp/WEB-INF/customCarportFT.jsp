@@ -34,7 +34,6 @@
                <h2>Carport efter egne mål - Carport med flat tag</h2>
             </div>
 
-
             <div class="flexRow">
                <section id="customCarportNav_section" class="flexColumn">
                   <div id="carportExampleImg_container">
@@ -68,7 +67,7 @@
                   </p>
 
                   <div id="customcarportForm_container">
-                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/CarportStCommand" method="post">
+                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/sendInquiryCommand" method="post">
                         <div class="formTitle_container">
                            <h2 class="formTitle">
                               Carport med fladt tag
@@ -99,15 +98,14 @@
                            </c:forEach>
                         </select>
 
-
                         <c:forEach items="${sessionScope.cCPOptionListContainer.roofTypeOptions}" var="roofTypeOption">
                            <c:if test="${roofTypeOption.type.equals('flat')}">
                               <input name="roofType" type="hidden" value="${roofTypeOption.id}">
                            </c:if>
                         </c:forEach>
 
-                        <label for="carportRoof" class="formLabel">Tag:</label>
-                        <select name="carportRoof" id="carportRoof" class="formSelect_element">
+                        <label for="roofMaterial" class="formLabel">Tag:</label>
+                        <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
                            <option value="" disabled selected>Vælg materiale og farve</option>
                            <c:forEach items="${sessionScope.cCPOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
                               <c:if test="${roofMaterialOption.roofType == 1}">
@@ -118,7 +116,7 @@
 
                         <c:forEach items="${sessionScope.cCPOptionListContainer.roofAngleOptions}" var="roofAngleOption">
                            <c:if test="${roofAngleOption.angle == 180}">
-                              <input type="hidden" id="roofAngle" name="roofAngle" value="${roofAngleOption.id}">
+                              <input name="roofAngle" type="hidden" id="roofAngle" value="${roofAngleOption.id}">
                            </c:if>
                         </c:forEach>
 

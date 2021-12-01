@@ -67,7 +67,7 @@
                   </p>
 
                   <div id="customcarportForm_container">
-                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/CarportStCommand" method="post">
+                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/sendInquiryCommand" method="post">
                         <div class="formTitle_container">
                            <h2 class="formTitle">
                               Carport med rejsning
@@ -99,8 +99,14 @@
                            </c:forEach>
                         </select>
 
-                        <label for="carportRoof" class="formLabel">Tag:</label>
-                        <select name="carportRoof" id="carportRoof" class="formSelect_element">
+                        <c:forEach items="${sessionScope.cCPOptionListContainer.roofTypeOptions}" var="roofTypeOption">
+                           <c:if test="${roofTypeOption.type.equals('angled')}">
+                              <input name="roofType" type="hidden" value="${roofTypeOption.id}">
+                           </c:if>
+                        </c:forEach>
+
+                        <label for="roofMaterial" class="formLabel">Tag:</label>
+                        <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
                            <option value="" disabled selected>Vælg materiale og farve</option>
                            <c:forEach items="${sessionScope.cCPOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
                               <c:if test="${roofMaterialOption.roofType == 2}">

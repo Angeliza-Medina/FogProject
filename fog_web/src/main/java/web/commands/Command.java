@@ -7,8 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class Command
-{
+public abstract class Command {
     //Return a token string from the execute method to make a client side redirect,
     // instead of a server side (forward) redirect
     public final static String REDIRECT_INDICATOR = "#*redirect*#_###_";
@@ -17,8 +16,7 @@ public abstract class Command
     private static HashMap<String, Command> commands;
     public static Database database;
 
-    private static void initCommands(Database database)
-    {
+    private static void initCommands(Database database) {
         commands = new HashMap<>();
 
         /* Pages commands */
@@ -28,7 +26,7 @@ public abstract class Command
 
         /* Functionality commands */
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
-        commands.put("CarportStCommand", new CarportStCommand(""));
+        commands.put("sendInquiryCommand", new SendInquiryCommand(""));
 
 
         /* Delete later */
