@@ -182,7 +182,7 @@ DROP TABLE IF EXISTS `custom_carport_inquiries`;
 CREATE TABLE `custom_carport_inquiries` (
   `custom_carport_inquiry_id` int NOT NULL AUTO_INCREMENT,
   `inquiryDate` date NOT NULL,
-  `fk_status_id` int NOT NULL,
+  `fk_status_id` int NOT NULL DEFAULT '1',
   `fk_user_id` int DEFAULT NULL,
   `firstName` varchar(100) NOT NULL,
   `lastName` varchar(100) NOT NULL,
@@ -191,6 +191,7 @@ CREATE TABLE `custom_carport_inquiries` (
   `address` varchar(100) NOT NULL,
   `postalcode` int NOT NULL,
   `city` varchar(100) NOT NULL,
+  `note` varchar(1000) NOT NULL,
   `fk_carportWidth_id` int NOT NULL,
   `fk_carportLength_id` int NOT NULL,
   `fk_carportHeight_id` int NOT NULL,
@@ -220,7 +221,7 @@ CREATE TABLE `custom_carport_inquiries` (
   CONSTRAINT `fk_status_id` FOREIGN KEY (`fk_status_id`) REFERENCES `inquiry_statuses` (`status_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_toolshedLength_id` FOREIGN KEY (`fk_toolshedLength_id`) REFERENCES `toolshed_length_options` (`toolshedLengthOption_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_toolshedWidth_id` FOREIGN KEY (`fk_toolshedWidth_id`) REFERENCES `toolshed_width_options` (`toolshedWidthOption_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_user_id` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`users_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -375,14 +376,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `users_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `fk_role_id` int NOT NULL DEFAULT '2',
   `email` varchar(100) NOT NULL,
   `firstName` varchar(100) NOT NULL,
   `lastName` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  PRIMARY KEY (`users_id`),
-  UNIQUE KEY `idusers_UNIQUE` (`users_id`),
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `idusers_UNIQUE` (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_role_id_idx` (`fk_role_id`),
   CONSTRAINT `fk_role_id` FOREIGN KEY (`fk_role_id`) REFERENCES `roles` (`role_id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -426,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-30 16:16:16
+-- Dump completed on 2021-12-01 20:11:21
