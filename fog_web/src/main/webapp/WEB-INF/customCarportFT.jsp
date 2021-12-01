@@ -215,6 +215,7 @@
          <%@include file="includes/footer.txt"%>
       </div> <!-- #wrapper END -->
 
+      <script src="<%=request.getContextPath()%>/assets/js/header.js"></script>
       <script src="<%=request.getContextPath()%>/assets/js/customCarport.js"></script>
    </body>
 </html>
