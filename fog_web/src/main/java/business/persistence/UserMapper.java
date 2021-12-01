@@ -36,22 +36,26 @@ public class UserMapper {
 
     public User login(String email, String password) throws UserException {
         try (Connection connection = database.connect()) {
-            String sql = "SELECT id, role FROM users WHERE email=? AND password=?";
+            String sql = "SELECT users.user_id, roles.role, users.email, users.firstName, users.lastName, users.password\n" +
+                   "FROM users\n" +
+                   "INNER JOIN roles\n" +
+                   "ON users.fk_role_id = roles.role_id\n" +
+                   "WHERE users.email = ? AND users.password = ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, email);
                 ps.setString(2, password);
+
                 ResultSet rs = ps.executeQuery();
-                if (rs.next())
-                {
+
+                if (rs.next()) {
+                    int id = rs.getInt("user_id");
                     String role = rs.getString("role");
-                    int id = rs.getInt("id");
+
                     User user = new User(email, password, role);
                     user.setId(id);
                     return user;
-                } else
-                {
+                } else {
                     throw new UserException("Could not validate user");
                 }
             }

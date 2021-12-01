@@ -25,9 +25,9 @@ public abstract class Command {
         commands.put("customCarportFT", new CommandUnprotectedPage("customCarportFT"));
 
         /* Functionality commands */
+       commands.put("loginCommand", new LoginCommand(""));
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
         commands.put("sendInquiryCommand", new SendInquiryCommand(""));
-
 
         /* Delete later */
         commands.put("loginpage", new CommandUnprotectedPage("loginpage"));

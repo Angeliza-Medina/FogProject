@@ -9,12 +9,38 @@
 
        <div id="headerNav_container" class="flexColumn">
           <div id="headerNavTop_container" class="flexRow">
-             <div id="login_container">
-                <a href="" class="header_link">
-                   <i class="fas fa-user-circle"></i>
-                   Log ind
-                </a>
-             </div>
+              <div id="login_container" class="posRelative">
+                <button id="loginBtn">
+                  <i class="fas fa-user-circle"></i>
+                  Log ind
+                </button>
+
+                <div id="loginBox_container" class="posAbsolute">
+                  <div id="loginHeadline_container">
+                    <h2>Log ind</h2>
+                  </div>
+
+                  <div id="loginForm_container">
+                    <form action="${pageContext.request.contextPath}/fc/loginCommand" method="POST">
+                      <input name="email" type="text" class="loginInput" placeholder="E-mail">
+                      <input name="password" type="password" class="loginInput" placeholder="Password">
+
+                      <div id="loginActions_container" class="flexRow">
+                        <div id="loginActionLink_container" class="loginAction_container">
+                          <a id="login_link" href="">Opret ny bruger</a>
+                        </div>
+
+                        <div id="loginActionBtn_container" class="loginAction_container">
+                          <button id="login_btn" type="submit">Login</button>
+                        </div>
+                      </div> <!-- #loginAction_container .flexRow END -->
+
+                      <div id="loginMsg_container">
+                      </div>
+                    </form>
+                  </div> <!-- #loginForm_container END -->
+                </div> <!-- #loginBox_container .posAbsolute END -->
+              </div> <!-- #login_container .posRelative END -->
 
              <div id="topNav_container" class="flexRow">
                 <div class="topNavLink_container">
