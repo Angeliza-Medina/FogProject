@@ -28,6 +28,7 @@ public abstract class Command
 
         /* Functionality commands */
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
+        commands.put("loginCommand", new LoginCommand(""));
 
 
         /* Delete later */

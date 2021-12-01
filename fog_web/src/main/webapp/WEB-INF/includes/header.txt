@@ -21,9 +21,9 @@
                   </div>
 
                   <div id="loginForm_container">
-                    <form action="" method="POST">
+                    <form action="${pageContext.request.contextPath}/fc/loginCommand" method="POST">
                       <input name="email" type="text" class="loginInput" placeholder="E-mail">
-                      <input name="email" type="password" class="loginInput" placeholder="Password">
+                      <input name="password" type="password" class="loginInput" placeholder="Password">
 
                       <div id="loginActions_container" class="flexRow">
                         <div id="loginActionLink_container" class="loginAction_container">
