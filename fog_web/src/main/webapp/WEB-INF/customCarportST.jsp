@@ -1,5 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -134,11 +133,11 @@
                            </div>
                         </div>
 
-                        <p id="toolshedNote">
-                           NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet.
-                        </p>
-
                         <div id="toolshedOptions_container">
+                           <p id="toolshedNote">
+                              NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet.
+                           </p>
+
                            <label for="toolshedWidth" class="formLabel">Redskabsrum bredde:</label>
                            <select name="toolshedWidth" id="toolshedWidth" class="formSelect_element">
                               <option value="" disabled selected>Vælg bredde i cm</option>
@@ -207,6 +206,8 @@
 
                         <label for="note" class="formLabel">Evt. bemærkninger:</label>
                         <textarea name="note" type="text" id="note" class="contactInput"></textarea>
+
+                        <input name="pageToGoTo" type="hidden" value="customCarportST">
 
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
                      </form>
