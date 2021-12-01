@@ -67,7 +67,7 @@
                   </p>
 
                   <div id="customcarportForm_container">
-                     <form id="customCarport_form" action="" method="POST">
+                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/CarportStCommand" method="post">
                         <div class="formTitle_container">
                            <h2 class="formTitle">
                               Carport med rejsning

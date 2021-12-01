@@ -1,6 +1,16 @@
 package business.entities;
 
 public class ContanctInfo {
+    private  String firstName;
+    private  String lastName;
+    private  String address ;
+    private  int postalCode;
+    private  String town;
+    private  String email;
+    private  int phoneNum;
+    private  String note;
+
+
     public ContanctInfo(String firstName, String lastName, String address, int postalCode, String town, String email, int phoneNum, String note) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -12,14 +22,6 @@ public class ContanctInfo {
         this.note = note;
     }
 
-    private  String firstName;
-    private  String lastName;
-    private  String address ;
-    private  int postalCode;
-    private  String town;
-    private  String email;
-    private  int phoneNum;
-    private  String note;
 
     public String getFirstName() {
         return firstName;

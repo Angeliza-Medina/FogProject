@@ -34,6 +34,7 @@
                <h2>Carport efter egne mål - Carport med flat tag</h2>
             </div>
 
+
             <div class="flexRow">
                <section id="customCarportNav_section" class="flexColumn">
                   <div id="carportExampleImg_container">
@@ -67,7 +68,7 @@
                   </p>
 
                   <div id="customcarportForm_container">
-                     <form id="customCarport_form" action="" method="POST">
+                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/CarportStCommand" method="post">
                         <div class="formTitle_container">
                            <h2 class="formTitle">
                               Carport med fladt tag
@@ -97,6 +98,13 @@
                               <option value="${heightOption.id}">${heightOption.height} cm</option>
                            </c:forEach>
                         </select>
+
+
+                        <c:forEach items="${sessionScope.cCPOptionListContainer.roofTypeOptions}" var="roofTypeOption">
+                           <c:if test="${roofTypeOption.type.equals('flat')}">
+                              <input name="roofType" type="hidden" value="${roofTypeOption.id}">
+                           </c:if>
+                        </c:forEach>
 
                         <label for="carportRoof" class="formLabel">Tag:</label>
                         <select name="carportRoof" id="carportRoof" class="formSelect_element">
@@ -205,10 +213,12 @@
                         <input name="pageToGoTo" type="hidden" value="customCarportFT">
 
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
+
                      </form>
                   </div> <!-- #customcarportForm_container END -->
                </section> <!-- #customCarportForm_container END -->
             </div> <!-- .flexRow -->
+
          </main>
 
          <!-- footer include -->
