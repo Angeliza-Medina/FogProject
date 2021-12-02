@@ -175,6 +175,14 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
+                           <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
+                              <option value="" disabled selected>Vælg bræddebeklædning</option>
+                              <option value="none">Ingen</option>
+                              <option value="K33 16x100mm">K33 16x100mm</option>
+                              <option value="K33 19x150mm">K33 19x150mm</option>
+                           </select>
                         </div> <!-- #toolshedOptions_container END -->
 
                         <div class="formTitle_container">
