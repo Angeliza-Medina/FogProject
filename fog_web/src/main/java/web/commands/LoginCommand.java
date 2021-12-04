@@ -29,8 +29,6 @@ public class LoginCommand extends CommandUnprotectedPage {
             HttpSession session = request.getSession();
 
             session.setAttribute("user", user);
-//            session.setAttribute("role", user.getRole());
-//            session.setAttribute("email", email);
 
             String pageToShow = "";
 

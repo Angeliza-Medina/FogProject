@@ -54,7 +54,7 @@ header{
   align-items: center;
 }
 
-#login_container{
+#login_container, #logout_container{
   width: 40%;
 }
 
@@ -202,3 +202,21 @@ header{
 }
 /*-------------------------------- Login section END --------------------------------*/
 
+
+/*---------------------------------- Logout section ---------------------------------*/
+#logoutLink_container, #email_container{
+  margin-right: 15px;
+}
+
+#logout_link{
+  color: var(--white);
+}
+
+#logout_link:visited{
+  color: var(--white);
+}
+
+#logout_link:hover{
+  color: var(--turquoise);
+}
+/*-------------------------------- Logout section END -------------------------------*/
