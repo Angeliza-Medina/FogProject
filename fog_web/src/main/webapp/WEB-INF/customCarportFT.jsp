@@ -187,10 +187,18 @@
                         </div>
 
                         <label for="firstName" class="formLabel">Fornavn:</label>
-                        <input name="firstName" type="text" id="firstName" class="contactInput">
+                        <input name="firstName" type="text" id="firstName" class="contactInput"
+                           <c:if test="${sessionScope.user != null}">
+                                  value="${sessionScope.user.firstName}"
+                           </c:if>
+                        >
 
                         <label for="lastName" class="formLabel">Efternavn:</label>
-                        <input name="lastName" type="text" id="lastName" class="contactInput">
+                        <input name="lastName" type="text" id="lastName" class="contactInput"
+                           <c:if test="${sessionScope.user != null}">
+                                  value="${sessionScope.user.lastName}"
+                           </c:if>
+                        >
 
                         <label for="address" class="formLabel">Addresse:</label>
                         <input name="address" type="text" id="address" class="contactInput">
@@ -208,7 +216,11 @@
                         </div> <!-- #postalTown_container .flexRow END -->
 
                         <label for="email" class="formLabel">E-mail:</label>
-                        <input name="email" type="text" id="email" class="contactInput">
+                        <input name="email" type="text" id="email" class="contactInput"
+                           <c:if test="${sessionScope.user != null}">
+                               value="${sessionScope.user.email}"
+                           </c:if>
+                        >
 
                         <label for="phoneNum" class="formLabel">Telefon:</label>
                         <input name="phoneNum" type="text" id="phoneNum" class="contactInput">
