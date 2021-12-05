@@ -21,3 +21,53 @@ main{
     font-size: 1.3em;
     font-weight: normal;
 }
+
+/*---------------------------------- Search section ---------------------------------*/
+#search_container{
+    width: 50%;
+    margin: 15px auto;
+}
+
+#search_form{
+    justify-content: center;
+}
+
+#search_input, #searchCategory_select{
+    padding: 10px 5px;
+    border: none;
+    background-color: var(--white);
+    font-size: 1em;
+}
+
+#searchInput_container{
+    width: 65%;
+}
+
+#search_input{
+    width: 100%;
+    padding-bottom: 11px;
+    border: 1px solid var(--darkBlue);
+    border-right: none;
+}
+
+#searchBtn_container{
+    background-color: var(--white);
+}
+
+#searchBtn{
+    padding: 10px;
+    background-color: var(--white);
+    border: 1px solid var(--darkBlue);
+    border-left: none;
+    font-size: 1em;
+}
+
+#searchCategory_container{
+    width: 35%;
+}
+
+#searchCategory_select{
+    width: 100%;
+    border: 1px solid var(--darkBlue);
+}
+/*-------------------------------- Search section END -------------------------------*/
