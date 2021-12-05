@@ -102,3 +102,94 @@ main{
     color: var(--orange);
 }
 /*----------------------------- Filter link section END -----------------------------*/
+
+
+/*------------------------------------ CCPI List ------------------------------------*/
+#ccpiList_container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#ccpi_Table{
+    width: 100%;
+    border-spacing:0 15px;
+    text-align: center;
+}
+
+#ccpi_Table th{
+    padding: 10px 3%;
+    border: 1px solid var(--darkBlue);
+    background-color: var(--white);
+}
+
+#ccpi_Table td{
+    padding: 10px 3%;
+    border-top: 1px solid var(--darkBlue);
+    border-bottom: 1px solid var(--darkBlue);
+    background-color: var(--white);
+}
+
+#ccpiTable_head{
+    font-family: chaletComprime;
+    font-size: 1.3em;
+    color: var(--middleBlue);
+    text-transform: uppercase;
+}
+
+#ccpiTable_head th{
+    font-weight: normal;
+}
+
+#ccpiTable_head th, .ccpiTable_data td{
+    border-right: none;
+    border-left: none;
+}
+
+#ccpiTable_head th:nth-child(1){
+    border-left: 1px solid var(--darkBlue);
+}
+
+#ccpiTable_head th:nth-child(4){
+    border-right: 1px solid var(--darkBlue);
+}
+
+.ccpiTable_data td:nth-child(1){
+    border-left: 1px solid var(--darkBlue);
+}
+
+.ccpiTable_data td:nth-child(4){
+    border-right: 1px solid var(--darkBlue);
+}
+
+#ccpi_Table tr td:nth-child(1) { /* Date */
+    width: 25%;
+}
+
+#ccpi_Table tr td:nth-child(2) { /* Id */
+    width: 25%;
+}
+
+#ccpi_Table tr td:nth-child(3) { /* Dimentions */
+    width: 40%;
+}
+
+#ccpi_Table tr td:nth-child(4) { /* Status */
+    width: 10%;
+}
+
+.ccpiList_icon{
+    font-size: 1.4em;
+    color: var(--orange);
+}
+
+.calculateCCPIBtn{
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/*---------------------------------- CCPI List END ----------------------------------*/
