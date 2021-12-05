@@ -1,0 +1,122 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@import url("base.css");
+
+header{
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: var(--darkBlue);
+    font-family: chaletComprime;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+
+/*----------------------------------- Logo section ----------------------------------*/
+#logo_container{
+    width: 10%;
+}
+
+#logo_container img{
+    display: block;
+}
+
+#logo_link{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+/*--------------------------------- Logo section END --------------------------------*/
+
+
+#headerNav_container{
+    width: 90%;
+    padding: 0 15px;
+}
+
+.header_link:visited{
+    color: var(--white);
+}
+
+.header_link:hover{
+    color: var(--turquoise);
+}
+
+
+/*-------------------------------- Header top section -------------------------------*/
+#headerNavTop_container{
+    font-size: 1.2em;
+    border-bottom: 1px solid var(--turquoise);
+    align-items: center;
+}
+
+#logout_container{
+    width: 40%;
+}
+
+#topNav_container{
+    justify-content: flex-end;
+    width: 60%;
+    text-align: center;
+}
+
+/* Only for project simulation - Should be dynamic */
+#topNav_container div:nth-child(3){
+    border-top: 1px solid var(--yellow);
+    border-bottom: 1px solid var(--yellow);
+    color: var(--turquoise);
+}
+
+/* Only for project simulation - Should be dynamic */
+#topNav_container div:nth-child(3) a{
+    color: var(--turquoise);
+}
+
+/* Only for project simulation - Should be dynamic */
+#topNav_container div:nth-child(3) a:visited{
+    color: var(--turquoise);
+}
+
+.topNavLink_container{
+    padding: 15px;
+}
+/*------------------------------ Header top section END -----------------------------*/
+
+
+/*------------------------------ Header bottom section ------------------------------*/
+#headerNavBtm_container{
+    padding: 15px 0;
+    font-size: 1.4em;
+}
+
+#navBtm_section{
+    width: 60%;
+}
+
+.btmNavLink_container{
+    margin-right: 15px;
+}
+/*---------------------------- Header bottom section END ----------------------------*/
+
+
+/*---------------------------------- Logout section ---------------------------------*/
+#logoutLink_container, #email_container{
+    margin-right: 15px;
+}
+
+#logout_link{
+    color: var(--white);
+}
+
+#logout_link:visited{
+    color: var(--white);
+}
+
+#logout_link:hover{
+    color: var(--turquoise);
+}
+/*-------------------------------- Logout section END -------------------------------*/
