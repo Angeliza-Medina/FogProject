@@ -108,6 +108,53 @@
             </form> <!-- #searchCCPI_form .flexRow END -->
         </div> <!-- #searchCCPI_container END -->
 
+
+        <div id="filterBtns_container" class="flexRow">
+            <form action="" method="GET" class="filterBtn_container">
+                <input name="filterType" type="hidden" value="all">
+
+                <button type="submit" id="allFilter" class="filterBtn">
+                    Alle
+                </button>
+            </form>
+
+            <form action="" method="GET" class="filterBtn_container">
+                <input name="filterType" type="hidden" value="pending">
+
+                <button type="submit" id="pendingFilter" class="filterBtn">
+                    Afventer
+                    <i class="fas fa-clock filterBtn_icon"></i>
+                </button>
+            </form>
+
+            <form action="" method="GET" class="filterBtn_container">
+                <input name="filterType" type="hidden" value="inProgress">
+
+                <button type="submit" id="inProgressFilter" class="filterBtn">
+                    Behandles
+                    <i class="fas fa-hammer filterBtn_icon"></i>
+                </button>
+            </form>
+
+            <form action="" method="GET" class="filterBtn_container">
+                <input name="filterType" type="hidden" value="completed">
+
+                <button type="submit" id="completedFilter" class="filterBtn">
+                    Afsluttet
+                    <i class="far fa-check-circle filterBtn_icon"></i>
+                </button>
+            </form>
+
+            <form action="" method="GET" class="filterBtn_container">
+                <input name="filterType" type="hidden" value="cancelled">
+
+                <button type="submit" id="cancelledFilter" class="filterBtn">
+                    Annulleret
+                    <i class="far fa-times-circle filterBtn_icon"></i>
+                </button>
+            </form>
+        </div> <!-- #filterLinks_container .flex -->
+
     </main>
 
 
