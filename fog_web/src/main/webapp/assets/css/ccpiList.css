@@ -71,3 +71,34 @@ main{
     border: 1px solid var(--darkBlue);
 }
 /*-------------------------------- Search section END -------------------------------*/
+
+
+/*------------------------------- Filter link section -------------------------------*/
+#filterBtns_container{
+    width: 80%;
+    margin: 30px auto;
+    justify-content: space-between;
+}
+
+.filterBtn_container{
+    width: 15%;
+    max-width: 150px;
+    text-align: center;
+}
+
+.filterBtn{
+    display: block;
+    width: 100%;
+    padding: 6px 0;
+    background-color: var(--darkBlue);
+    font-family: chaletComprime;
+    color: var(--white);
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+
+.filterBtn_icon{
+    padding-left: 15px;
+    color: var(--orange);
+}
+/*----------------------------- Filter link section END -----------------------------*/
