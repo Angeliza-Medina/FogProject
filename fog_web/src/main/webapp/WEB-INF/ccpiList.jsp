@@ -86,6 +86,27 @@
             <h2>Carport forespørgsler</h2>
         </div>
 
+        <div id="search_container">
+            <form action="" method="GET" id="search_form" class="flexRow">
+                <div id="searchInput_container">
+                    <input name="search_input" type="text" id="search_input">
+                </div>
+
+                <div id="searchBtn_container">
+                    <button type="submit" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div id="searchCategory_container">
+                    <select name="searchCategory" id="searchCategory_select">
+                        <option value="ccpiId" selected>Forespørgsels id</option>
+                        <option value="date">Dato</option>
+                        <option value="lastName">Efternavn</option>
+                    </select>
+                </div>
+            </form> <!-- #searchCCPI_form .flexRow END -->
+        </div> <!-- #searchCCPI_container END -->
 
     </main>
 
