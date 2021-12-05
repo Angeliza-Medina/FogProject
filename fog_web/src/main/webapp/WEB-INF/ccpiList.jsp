@@ -155,6 +155,94 @@
             </form>
         </div> <!-- #filterLinks_container .flex -->
 
+        <div id="ccpiList_container">
+            <table id="ccpi_Table">
+                <tr id="ccpiTable_head">
+                    <th>Dato</th>
+
+                    <th>Forespørgsels-id</th>
+
+                    <th>Carport + Redskabsrum mål</th>
+
+                    <th>Status</th>
+                </tr>
+
+                <tr class="ccpiTable_data posRelative">
+                    <td>02-12-2021</td>
+                    <td>#005</td>
+                    <td>
+                        Carport: 210 x 300 x 270<br>
+                        Redskabsrum: 160 x 210
+                    </td>
+                    <td>
+                        <i class="fas fa-clock ccpiList_icon"></i>
+
+                        <form action="" method="GET">
+                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+
+                            <button class="calculateCCPIBtn posAbsolute" type="submit">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr class="ccpiTable_data posRelative">
+                    <td>02-12-2021</td>
+                    <td>#005</td>
+                    <td>
+                        Carport: 210 x 300 x 270
+                    </td>
+                    <td>
+                        <i class="fas fa-hammer ccpiList_icon"></i>
+
+                        <form action="" method="GET">
+                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+
+                            <button class="calculateCCPIBtn posAbsolute" type="submit">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr class="ccpiTable_data posRelative">
+                    <td>02-12-2021</td>
+                    <td>#005</td>
+                    <td>
+                        Carport: 210 x 300 x 270<br>
+                        Redskabsrum: 160 x 210
+                    </td>
+                    <td>
+                        <i class="far fa-check-circle ccpiList_icon"></i>
+
+                        <form action="" method="GET">
+                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+
+                            <button class="calculateCCPIBtn posAbsolute" type="submit">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr class="ccpiTable_data posRelative">
+                    <td>02-12-2021</td>
+                    <td>#005</td>
+                    <td>
+                        Carport: 210 x 300 x 270
+                    </td>
+                    <td>
+                        <i class="far fa-times-circle ccpiList_icon"></i>
+
+                        <form action="" method="GET">
+                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+
+                            <button class="calculateCCPIBtn posAbsolute" type="submit">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div> <!-- #ccpiList_container END -->
+        
     </main>
 
 
