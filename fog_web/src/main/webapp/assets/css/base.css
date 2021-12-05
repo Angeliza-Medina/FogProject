@@ -44,6 +44,10 @@ html{
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
 body{
   max-width: 2000px;
   margin: 0 auto;
