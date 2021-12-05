@@ -1,0 +1,22 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@import url("base.css");
+
+footer{
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    font-family: roboto;
+    color: var(--white);
+}
+
+#adminFooter{
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: var(--lightBlue);
+    justify-content: space-between;
+}
+
