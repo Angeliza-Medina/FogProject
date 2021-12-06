@@ -1,4 +1,9 @@
-* {
+@charset "UTF-8";
+/* CSS Document */
+
+@import url("base.css");
+
+main{
     text-align: center;
     font-size: 1.2em;
     background-color: var(--darkBlue);

@@ -5,36 +5,36 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!-- CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/base.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/header.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/index.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/footer.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/errorpage.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <title>Fog - Error</title>
 
-</head>
+        <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/assets/images/logo/favicon.jpg"/>
+        <!-- CSS -->
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/base.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/header.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/errorpage.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/footer.css">
+    </head>
 
-<body>
-<div id="wrapper">
-    <!-- header include -->
-    <%@include file="includes/header.txt"%>
+    <body>
+        <main>
+            <div id="wrapper">
+                <!-- header include -->
+                <%@include file="includes/header.txt"%>
 
-    <main>
-        <c:if test="${requestScope.error != null}">
-            <div>
-                    ${requestScope.error}
-            </div>
-        </c:if>
-        <p>Hej hej hejjejejeje</p>
-    </main>
+                    <c:if test="${requestScope.error != null}">
+                        <div>
+                                ${requestScope.error}
+                        </div>
+                    </c:if>
+                    <p>Hej hej hejjejejeje</p>
 
-        <%@include file="includes/footer.txt"%>
-
-
-</div> <!-- #wrapper END -->
-
-</body>
+                    <%@include file="includes/footer.txt"%>
+            </div> <!-- #wrapper END -->
+        </main>
+    </body>
 </html>
