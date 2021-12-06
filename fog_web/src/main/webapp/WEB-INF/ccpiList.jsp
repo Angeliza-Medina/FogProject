@@ -26,65 +26,7 @@
 
    <body>
       <div id="wrapper">
-         <header>
-            <div id="header_container" class="flexRow">
-               <div id="logo_container" class="posRelative">
-                  <img src="<%=request.getContextPath()%>/assets/images/logo/logo.png" alt="Johannes Fog logo">
-                  <a id="logo_link" href="${pageContext.request.contextPath}/fc/index"></a>
-               </div>
-
-               <div id="headerNav_container" class="flexColumn">
-                  <div id="headerNavTop_container" class="flexRow">
-                     <div id="logout_container" class="flexRow">
-                        <div id="logoutLink_container">
-                           <a id="logout_link" href="${pageContext.request.contextPath}/fc/logoutCommand">
-                              <i class="fas fa-user-circle"></i>
-                              Log ud
-                           </a>
-                        </div>
-
-                        <div id="email_container">
-                           ${sessionScope.user.email}
-                        </div>
-                     </div> <!-- #logout_container .flexRow END -->
-
-                     <div id="topNav_container" class="flexRow">
-                        <div class="topNavLink_container">
-                           <a href="" class="header_link topNav_link">Outlet</a>
-                        </div>
-
-                        <div class="topNavLink_container">
-                           <a href="" class="header_link topNav_link">Bolig & Designhus</a>
-                        </div>
-
-                        <div class="topNavLink_container">
-                           <a href="" class="header_link topNav_link">Trælast & Byggecenter</a>
-                        </div>
-
-                        <div class="topNavLink_container">
-                           <a href="" class="header_link topNav_link">FogPro</a>
-                        </div>
-                     </div>
-                  </div> <!-- #headerNavTop_container .flexRow END -->
-
-                  <div id="headerNavBtm_container" class="flexRow">
-                     <section id="navBtm_section" class="flexRow">
-                        <div class="btmNavLink_container">
-                           <a href="${pageContext.request.contextPath}/fc/ccpiList" class="header_link">
-                              Behandl carport forespørgsler
-                           </a>
-                        </div>
-
-                        <div class="btmNavLink_container">
-                           <a href="" class="header_link">
-                              Rediger produkter
-                           </a>
-                        </div>
-                     </section>
-                  </div> <!-- #headerNavBtm_container .flexRow END -->
-               </div> <!-- #headerNav_container .flexColumn END -->
-            </div>
-         </header>
+         <%@include file="includes/admin_header.txt"%>
 
          <main>
             <div id="pageHeadline_container">
