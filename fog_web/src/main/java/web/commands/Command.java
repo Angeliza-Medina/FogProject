@@ -23,6 +23,7 @@ public abstract class Command {
         commands.put("index", new CommandUnprotectedPage("index"));
         commands.put("customCarportST", new CommandUnprotectedPage("customCarportST"));
         commands.put("customCarportFT", new CommandUnprotectedPage("customCarportFT"));
+        commands.put("ccpiList", new CommandProtectedPage("ccpiList", "admin"));
 
         /* Functionality commands */
         commands.put("loginCommand", new LoginCommand(""));

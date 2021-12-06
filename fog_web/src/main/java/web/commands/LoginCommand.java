@@ -29,17 +29,19 @@ public class LoginCommand extends CommandUnprotectedPage {
             HttpSession session = request.getSession();
 
             session.setAttribute("user", user);
+            session.setAttribute("role", user.getRole());
 
             String pageToShow = "";
 
             if(user.getRole().equals("customer")){
                 pageToShow = "index";
             }else if(user.getRole().equals("admin")){
-                pageToShow = "adminIndex";
+                pageToShow = "ccpiList";
             }
 
             return REDIRECT_INDICATOR + pageToShow;
         } catch (UserException ex) {
+            pageToShow = "index";
             request.setAttribute("error", "Forkert email eller password...");
             return pageToShow;
         }
