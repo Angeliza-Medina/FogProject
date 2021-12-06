@@ -21,20 +21,21 @@
     </head>
 
     <body>
-        <main>
-            <div id="wrapper">
-                <!-- header include -->
-                <%@include file="includes/header.txt"%>
+        <div id="wrapper">
+            <!-- Header include -->
+            <%@include file="includes/header.txt"%>
 
-                    <c:if test="${requestScope.error != null}">
-                        <div>
-                                ${requestScope.error}
-                        </div>
-                    </c:if>
-                    <p>Hej hej hejjejejeje</p>
+            <main>
+                <c:if test="${requestScope.error != null}">
+                    <div>
+                            ${requestScope.error}
+                    </div>
+                </c:if>
+                <p>Hej hej hejjejejeje</p>
+            </main>
 
-                    <%@include file="includes/footer.txt"%>
-            </div> <!-- #wrapper END -->
-        </main>
+            <!-- Footer include -->
+            <%@include file="includes/footer.txt"%>
+        </div> <!-- #wrapper END -->
     </body>
 </html>
