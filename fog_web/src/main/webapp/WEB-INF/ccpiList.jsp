@@ -245,15 +245,7 @@
             </div> <!-- #ccpiList_container END -->
          </main>
 
-         <footer id="adminFooter" class="flexRow">
-            <section id="businessInfo">
-               Johannes Fog A/S - Firskovvej 20 - 2800 Lyngby - CVR-nr. 16314439
-            </section>
-
-            <section id="priceInfo">
-               Alle priser er inkl. moms
-            </section>
-         </footer>
+         <%@include file="includes/admin_footer.txt"%>
       </div> <!-- #wrapper END -->
 
       <script src="<%=request.getContextPath()%>/assets/js/ccpiList.js"></script>
