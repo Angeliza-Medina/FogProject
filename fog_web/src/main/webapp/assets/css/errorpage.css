@@ -1,0 +1,9 @@
+* {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: var(--darkBlue);
+    font-family: chaletComprime;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
