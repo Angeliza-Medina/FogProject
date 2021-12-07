@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 public class GetCCPOptionsCommand extends CommandUnprotectedPage{
-   CCPOptionFacade cCPOptionFacade;
+   CCPOptionFacade ccpOptionFacade;
 
    public GetCCPOptionsCommand(String pageToShow){
       super(pageToShow);
-      cCPOptionFacade = new CCPOptionFacade(database);
+      ccpOptionFacade = new CCPOptionFacade(database);
    }
 
    @Override
@@ -22,33 +22,35 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
       String pageToGo = request.getParameter("pageToGo");
 
       try {
-         ArrayList<RoofTypeOption> roofTypeOptions = cCPOptionFacade.getCCPRoofTypeOptions();
-         ArrayList<RoofAngleOption> roofAngleOptions = cCPOptionFacade.getCCPRoofAngleOptions();
-         ArrayList<RoofMaterialOption> roofMaterialOptions = cCPOptionFacade.getCCPRoofMaterialOptions();
-         ArrayList<CCPWidthOption> cCPWidthOptions = cCPOptionFacade.getCCPWidthOptions();
-         ArrayList<CCPLengthOption> cCPLengthOptions = cCPOptionFacade.getCCPLengthOptions();
-         ArrayList<CCPHeightOption> cCPHeightOptions = cCPOptionFacade.getCCPHeightOptions();
-         ArrayList<CTSWidthOption> cTSWidthOptions = cCPOptionFacade.getCTSWidthOptions();
-         ArrayList<CTSLengthOption> cTSLengthOptions = cCPOptionFacade.getCTSLengthOptions();
+         ArrayList<RoofTypeOption> roofTypeOptions = ccpOptionFacade.getCCPRoofTypeOptions();
+         ArrayList<Integer> roofAngleOptions = ccpOptionFacade.getCCPRoofAngleOptions();
+         ArrayList<RoofMaterialOption> roofMaterialOptions = ccpOptionFacade.getCCPRoofMaterialOptions();
+         ArrayList<Integer> ccpWidthOptions = ccpOptionFacade.getCCPWidthOptions();
+         ArrayList<Integer> ccpLengthOptions = ccpOptionFacade.getCCPLengthOptions();
+         ArrayList<Integer> ccpHeightOptions = ccpOptionFacade.getCCPHeightOptions();
+         ArrayList<Integer> ctsWidthOptions = ccpOptionFacade.getCTSWidthOptions();
+         ArrayList<Integer> ctsLengthOptions = ccpOptionFacade.getCTSLengthOptions();
+         ArrayList<CTSCladdingOption> ctsCladdingOptions = ccpOptionFacade.getCladdingOptions();
 
          CCPOptionListContainer cCPOptionListContainer = new CCPOptionListContainer(
                 roofTypeOptions,
                 roofAngleOptions,
                 roofMaterialOptions,
-                cCPWidthOptions,
-                cCPLengthOptions,
-                cCPHeightOptions,
-                cTSWidthOptions,
-                cTSLengthOptions);
+                ccpWidthOptions,
+                ccpLengthOptions,
+                ccpHeightOptions,
+                ctsWidthOptions,
+                ctsLengthOptions,
+                ctsCladdingOptions);
 
          HttpSession session = request.getSession();
 
-         session.setAttribute("cCPOptionListContainer", cCPOptionListContainer);
+         session.setAttribute("ccpOptionListContainer", cCPOptionListContainer);
 
          return REDIRECT_INDICATOR + pageToGo;
       } catch (UserException ex) {
-         request.setAttribute("error", "Something went wrong...");
-         return "error";
+         request.setAttribute("error", ex.getMessage());
+         return "index";
       }
    }
 

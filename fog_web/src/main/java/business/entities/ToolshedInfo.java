@@ -1,12 +1,14 @@
 package business.entities;
 
-public class ToolInfo {
+public class ToolshedInfo {
     private  int toolshedWidth;
     private  int toolshedLength;
+    private int toolshedCladdingId;
 
-    public ToolInfo(int toolshedWidth, int toolshedLength) {
+    public ToolshedInfo(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {
         this.toolshedWidth = toolshedWidth;
         this.toolshedLength = toolshedLength;
+        this.toolshedCladdingId = toolshedCladdingId;
     }
 
     public int getToolshedWidth() {
@@ -23,5 +25,13 @@ public class ToolInfo {
 
     public void setToolshedLength(int toolshedLength) {
         this.toolshedLength = toolshedLength;
+    }
+
+    public int getToolshedCladdingId() {
+        return toolshedCladdingId;
+    }
+
+    public void setToolshedCladdingId(int toolshedCladdingId) {
+        this.toolshedCladdingId = toolshedCladdingId;
     }
 }

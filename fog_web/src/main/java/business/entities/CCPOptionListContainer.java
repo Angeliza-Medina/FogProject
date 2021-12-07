@@ -4,32 +4,35 @@ import java.util.ArrayList;
 
 public class CCPOptionListContainer {
    private ArrayList<RoofTypeOption> roofTypeOptions;
-   private ArrayList<RoofAngleOption> roofAngleOptions;
+   private ArrayList<Integer> roofAngleOptions;
    private ArrayList<RoofMaterialOption> roofMaterialOptions;
-   private ArrayList<CCPWidthOption> cCPWidthOptions;
-   private ArrayList<CCPLengthOption> cCPLengthOptions;
-   private ArrayList<CCPHeightOption> cCPHeightOptions;
-   private ArrayList<CTSWidthOption> cTSWidthOptions;
-   private ArrayList<CTSLengthOption> cTSLengthOptions;
+   private ArrayList<Integer> ccpWidthOptions;
+   private ArrayList<Integer> ccpLengthOptions;
+   private ArrayList<Integer> ccpHeightOptions;
+   private ArrayList<Integer> ctsWidthOptions;
+   private ArrayList<Integer> ctsLengthOptions;
+   private ArrayList<CTSCladdingOption> ctsCladdingOptions;
 
 
    public CCPOptionListContainer(ArrayList<RoofTypeOption> roofTypeOptions,
-                                 ArrayList<RoofAngleOption> roofAngleOptions,
+                                 ArrayList<Integer> roofAngleOptions,
                                  ArrayList<RoofMaterialOption> roofMaterialOptions,
-                                 ArrayList<CCPWidthOption> cCPWidthOptions,
-                                 ArrayList<CCPLengthOption> cCPLengthOptions,
-                                 ArrayList<CCPHeightOption> cCPHeightOptions,
-                                 ArrayList<CTSWidthOption> cTSWidthOptions,
-                                 ArrayList<CTSLengthOption> cTSLengthOptions)
+                                 ArrayList<Integer> ccpWidthOptions,
+                                 ArrayList<Integer> ccpLengthOptions,
+                                 ArrayList<Integer> ccpHeightOptions,
+                                 ArrayList<Integer> ctsWidthOptions,
+                                 ArrayList<Integer> ctsLengthOptions,
+                                 ArrayList<CTSCladdingOption> ctsCladdingOptions)
    {
       this.roofTypeOptions = roofTypeOptions;
       this.roofAngleOptions = roofAngleOptions;
       this.roofMaterialOptions = roofMaterialOptions;
-      this.cCPWidthOptions = cCPWidthOptions;
-      this.cCPLengthOptions = cCPLengthOptions;
-      this.cCPHeightOptions = cCPHeightOptions;
-      this.cTSWidthOptions = cTSWidthOptions;
-      this.cTSLengthOptions = cTSLengthOptions;
+      this.ccpWidthOptions = ccpWidthOptions;
+      this.ccpLengthOptions = ccpLengthOptions;
+      this.ccpHeightOptions = ccpHeightOptions;
+      this.ctsWidthOptions = ctsWidthOptions;
+      this.ctsLengthOptions = ctsLengthOptions;
+      this.ctsCladdingOptions = ctsCladdingOptions;
    }
 
 
@@ -41,11 +44,11 @@ public class CCPOptionListContainer {
       this.roofTypeOptions = roofTypeOptions;
    }
 
-   public ArrayList<RoofAngleOption> getRoofAngleOptions() {
+   public ArrayList<Integer> getRoofAngleOptions() {
       return roofAngleOptions;
    }
 
-   public void setRoofAngleOptions(ArrayList<RoofAngleOption> roofAngleOptions) {
+   public void setRoofAngleOptions(ArrayList<Integer> roofAngleOptions) {
       this.roofAngleOptions = roofAngleOptions;
    }
 
@@ -57,44 +60,51 @@ public class CCPOptionListContainer {
       this.roofMaterialOptions = roofMaterialOptions;
    }
 
-   public ArrayList<CCPWidthOption> getcCPWidthOptions() {
-      return cCPWidthOptions;
+   public ArrayList<Integer> getCcpWidthOptions() {
+      return ccpWidthOptions;
    }
 
-   public void setcCPWidthOptions(ArrayList<CCPWidthOption> cCPWidthOptions) {
-      this.cCPWidthOptions = cCPWidthOptions;
+   public void setCcpWidthOptions(ArrayList<Integer> ccpWidthOptions) {
+      this.ccpWidthOptions = ccpWidthOptions;
    }
 
-   public ArrayList<CCPLengthOption> getcCPLengthOptions() {
-      return cCPLengthOptions;
+   public ArrayList<Integer> getCcpLengthOptions() {
+      return ccpLengthOptions;
    }
 
-   public void setcCPLengthOptions(ArrayList<CCPLengthOption> cCPLengthOptions) {
-      this.cCPLengthOptions = cCPLengthOptions;
+   public void setCcpLengthOptions(ArrayList<Integer> ccpLengthOptions) {
+      this.ccpLengthOptions = ccpLengthOptions;
    }
 
-   public ArrayList<CCPHeightOption> getcCPHeightOptions() {
-      return cCPHeightOptions;
+   public ArrayList<Integer> getCcpHeightOptions() {
+      return ccpHeightOptions;
    }
 
-   public void setcCPHeightOptions(ArrayList<CCPHeightOption> cCPHeightOptions) {
-      this.cCPHeightOptions = cCPHeightOptions;
+   public void setCcpHeightOptions(ArrayList<Integer> ccpHeightOptions) {
+      this.ccpHeightOptions = ccpHeightOptions;
    }
 
-   public ArrayList<CTSWidthOption> getcTSWidthOptions() {
-      return cTSWidthOptions;
+   public ArrayList<Integer> getCtsWidthOptions() {
+      return ctsWidthOptions;
    }
 
-   public void setcTSWidthOptions(ArrayList<CTSWidthOption> cTSWidthOptions) {
-      this.cTSWidthOptions = cTSWidthOptions;
+   public void setCtsWidthOptions(ArrayList<Integer> ctsWidthOptions) {
+      this.ctsWidthOptions = ctsWidthOptions;
    }
 
-   public ArrayList<CTSLengthOption> getcTSLengthOptions() {
-      return cTSLengthOptions;
+   public ArrayList<Integer> getCtsLengthOptions() {
+      return ctsLengthOptions;
    }
 
-   public void setcTSLengthOptions(ArrayList<CTSLengthOption> cTSLengthOptions) {
-      this.cTSLengthOptions = cTSLengthOptions;
+   public void setCtsLengthOptions(ArrayList<Integer> ctsLengthOptions) {
+      this.ctsLengthOptions = ctsLengthOptions;
    }
 
+   public ArrayList<CTSCladdingOption> getCtsCladdingOptions() {
+      return ctsCladdingOptions;
+   }
+
+   public void setCtsCladdingOptions(ArrayList<CTSCladdingOption> ctsCladdingOptions) {
+      this.ctsCladdingOptions = ctsCladdingOptions;
+   }
 }
