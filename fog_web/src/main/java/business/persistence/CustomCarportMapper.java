@@ -1,13 +1,10 @@
 package business.persistence;
 
 import business.entities.CustomCarportInquiry;
-import business.entities.User;
 import business.exceptions.UserException;
-
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.function.ToDoubleBiFunction;
 
 public class CustomCarportMapper {
 
@@ -17,42 +14,66 @@ public class CustomCarportMapper {
         this.database = database;
     }
 
-    public void sendInquiryToDatabase(CustomCarportInquiry cpi) throws UserException{
+    public void sendInquiryToDatabase(CustomCarportInquiry ccpi) throws UserException{
         try (Connection connection = database.connect()) {
-            LocalDate inquiryDate = LocalDate.now();
-            String sql = "INSERT INTO custom_carport_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, " +
-                   "phoneNum, address, postalcode, city, note, fk_carportWidth_id, fk_carportLength_id, fk_carportHeight_id, " +
-                   "fk_rooftype_id, fk_roofMaterial_id, fk_roofAngle_id, fk_toolshedWidth_id, fk_toolshedLength_id) " +
-                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            String sql =
+                   "INSERT INTO cts (fk_ctsWidth, fk_ctsLength, fk_cladding_id)\n" +
+                   "    VALUES(?, ?, ?);\n" +
+                   "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
+                   "    VALUES(?, ?, ?, 0.86, ?, ?, ?, LAST_INSERT_ID());\n" +
+                   "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
+                   "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID());\n";
+
+//            String sql = "START TRANSACTION; " +
+//                   "INSERT INTO cts (fk_ctsWidth, fk_ctsLength, fk_cladding_id)\n" +
+//                   "    VALUES(?, ?, ?);\n" +
+//                   "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
+//                   "    VALUES(?, ?, ?, 0.86, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
+//                   "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
+//                   "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
+//                   "COMMIT;";
 
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setDate(1, Date.valueOf(inquiryDate));
-                ps.setInt(2, 2); //TODO fix user_id so it's not hardcoded
-                ps.setString(3, cpi.getContactInfo().getFirstName());
-                ps.setString(4, cpi.getContactInfo().getLastName());
-                ps.setString(5, cpi.getContactInfo().getEmail());
-                ps.setString(6, cpi.getContactInfo().getPhoneNum());
-                ps.setString(7, cpi.getContactInfo().getAddress());
-                ps.setInt(8, cpi.getContactInfo().getPostalCode());
-                ps.setString(9, cpi.getContactInfo().getTown());
-                ps.setString(10, cpi.getNote());
-                ps.setInt(11, cpi.getCarportWidth());
-                ps.setInt(12, cpi.getCarportLength());
-                ps.setInt(13, cpi.getCarportHeight());
-                ps.setInt(14, cpi.getRoofType());
-                ps.setInt(15, cpi.getRoofMaterial());
-                ps.setInt(16, cpi.getRoofAngle());
-                ps.setInt(17, cpi.getToolInfo().getToolshedWidth());
-                ps.setInt(18, cpi.getToolInfo().getToolshedLength());
+                // Inserts into cts
+                ps.setInt(1, ccpi.getToolshedInfo().getToolshedWidth());
+                ps.setInt(2, ccpi.getToolshedInfo().getToolshedLength());
+                ps.setInt(3, ccpi.getToolshedInfo().getToolshedCladdingId());
+
+                // Inserts into ccp
+                ps.setInt(4, ccpi.getCarportWidth());
+                ps.setInt(5, ccpi.getCarportLength());
+                ps.setInt(6, ccpi.getCarportHeight());
+                ps.setInt(7, ccpi.getRoofTypeId());
+                ps.setInt(8, ccpi.getRoofAngle());
+                ps.setInt(9, ccpi.getRoofMaterialId());
+
+                // Inserts into ccp_inquiries
+                LocalDate inquiryDate = LocalDate.now();
+                ps.setDate(10, Date.valueOf(inquiryDate));
+
+                if(ccpi.getUserId() != 0){
+                    ps.setInt(11, ccpi.getUserId());
+                }else{
+                    ps.setNull(11, Types.INTEGER);
+                }
+
+                ps.setString(12, ccpi.getContactInfo().getFirstName());
+                ps.setString(13, ccpi.getContactInfo().getLastName());
+                ps.setString(14, ccpi.getContactInfo().getEmail());
+                ps.setString(15, ccpi.getContactInfo().getPhoneNum());
+                ps.setString(16, ccpi.getContactInfo().getAddress());
+                ps.setInt(17, ccpi.getContactInfo().getPostalCode());
+                ps.setString(18, ccpi.getContactInfo().getCity());
+                ps.setString(19, ccpi.getNote());
 
                 ps.executeUpdate();
-                System.out.println("Here: 1");
 
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
         } catch (SQLException ex) {
-            throw new UserException(ex.getMessage());
+            throw new UserException("Could not establish connection to our database at the moment...");
         }
     }
 

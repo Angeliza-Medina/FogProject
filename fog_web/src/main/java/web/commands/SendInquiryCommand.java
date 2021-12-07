@@ -2,7 +2,7 @@ package web.commands;
 
 import business.entities.ContactInfo;
 import business.entities.CustomCarportInquiry;
-import business.entities.ToolInfo;
+import business.entities.ToolshedInfo;
 import business.exceptions.UserException;
 import business.services.CustomCarportFacade;
 
@@ -20,43 +20,45 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
         // - User info-
-        int userID = 2; // todo change from hardcode to dynamic later
+        int userID = Integer.parseInt(request.getParameter("userId"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
         int postalCode = Integer.parseInt(request.getParameter("postalCode"));
-        String town = request.getParameter("town");
+        String city = request.getParameter("city");
         String email = request.getParameter("email");
         String phoneNum = request.getParameter("phoneNum");
         String note = request.getParameter("note");
 
-        // - Carport dimensions -
+        // - Carport info -
         int carportWidth = Integer.parseInt(request.getParameter("carportWidth"));
         int carportLength = Integer.parseInt(request.getParameter("carportLength"));
         int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
-        int roofType = Integer.parseInt(request.getParameter("roofType"));
+        int roofTypeID = Integer.parseInt(request.getParameter("roofType"));
         int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
-        int roofMaterial = Integer.parseInt(request.getParameter("roofMaterial"));
+        int roofMaterialID = Integer.parseInt(request.getParameter("roofMaterial"));
 
-        // - Toolshed dimensions -
+        // - Toolshed info -
         int toolshedWidth = Integer.parseInt(request.getParameter("toolshedWidth"));
         int toolshedLength = Integer.parseInt(request.getParameter("toolshedLength"));
+        int toolshedCladdingID = Integer.parseInt(request.getParameter("toolshedCladding"));
+
         String pageToGoTo = request.getParameter("pageToGoTo");
 
         try {
-            ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, town, email, phoneNum, note);
-            ToolInfo toolInfo = new ToolInfo(toolshedWidth, toolshedLength);
-
+            ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum, note);
+            ToolshedInfo toolshedInfo = new ToolshedInfo(toolshedWidth, toolshedLength, toolshedCladdingID);
             CustomCarportInquiry cpi = new CustomCarportInquiry(
                    userID, carportWidth, carportLength, carportHeight,
-                   roofType, roofAngle, roofMaterial, contactInfo, toolInfo, note);
+                   roofTypeID, roofAngle, roofMaterialID, contactInfo, toolshedInfo, note
+            );
 
             customCarportFacade.sendInquiryToDB(cpi);
-            System.out.println("HERE5!!!");
+
             String pageToShow =  pageToGoTo;
+
             return REDIRECT_INDICATOR + pageToShow;
         }catch (UserException ex) {
-            System.out.println("HERE6!!!");
             System.out.println(ex.getMessage());
             request.setAttribute("error", "Wrong input");
             return pageToGoTo;

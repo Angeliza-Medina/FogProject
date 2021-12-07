@@ -2,53 +2,54 @@ package business.services;
 
 import business.entities.*;
 import business.exceptions.UserException;
-import business.persistence.CustomCarportOptionMapper;
+import business.persistence.CCPOptionMapper;
 import business.persistence.Database;
 
 import java.util.ArrayList;
 
 public class CCPOptionFacade {
 
-   CustomCarportOptionMapper customCarportOptionMapper;
+   CCPOptionMapper ccpOptionMapper;
 
    public CCPOptionFacade(Database database){
-      customCarportOptionMapper = new CustomCarportOptionMapper(database);
+      ccpOptionMapper = new CCPOptionMapper(database);
    }
 
-   public void getAllCustomCarpor() throws UserException {
-
-   }
 
    public ArrayList<RoofTypeOption> getCCPRoofTypeOptions() throws UserException{
-      return customCarportOptionMapper.getCCPRoofTypeOptions();
+      return ccpOptionMapper.getCCPRoofTypeOptions();
    }
 
-   public ArrayList<RoofAngleOption> getCCPRoofAngleOptions() throws UserException{
-      return customCarportOptionMapper.getCCPRoofAngleOptions();
+   public ArrayList<Integer> getCCPRoofAngleOptions() throws UserException{
+      return ccpOptionMapper.getCCPRoofAngleOptions();
    }
 
    public ArrayList<RoofMaterialOption> getCCPRoofMaterialOptions() throws UserException{
-      return customCarportOptionMapper.getCCPRoofMaterialOptions();
+      return ccpOptionMapper.getCCPRoofMaterialOptions();
    }
 
-   public ArrayList<CCPWidthOption> getCCPWidthOptions() throws UserException{
-      return customCarportOptionMapper.getCCPWidthOptions();
+   public ArrayList<Integer> getCCPWidthOptions() throws UserException{
+      return ccpOptionMapper.getCCPWidthOptions();
    }
 
-   public ArrayList<CCPLengthOption> getCCPLengthOptions() throws UserException{
-      return customCarportOptionMapper.getCCPLengthOptions();
+   public ArrayList<Integer> getCCPLengthOptions() throws UserException{
+      return ccpOptionMapper.getCCPLengthOptions();
    }
 
-   public ArrayList<CCPHeightOption> getCCPHeightOptions() throws UserException{
-      return customCarportOptionMapper.getCCPHeightOptions();
+   public ArrayList<Integer> getCCPHeightOptions() throws UserException{
+      return ccpOptionMapper.getCCPHeightOptions();
    }
 
-   public ArrayList<CTSWidthOption> getCTSWidthOptions() throws UserException{
-      return customCarportOptionMapper.getCTSWidthOptions();
+   public ArrayList<Integer> getCTSWidthOptions() throws UserException{
+      return ccpOptionMapper.getCTSWidthOptions();
    }
 
-   public ArrayList<CTSLengthOption> getCTSLengthOptions() throws UserException{
-      return customCarportOptionMapper.getCTSLengthOptions();
+   public ArrayList<Integer> getCTSLengthOptions() throws UserException{
+      return ccpOptionMapper.getCTSLengthOptions();
+   }
+
+   public ArrayList<CTSCladdingOption> getCladdingOptions() throws UserException{
+      return ccpOptionMapper.getCTSCladdingOptions();
    }
 
 }
