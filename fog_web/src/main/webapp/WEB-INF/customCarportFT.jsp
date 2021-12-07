@@ -240,7 +240,18 @@
 
                         <input name="pageToGoTo" type="hidden" value="customCarportFT">
 
+
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
+                        
+                        <div id="formSumbit_container">
+                           <p>Hell nah</p>
+                           <c:if test="${requestScope.error != null}">
+                              <div>
+                                    ${requestScope.error}
+                              </div>
+                           </c:if>
+                        </div>
+
                      </form>
                   </div> <!-- #customcarportForm_container END -->
                </section> <!-- #customCarportForm_container END -->

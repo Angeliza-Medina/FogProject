@@ -188,4 +188,12 @@ main{
 #formSubmit_btn:hover{
   background-color: var(--orange);
 }
+
+#formSumbit_container{
+  font-size: 1em;
+  margin: 5%;
+  color: red;
+  background-color: var(--lightGrey);
+}
+
 /*------------------------------------- Form END ------------------------------------*/
