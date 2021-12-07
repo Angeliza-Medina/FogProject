@@ -31,7 +31,7 @@
                             ${requestScope.error}
                     </div>
                 </c:if>
-                <p>Hej hej hejjejejeje</p>
+                <p>Fejl</p>
             </main>
 
             <!-- Footer include -->
