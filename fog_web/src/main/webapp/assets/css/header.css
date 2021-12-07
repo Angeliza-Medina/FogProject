@@ -200,6 +200,14 @@ header{
 #login_btn:hover{
   background-color: var(--orange);
 }
+
+#loginMsg_container{
+  font-size: 1em;
+  margin: 5%;
+  color: red;
+  background-color: var(--white);
+}
+
 /*-------------------------------- Login section END --------------------------------*/
 
 
