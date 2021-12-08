@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fog_db_v3
+-- Host: 127.0.0.1    Database: fog_db
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -395,7 +395,7 @@ CREATE TABLE `cts_cladding_options` (
   PRIMARY KEY (`cts_cladding_id`),
   UNIQUE KEY `cladding_id_UNIQUE` (`cts_cladding_id`),
   UNIQUE KEY `cladding_UNIQUE` (`cladding`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,7 +404,7 @@ CREATE TABLE `cts_cladding_options` (
 
 LOCK TABLES `cts_cladding_options` WRITE;
 /*!40000 ALTER TABLE `cts_cladding_options` DISABLE KEYS */;
-INSERT INTO `cts_cladding_options` VALUES (1,'fyr',19,100,54.95),(2,'ask',19,100,124.95),(3,'eg',19,100,119.95),(4,'mahogni',19,100,144.95),(5,'gran',19,100,45.95),(6,'teak',19,100,249.95);
+INSERT INTO `cts_cladding_options` VALUES (1,'No cladding',0,0,0),(2,'Fyr',19,100,54.95),(3,'Ask',19,100,124.95),(4,'Eg',19,100,119.95),(5,'Mahogni',19,100,144.95),(6,'Gran',19,100,45.95),(7,'Teak',19,100,249.95);
 /*!40000 ALTER TABLE `cts_cladding_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,4 +573,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-07 19:12:24
+-- Dump completed on 2021-12-08 21:07:01

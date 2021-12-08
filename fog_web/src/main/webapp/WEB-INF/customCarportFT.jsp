@@ -101,7 +101,7 @@
 
                         <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
                            <c:if test="${roofTypeOption.type.equals('flat')}">
-                              <input name="roofType" type="hidden" value="${roofTypeOption}">
+                              <input name="roofType" type="hidden" value="${roofTypeOption.id}">
                            </c:if>
                         </c:forEach>
 
@@ -175,9 +175,16 @@
                            <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
                            <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
                               <option value="" disabled selected>Vælg bræddebeklædning</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
+                                 <c:if test="${claddingOption.id == 1}">
+                                    <option hidden value="${claddingOption.id}"></option>
+                                 </c:if>
+                              </c:forEach>
 
                               <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
-                                 <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                 <c:if test="${claddingOption.id != 1}">
+                                    <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                 </c:if>
                               </c:forEach>
                            </select>
                         </div> <!-- #toolshedOptions_container END -->
@@ -220,8 +227,8 @@
                            </div>
 
                            <div id="town_container">
-                              <label for="town" class="formLabel">By:</label>
-                              <input name="town" type="text" id="town" class="contactInput">
+                              <label for="city" class="formLabel">By:</label>
+                              <input name="city" type="text" id="city" class="contactInput">
                            </div>
                         </div> <!-- #postalTown_container .flexRow END -->
 
@@ -240,18 +247,13 @@
 
                         <input name="pageToGoTo" type="hidden" value="customCarportFT">
 
-
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
-                        
-                        <div id="formSumbit_container">
-                           <p>Hell nah</p>
-                           <c:if test="${requestScope.error != null}">
-                              <div>
-                                    ${requestScope.error}
-                              </div>
-                           </c:if>
-                        </div>
 
+                        <c:if test="${requestScope.error != null}">
+                           <div id="formSumbit_container">
+                                 ${requestScope.error}
+                           </div>
+                        </c:if>
                      </form>
                   </div> <!-- #customcarportForm_container END -->
                </section> <!-- #customCarportForm_container END -->

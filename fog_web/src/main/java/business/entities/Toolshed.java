@@ -1,11 +1,11 @@
 package business.entities;
 
-public class ToolshedInfo {
-    private  int toolshedWidth;
-    private  int toolshedLength;
+public class Toolshed {
+    private int toolshedWidth;
+    private int toolshedLength;
     private int toolshedCladdingId;
 
-    public ToolshedInfo(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {
+    public Toolshed(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {
         this.toolshedWidth = toolshedWidth;
         this.toolshedLength = toolshedLength;
         this.toolshedCladdingId = toolshedCladdingId;
