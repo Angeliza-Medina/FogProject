@@ -101,7 +101,7 @@
 
                         <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
                            <c:if test="${roofTypeOption.type.equals('flat')}">
-                              <input name="roofType" type="hidden" value="${roofTypeOption}">
+                              <input name="roofType" type="hidden" value="${roofTypeOption.id}">
                            </c:if>
                         </c:forEach>
 
@@ -227,8 +227,8 @@
                            </div>
 
                            <div id="town_container">
-                              <label for="town" class="formLabel">By:</label>
-                              <input name="town" type="text" id="town" class="contactInput">
+                              <label for="city" class="formLabel">By:</label>
+                              <input name="city" type="text" id="city" class="contactInput">
                            </div>
                         </div> <!-- #postalTown_container .flexRow END -->
 

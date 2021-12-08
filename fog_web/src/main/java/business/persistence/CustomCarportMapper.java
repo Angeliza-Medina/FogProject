@@ -62,8 +62,9 @@ public class CustomCarportMapper {
                 ps.setString(18, ccpi.getContactInfo().getCity());
                 ps.setString(19, ccpi.getNote());
 
+                System.out.println("Here before execute");
                 ps.executeUpdate();
-
+                System.out.println("Here after execute");
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }

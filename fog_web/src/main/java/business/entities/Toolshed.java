@@ -1,8 +1,8 @@
 package business.entities;
 
 public class Toolshed {
-    private  int toolshedWidth;
-    private  int toolshedLength;
+    private int toolshedWidth;
+    private int toolshedLength;
     private int toolshedCladdingId;
 
     public Toolshed(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {

@@ -19,10 +19,12 @@ addToolshedFalseBtn_element.addEventListener("click", (event) => {
     element.style.height = 0;
   });
 
-  // Set value for the select box to 0 on both width and length
+  // Toolshed width and length are set to 0 and cladding is set to "No cladding"
   toolshedWidthSelect_element.selectedIndex = "1";
   toolshedLengthSelect_element.selectedIndex = "1";
   toolshedCladdingSelect_element.selctedIndex = "1";
+
+  console.log("Toolshed cladding: " + toolshedCladdingSelect_element.options[toolshedCladdingSelect_element.selectedIndex].value);
 });
 
 
@@ -36,9 +38,10 @@ addToolshedTrueBtn_element.addEventListener("click", (event) => {
     element.style.height = "auto";
   });
 
-  // Set value for the select box to placeholder on both width and length
+  // Set value to placeholder on width, length and cladding select boxes
   toolshedWidthSelect_element.selectedIndex = "0";
   toolshedLengthSelect_element.selectedIndex = "0";
   toolshedCladdingSelect_element.selctedIndex = "0";
 
+  console.log("Toolshed cladding: " + toolshedCladdingSelect_element.options[toolshedCladdingSelect_element.selectedIndex].value);
 });
