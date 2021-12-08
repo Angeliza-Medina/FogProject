@@ -1,34 +1,61 @@
 package business.entities;
 
+import java.time.LocalDate;
+
 public class CustomCarportInquiry {
 
    // - Carport dimensions -
+   private int ccpiId;
+   private LocalDate inquiryDate;
+   private String status;
   private int userId;
-  private  int carportWidth;
-  private  int carportLength;
-  private  int carportHeight;
-  private int roofTypeId;
-  private  int roofAngle;
-  private int roofMaterialId;
   private ContactInfo contactInfo;
-  private ToolshedInfo toolshedInfo;
+  private CustomCarport customCarport;
+  private Toolshed toolshed;
   private String note;
 
-
-  public CustomCarportInquiry(
-         int userId, int carportWidth, int carportLength, int carportHeight, int roofTypeId, int roofAngle,
-         int roofMaterialId, ContactInfo contactInfo, ToolshedInfo toolshedInfo, String note) {
-    this.userId = userId;
-     this.carportWidth = carportWidth;
-     this.carportLength = carportLength;
-     this.carportHeight = carportHeight;
-    this.roofTypeId = roofTypeId;
-     this.roofAngle = roofAngle;
-    this.roofMaterialId = roofMaterialId;
+  // Constructor used to create an inquiry and send it to the db
+  public CustomCarportInquiry(int userId, CustomCarport customCarport, ContactInfo contactInfo, Toolshed toolshed, String note) {
+     this.userId = userId;
      this.contactInfo = contactInfo;
-     this.toolshedInfo = toolshedInfo;
+     this.customCarport = customCarport;
+     this.toolshed = toolshed;
      this.note = note;
   }
+
+  // Constructor used when getting inquiries from the db
+  public CustomCarportInquiry(int ccpiId, LocalDate inquiryDate, String status, CustomCarport customCarport, Toolshed toolshed){
+     this.ccpiId = ccpiId;
+     this.inquiryDate = inquiryDate;
+     this.status = status;
+     this.customCarport = customCarport;
+     this.toolshed = toolshed;
+  }
+
+
+   public int getCcpiId() {
+      return ccpiId;
+   }
+
+   public void setCcpiId(int ccpiId) {
+      this.ccpiId = ccpiId;
+   }
+
+   public LocalDate getInquiryDate() {
+      return inquiryDate;
+   }
+
+   public void setInquiryDate(LocalDate inquiryDate) {
+      this.inquiryDate = inquiryDate;
+   }
+
+   public String getStatus() {
+      return status;
+   }
+
+   public void setStatus(String status) {
+      this.status = status;
+   }
 
    public int getUserId() {
       return userId;
@@ -38,46 +65,6 @@ public class CustomCarportInquiry {
       this.userId = userId;
    }
 
-    public int getCarportWidth() {
-        return carportWidth;
-    }
-
-    public void setCarportWidth(int carportWidth) {
-        this.carportWidth = carportWidth;
-    }
-
-    public int getCarportLength() {
-        return carportLength;
-    }
-
-    public void setCarportLength(int carportLength) {
-        this.carportLength = carportLength;
-    }
-
-    public int getCarportHeight() {
-        return carportHeight;
-    }
-
-    public void setCarportHeight(int carportHeight) {
-        this.carportHeight = carportHeight;
-    }
-
-   public int getRoofTypeId() {
-      return roofTypeId;
-   }
-
-   public void setRoofTypeId(int roofTypeId) {
-      this.roofTypeId = roofTypeId;
-   }
-
-    public int getRoofAngle() {
-        return roofAngle;
-    }
-
-    public void setRoofAngle(int roofAngle) {
-        this.roofAngle = roofAngle;
-    }
-
    public ContactInfo getContactInfo() {
       return contactInfo;
    }
@@ -86,20 +73,20 @@ public class CustomCarportInquiry {
       this.contactInfo = contactInfo;
    }
 
-    public ToolshedInfo getToolshedInfo() {
-        return toolshedInfo;
+   public CustomCarport getCustomCarport() {
+      return customCarport;
+   }
+
+   public void setCustomCarport(CustomCarport customCarport) {
+      this.customCarport = customCarport;
+   }
+
+   public Toolshed getToolshed() {
+        return toolshed;
     }
 
-    public void setToolshedInfo(ToolshedInfo toolshedInfo) {
-        this.toolshedInfo = toolshedInfo;
-    }
-
-    public int getRoofMaterialId() {
-        return roofMaterialId;
-    }
-
-    public void setRoofMaterialId(int roofMaterialId) {
-        this.roofMaterialId = roofMaterialId;
+   public void setToolshed(Toolshed toolshed) {
+        this.toolshed = toolshed;
     }
 
    public String getNote() {
@@ -109,4 +96,5 @@ public class CustomCarportInquiry {
    public void setNote(String note) {
       this.note = note;
    }
+
 }

@@ -1,8 +1,9 @@
 package web.commands;
 
 import business.entities.ContactInfo;
+import business.entities.CustomCarport;
 import business.entities.CustomCarportInquiry;
-import business.entities.ToolshedInfo;
+import business.entities.Toolshed;
 import business.exceptions.UserException;
 import business.services.CustomCarportFacade;
 
@@ -47,11 +48,9 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
 
         try {
             ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum, note);
-            ToolshedInfo toolshedInfo = new ToolshedInfo(toolshedWidth, toolshedLength, toolshedCladdingID);
-            CustomCarportInquiry cpi = new CustomCarportInquiry(
-                   userID, carportWidth, carportLength, carportHeight,
-                   roofTypeID, roofAngle, roofMaterialID, contactInfo, toolshedInfo, note
-            );
+            Toolshed toolshed = new Toolshed(toolshedWidth, toolshedLength, toolshedCladdingID);
+            CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
+            CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, toolshed, note);
 
             customCarportFacade.sendInquiryToDB(cpi);
 
