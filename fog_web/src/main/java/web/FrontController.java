@@ -19,7 +19,7 @@ public class FrontController extends HttpServlet
 {
     private final static String USER = "root";
 
-    private final static String PASSWORD = "ph16061616"; // Change to your own local MySQL password
+    private final static String PASSWORD = "kisshu25"; //""ph16061616"; // Change to your own local MySQL password
     private final static String URL = "jdbc:mysql://localhost:3306/fog_db?serverTimezone=CET&allowMultiQueries=true";
 
     public static Database database;

@@ -24,6 +24,11 @@ public class LoginCommand extends CommandUnprotectedPage {
 
 
         try {
+
+            if (email.trim().length() == 0 || password.trim().length() == 0) {
+                throw new UserException("Begge felter skal være udfyldt!");
+            }
+
             User user = userFacade.login(email, password);
 
             HttpSession session = request.getSession();
@@ -32,11 +37,6 @@ public class LoginCommand extends CommandUnprotectedPage {
             session.setAttribute("role", user.getRole());
 
             String pageToShow = "";
-            System.out.println(email);
-            if (email == null || password == null) {
-
-                throw new UserException("Begge felter skal være udfyldt!");
-            }
 
             if(user.getRole().equals("customer")){
                 pageToShow = "index";
