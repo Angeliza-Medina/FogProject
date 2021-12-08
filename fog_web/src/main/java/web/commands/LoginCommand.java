@@ -18,7 +18,6 @@ public class LoginCommand extends CommandUnprotectedPage {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
-        // todo Add form validation - No empty fields
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
