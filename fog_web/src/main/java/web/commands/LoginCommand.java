@@ -22,6 +22,7 @@ public class LoginCommand extends CommandUnprotectedPage {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+
         try {
             User user = userFacade.login(email, password);
 
@@ -31,6 +32,11 @@ public class LoginCommand extends CommandUnprotectedPage {
             session.setAttribute("role", user.getRole());
 
             String pageToShow = "";
+            System.out.println(email);
+            if (email == null || password == null) {
+
+                throw new UserException("Begge felter skal være udfyldt!");
+            }
 
             if(user.getRole().equals("customer")){
                 pageToShow = "index";
@@ -41,7 +47,7 @@ public class LoginCommand extends CommandUnprotectedPage {
             return REDIRECT_INDICATOR + pageToShow;
         } catch (UserException ex) {
             pageToShow = "index";
-            request.setAttribute("error", "Forkert email eller password...");
+            request.setAttribute("error", ex.getMessage());
             return pageToShow;
         }
     }

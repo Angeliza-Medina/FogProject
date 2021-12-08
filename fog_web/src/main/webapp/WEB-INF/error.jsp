@@ -26,12 +26,12 @@
             <%@include file="includes/header.txt"%>
 
             <main>
+                <h2>Error!</h2><br>
                 <c:if test="${requestScope.error != null}">
                     <div>
                             ${requestScope.error}
                     </div>
                 </c:if>
-                <p>Fejl</p>
             </main>
 
             <!-- Footer include -->

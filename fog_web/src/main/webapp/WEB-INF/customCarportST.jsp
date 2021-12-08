@@ -67,7 +67,7 @@
                   </p>
 
                   <div id="customcarportForm_container">
-                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/sendInquiryCommand" method="post">
+                     <form id="customCarport_form" action="${pageContext.request.contextPath}/fc/sendInquiryCommand" method="POST">
                         <div class="formTitle_container">
                            <h2 class="formTitle">
                               Carport med rejsning
@@ -77,29 +77,28 @@
                         <label for="carportWidth" class="formLabel">Carport bredde:</label>
                         <select name="carportWidth" id="carportWidth" class="formSelect_element">
                            <option value="" disabled selected>Vælg bredde i cm</option>
-
-                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPWidthOptions}" var="widthOption">
-                              <option value="${widthOption.id}">${widthOption.width} cm</option>
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.ccpWidthOptions}" var="widthOption">
+                              <option value="${widthOption}">${widthOption} cm</option>
                            </c:forEach>
                         </select>
 
                         <label for="carportLength" class="formLabel">Carport længde:</label>
                         <select name="carportLength" id="carportLength" class="formSelect_element">
                            <option value="" disabled selected>Vælg længde i cm</option>
-                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPLengthOptions}" var="lengthOption">
-                              <option value="${lengthOption.id}">${lengthOption.length} cm</option>
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.ccpLengthOptions}" var="lengthOption">
+                              <option value="${lengthOption}">${lengthOption} cm</option>
                            </c:forEach>
                         </select>
 
                         <label for="carportHeight" class="formLabel">Carport højde:</label>
                         <select name="carportHeight" id="carportHeight" class="formSelect_element">
                            <option value="" disabled selected>Vælg højde i cm</option>
-                           <c:forEach items="${sessionScope.cCPOptionListContainer.cCPHeightOptions}" var="heightOption">
-                              <option value="${heightOption.id}">${heightOption.height} cm</option>
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.ccpHeightOptions}" var="heightOption">
+                              <option value="${heightOption}">${heightOption} cm</option>
                            </c:forEach>
                         </select>
 
-                        <c:forEach items="${sessionScope.cCPOptionListContainer.roofTypeOptions}" var="roofTypeOption">
+                        <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
                            <c:if test="${roofTypeOption.type.equals('angled')}">
                               <input name="roofType" type="hidden" value="${roofTypeOption.id}">
                            </c:if>
@@ -108,7 +107,7 @@
                         <label for="roofMaterial" class="formLabel">Tag:</label>
                         <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
                            <option value="" disabled selected>Vælg materiale og farve</option>
-                           <c:forEach items="${sessionScope.cCPOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
                               <c:if test="${roofMaterialOption.roofType == 2}">
                                  <option value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
                               </c:if>
@@ -118,9 +117,9 @@
                         <label for="roofAngle" class="formLabel">Taghældning:</label>
                         <select name="roofAngle" id="roofAngle" class="formSelect_element">
                            <option value="" disabled selected>Vælg taghældning i grader</option>
-                           <c:forEach items="${sessionScope.cCPOptionListContainer.roofAngleOptions}" var="roofAngleOption">
-                              <c:if test="${roofAngleOption.angle != 180}">
-                                 <option value="${roofAngleOption.id}">${roofAngleOption.angle} grader</option>
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofAngleOptions}" var="roofAngleOption">
+                              <c:if test="${roofAngleOption != 180}">
+                                 <option value="${roofAngleOption}">${roofAngleOption} grader</option>
                               </c:if>
                            </c:forEach>
                         </select>
@@ -147,15 +146,15 @@
                            <label for="toolshedWidth" class="formLabel">Redskabsrum bredde:</label>
                            <select name="toolshedWidth" id="toolshedWidth" class="formSelect_element">
                               <option value="" disabled selected>Vælg bredde i cm</option>
-                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSWidthOptions}" var="cTSWidthOption">
-                                 <c:if test="${cTSWidthOption.width == 0}">
-                                    <option hidden value="${cTSWidthOption.id}"></option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsWidthOptions}" var="cTSWidthOption">
+                                 <c:if test="${cTSWidthOption == 0}">
+                                    <option hidden value="${cTSWidthOption}"></option>
                                  </c:if>
                               </c:forEach>
 
-                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSWidthOptions}" var="cTSWidthOption">
-                                 <c:if test="${cTSWidthOption.width != 0}">
-                                    <option value="${cTSWidthOption.id}">${cTSWidthOption.width} cm</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsWidthOptions}" var="cTSWidthOption">
+                                 <c:if test="${cTSWidthOption != 0}">
+                                    <option value="${cTSWidthOption}">${cTSWidthOption} cm</option>
                                  </c:if>
                               </c:forEach>
                            </select>
@@ -163,15 +162,15 @@
                            <label for="toolshedLength" class="formLabel">Redskabsrum længde:</label>
                            <select name="toolshedLength" id="toolshedLength" class="formSelect_element">
                               <option value="" disabled selected>Vælg længde i cm</option>
-                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSLengthOptions}" var="cTLengthOption">
-                                 <c:if test="${cTLengthOption.length == 0}">
-                                    <option hidden value="${cTLengthOption.id}"></option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsLengthOptions}" var="cTLengthOption">
+                                 <c:if test="${cTLengthOption == 0}">
+                                    <option hidden value="${cTLengthOption}"></option>
                                  </c:if>
                               </c:forEach>
 
-                              <c:forEach items="${sessionScope.cCPOptionListContainer.cTSLengthOptions}" var="cTLengthOption">
-                                 <c:if test="${cTLengthOption.length != 0}">
-                                    <option value="${cTLengthOption.id}">${cTLengthOption.length} cm</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsLengthOptions}" var="cTLengthOption">
+                                 <c:if test="${cTLengthOption != 0}">
+                                    <option value="${cTLengthOption}">${cTLengthOption} cm</option>
                                  </c:if>
                               </c:forEach>
                            </select>
@@ -179,9 +178,9 @@
                            <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
                            <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
                               <option value="" disabled selected>Vælg bræddebeklædning</option>
-                              <option value="none">Ingen</option>
-                              <option value="K33 16x100mm">K33 16x100mm</option>
-                              <option value="K33 19x150mm">K33 19x150mm</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
+                                 <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                              </c:forEach>
                            </select>
                         </div> <!-- #toolshedOptions_container END -->
 
@@ -190,6 +189,14 @@
                               Kontakt oplysninger
                            </h2>
                         </div>
+
+                        <c:if test="${sessionScope.user != null}">
+                           <input name="userId" type="hidden" value="${sessionScope.user.id}">
+                        </c:if>
+
+                        <c:if test="${sessionScope.user == null}">
+                           <input name="userId" type="hidden" value="0">
+                        </c:if>
 
                         <label for="firstName" class="formLabel">Fornavn:</label>
                         <input name="firstName" type="text" id="firstName" class="contactInput"
@@ -215,8 +222,8 @@
                            </div>
 
                            <div id="town_container">
-                              <label for="town" class="formLabel">By:</label>
-                              <input name="town" type="text" id="town" class="contactInput">
+                              <label for="city" class="formLabel">By:</label>
+                              <input name="city" type="text" id="city" class="contactInput">
                            </div>
                         </div> <!-- #postalTown_container .flexRow END -->
 
@@ -236,6 +243,17 @@
                         <input name="pageToGoTo" type="hidden" value="customCarportST">
 
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
+
+                        <div id="formSumbit_container">
+                           <p>Hell nah</p>
+                           <c:if test="${requestScope.error != null}">
+                              <div>
+                                    ${requestScope.error}
+                              </div>
+                           </c:if>
+                        </div>
+
+
                      </form>
                   </div> <!-- #customcarportForm_container END -->
                </section> <!-- #customCarportForm_container END -->
