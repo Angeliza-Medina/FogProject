@@ -23,7 +23,7 @@
     <body>
         <div id="wrapper">
             <!-- Header include -->
-            <%@include file="includes/header.txt"%>
+            <%@include file="WEB-INF/includes/header.txt"%>
 
             <main>
                 <h2>Error!</h2><br>
@@ -35,7 +35,7 @@
             </main>
 
             <!-- Footer include -->
-            <%@include file="includes/footer.txt"%>
+            <%@include file="WEB-INF/includes/footer.txt"%>
         </div> <!-- #wrapper END -->
     </body>
 </html>
