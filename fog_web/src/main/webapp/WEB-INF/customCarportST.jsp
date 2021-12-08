@@ -179,7 +179,15 @@
                            <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
                               <option value="" disabled selected>Vælg bræddebeklædning</option>
                               <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
-                                 <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                 <c:if test="${claddingOption.id == 1}">
+                                    <option hidden value="${claddingOption.id}"></option>
+                                 </c:if>
+                              </c:forEach>
+
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
+                                 <c:if test="${claddingOption.id != 1}">
+                                    <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                 </c:if>
                               </c:forEach>
                            </select>
                         </div> <!-- #toolshedOptions_container END -->
@@ -244,16 +252,11 @@
 
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
 
-                        <div id="formSumbit_container">
-                           <p>Hell nah</p>
-                           <c:if test="${requestScope.error != null}">
-                              <div>
-                                    ${requestScope.error}
-                              </div>
-                           </c:if>
-                        </div>
-
-
+                        <c:if test="${requestScope.error != null}">
+                           <div id="formSumbit_container">
+                                 ${requestScope.error}
+                           </div>
+                        </c:if>
                      </form>
                   </div> <!-- #customcarportForm_container END -->
                </section> <!-- #customCarportForm_container END -->
