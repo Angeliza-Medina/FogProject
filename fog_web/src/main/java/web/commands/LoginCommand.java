@@ -23,6 +23,10 @@ public class LoginCommand extends CommandUnprotectedPage {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        if (email.equals("") || password.equals("")) {
+            throw new UserException("Begge felter skal være udfyldt!");
+        }
+
         try {
             User user = userFacade.login(email, password);
 
@@ -38,6 +42,7 @@ public class LoginCommand extends CommandUnprotectedPage {
             }else if(user.getRole().equals("admin")){
                 pageToShow = "ccpiList";
             }
+
 
             return REDIRECT_INDICATOR + pageToShow;
         } catch (UserException ex) {
