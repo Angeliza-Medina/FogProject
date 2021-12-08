@@ -120,7 +120,7 @@
                      <td>
                         <i class="fas fa-clock ccpiList_icon"></i>
 
-                        <form action="" method="GET">
+                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
 
                            <button class="calculateCCPIBtn posAbsolute" type="submit">
@@ -138,7 +138,7 @@
                      <td>
                         <i class="fas fa-hammer ccpiList_icon"></i>
 
-                        <form action="" method="GET">
+                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
 
                            <button class="calculateCCPIBtn posAbsolute" type="submit">
@@ -157,7 +157,7 @@
                      <td>
                         <i class="far fa-check-circle ccpiList_icon"></i>
 
-                        <form action="" method="GET">
+                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
 
                            <button class="calculateCCPIBtn posAbsolute" type="submit">
@@ -175,7 +175,7 @@
                      <td>
                         <i class="far fa-times-circle ccpiList_icon"></i>
 
-                        <form action="" method="GET">
+                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
                            <input type="hidden" value="1"> <!-- Change value to ccpi id -->
 
                            <button class="calculateCCPIBtn posAbsolute" type="submit">
