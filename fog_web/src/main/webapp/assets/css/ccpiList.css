@@ -107,7 +107,17 @@ main{
 /*------------------------------------ CCPI List ------------------------------------*/
 #ccpiList_container{
     width: 80%;
+    min-height: 500px;
     margin: 0 auto;
+}
+
+#errorInfo_container{
+    margin: 50px 0;
+    font-family: chaletComprime;
+    font-size: 1.7em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--black);
 }
 
 #ccpi_Table{

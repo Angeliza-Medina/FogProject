@@ -126,20 +126,19 @@ public class CustomCarportMapper {
 
         try (Connection connection = database.connect()) {
             String sql =
-                   "SELECT custom_carport_inquiry_id AS inquiry_id, " +
-                       "inquiryDate, " +
-                       "ccp_inquiry_statuses.status AS status, " +
-                       "ccp.ccp_id AS ccp_id, " +
-                       "ccp.fk_ccpWidth AS ccpWidth,\n" +
-                       "ccp.fk_ccpLength AS ccpLength, " +
-                       "ccp.fk_ccpHeight AS ccpHeight, " +
-                       "ccp.fk_cts_id AS cts_id,\n" +
-                       "cts.fk_ctsWidth AS ctsWidth, " +
-                       "cts.fk_ctsLength AS ctsLength\n" +
-                   "FROM (((ccp_inquiries\n" +
-                   "    INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
-                   "    INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
-                   "    INNER JOIN cts ON ccp.fk_cts_id = cts.cts_id)";
+                   "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
+                      "       inquiryDate, ccp_inquiry_statuses.status AS status,\n" +
+                      "       ccp.ccp_id AS ccp_id, ccp.fk_ccpWidth AS ccpWidth,\n" +
+                      "       ccp.fk_ccpLength AS ccpLength,\n" +
+                      "       ccp.fk_ccpHeight AS ccpHeight,\n" +
+                      "       ccp.fk_cts_id AS cts_id,\n" +
+                      "       cts.fk_ctsWidth AS ctsWidth,\n" +
+                      "       cts.fk_ctsLength AS ctsLength\n" +
+                      "FROM (((ccp_inquiries\n" +
+                      "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                      "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                      "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                      "ORDER BY status";
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -147,11 +146,13 @@ public class CustomCarportMapper {
             if (rs.next()) {
                 do {
                     // CTS data
-                    int cts_id = rs.getInt("cts_id");
-                    int ctsWidth = rs.getInt("ctsWidth");
-                    int ctsLength = rs.getInt("ctsLength");
-
-                    Toolshed toolshed = new Toolshed(cts_id, ctsWidth, ctsLength);
+                    Toolshed toolshed = null;
+                    if(rs.getInt("cts_id") != 0){
+                        int cts_id = rs.getInt("cts_id");
+                        int ctsWidth = rs.getInt("ctsWidth");
+                        int ctsLength = rs.getInt("ctsLength");
+                        toolshed = new Toolshed(cts_id, ctsWidth, ctsLength);
+                    }
 
                     // CCP data
                     int ccp_id = rs.getInt("ccp_id");
@@ -171,12 +172,10 @@ public class CustomCarportMapper {
                     inquiries.add(inquiry);
                 } while (rs.next());
 
-            } else {
-                // Todo: Change to something else
-                System.out.println("Something went wrong...");
+                return inquiries;
+            }else{
+                throw new UserException("Der er endnu ikke registreret nogle forespørgsler i databasen...");
             }
-
-            return inquiries;
         } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
