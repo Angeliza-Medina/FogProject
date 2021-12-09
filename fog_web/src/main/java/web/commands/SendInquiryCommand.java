@@ -11,75 +11,71 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SendInquiryCommand extends CommandUnprotectedPage{
-    CustomCarportFacade customCarportFacade;
+   CustomCarportFacade customCarportFacade;
 
-    public SendInquiryCommand(String pageToShow) {
-        super(pageToShow);
-        customCarportFacade = new CustomCarportFacade(database);
-    }
+   public SendInquiryCommand(String pageToShow) {
+      super(pageToShow);
+      customCarportFacade = new CustomCarportFacade(database);
+   }
 
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
-        System.out.println("1");
-        // - User info-
-        int userID = Integer.parseInt(request.getParameter("userId"));
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String address = request.getParameter("address");
-        int postalCode = Integer.parseInt(request.getParameter("postalCode"));
-        String city = request.getParameter("city");
-        String email = request.getParameter("email");
-        String phoneNum = request.getParameter("phoneNum");
-        String note = request.getParameter("note");
-        System.out.println("2");
+   public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
+      // - User info-
+      int userID = Integer.parseInt(request.getParameter("userId"));
+      String firstName = request.getParameter("firstName");
+      String lastName = request.getParameter("lastName");
+      String address = request.getParameter("address");
+      int postalCode = Integer.parseInt(request.getParameter("postalCode"));
+      String city = request.getParameter("city");
+      String email = request.getParameter("email");
+      String phoneNum = request.getParameter("phoneNum");
+      String note = request.getParameter("note");
 
-        // - Carport info -
-        int carportWidth = Integer.parseInt(request.getParameter("carportWidth"));
-        System.out.println(carportWidth);
-        int carportLength = Integer.parseInt(request.getParameter("carportLength"));
-        System.out.println(carportLength);
-        int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
-        System.out.println(carportHeight);
-        int roofTypeID = Integer.parseInt(request.getParameter("roofType"));
-        System.out.println(roofTypeID);
-        int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
-        System.out.println(roofAngle);
-        int roofMaterialID = Integer.parseInt(request.getParameter("roofMaterial"));
-        System.out.println(roofMaterialID);
-        System.out.println("3");
+      // - Carport info -
+      int carportWidth = Integer.parseInt(request.getParameter("carportWidth"));
+      int carportLength = Integer.parseInt(request.getParameter("carportLength"));
+      int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
+      int roofTypeID = Integer.parseInt(request.getParameter("roofType"));
+      int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
+      int roofMaterialID = Integer.parseInt(request.getParameter("roofMaterial"));
 
-        // - Toolshed info -
-        System.out.println("Before toolshed options");
-        int toolshedWidth = Integer.parseInt(request.getParameter("toolshedWidth"));
-        int toolshedLength = Integer.parseInt(request.getParameter("toolshedLength"));
-        int toolshedCladdingID = Integer.parseInt(request.getParameter("toolshedCladding"));
-        System.out.println("After toolshed options");
+      // - Toolshed info -
+      System.out.println("Before toolshed options");
+      int toolshedWidth = Integer.parseInt(request.getParameter("toolshedWidth"));
+      int toolshedLength = Integer.parseInt(request.getParameter("toolshedLength"));
+      int toolshedCladdingID = Integer.parseInt(request.getParameter("toolshedCladding"));
 
-        // Temp. solution
-        if(toolshedLength == 0){
-            toolshedCladdingID = 1;
-        }
+      // Temp. solution
+      if(toolshedLength == 0){
+         toolshedCladdingID = 1;
+      }
 
-        String pageToGoTo = request.getParameter("pageToGoTo");
+      String pageToGoTo = request.getParameter("pageToGoTo");
 
-        try {
-            ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum, note);
-            Toolshed toolshed = new Toolshed(toolshedWidth, toolshedLength, toolshedCladdingID);
-            CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
-            CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, toolshed, note);
+      try {
+         ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum, note);
+         Toolshed toolshed = new Toolshed(toolshedWidth, toolshedLength, toolshedCladdingID);
+         CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
+         CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, toolshed, note);
 
-            customCarportFacade.sendInquiryToDB(cpi);
+         if(cpi.getToolshed().getToolshedLength() == 0){
+            // When no toolshed was incl.
+            customCarportFacade.sendInquiryToDB2(cpi);
+         }else{
+            // When a toolshed was incl.
+            customCarportFacade.sendInquiryToDB1(cpi);
+         }
 
-            String pageToShow =  pageToGoTo;
+         String pageToShow =  pageToGoTo;
 
-            return REDIRECT_INDICATOR + pageToShow;
-        }catch (UserException ex) {
-            System.out.println(ex.getMessage());
-            request.setAttribute("error", ex.getMessage());
-            return pageToGoTo;
-        }
+         return REDIRECT_INDICATOR + pageToShow;
+      }catch (UserException ex) {
+         System.out.println(ex.getMessage());
+         request.setAttribute("error", ex.getMessage());
+         return pageToGoTo;
+      }
 
-    }
+   }
 
 
 }

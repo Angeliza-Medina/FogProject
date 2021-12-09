@@ -15,8 +15,12 @@ public class CustomCarportFacade {
     }
 
 
-    public void sendInquiryToDB(CustomCarportInquiry cpi) throws UserException{
-        customCarportMapper.sendInquiryToDatabase(cpi);
+    public void sendInquiryToDB1(CustomCarportInquiry cpi) throws UserException{
+        customCarportMapper.sendInquiryToDB1(cpi);
+    }
+
+    public void sendInquiryToDB2(CustomCarportInquiry cpi) throws UserException{
+        customCarportMapper.sendInquiryToDB2(cpi);
     }
 
     public ArrayList<CustomCarportInquiry> getAllCCPI() throws UserException{
