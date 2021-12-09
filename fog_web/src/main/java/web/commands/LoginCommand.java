@@ -48,8 +48,12 @@ public class LoginCommand extends CommandUnprotectedPage {
             }else if(user.getRole().equals("admin")){
                 pageToShow = "ccpiList";
 
-                ArrayList<CustomCarportInquiry> ccpiList = ccpFacade.getAllCCPI();
-                session.setAttribute("ccpiList", ccpiList);
+                try{
+                    ArrayList<CustomCarportInquiry> ccpiList = ccpFacade.getAllCCPI();
+                    session.setAttribute("ccpiList", ccpiList);
+                }catch(UserException ex){
+                    session.setAttribute("error", ex.getMessage());
+                }
             }
 
             return REDIRECT_INDICATOR + pageToShow;

@@ -102,6 +102,7 @@
             </div> <!-- #filterLinks_container .flex -->
 
             <div id="ccpiList_container">
+
                <table id="ccpi_Table">
                   <tr id="ccpiTable_head">
                      <th>Dato</th>
@@ -110,80 +111,57 @@
                      <th>Status</th>
                   </tr>
 
-                  <tr class="ccpiTable_data posRelative">
-                     <td>02-12-2021</td>
-                     <td>#005</td>
-                     <td>
-                        Carport: 210 x 300 x 270<br>
-                        Redskabsrum: 160 x 210
-                     </td>
-                     <td>
-                        <i class="fas fa-clock ccpiList_icon"></i>
+                  <c:forEach items="${sessionScope.ccpiList}" var="ccpiListItem">
+                     <tr class="ccpiTable_data posRelative">
+                        <td>${ccpiListItem.inquiryDate}</td> <!-- Format date -->
+                        <td>#${ccpiListItem.ccpiId}</td>
+                        <td>
+                           Carport:
+                              ${ccpiListItem.customCarport.width} x
+                              ${ccpiListItem.customCarport.length} x
+                              ${ccpiListItem.customCarport.height}
 
-                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
-                           <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+                           <c:if test="${ccpiListItem.customCarport.toolshed != null}">
+                              <br>
+                              Redskabsrum:
+                              ${ccpiListItem.customCarport.toolshed.toolshedWidth} x
+                              ${ccpiListItem.customCarport.toolshed.toolshedLength}
+                           </c:if>
+                        </td>
+                        <td>
+                           <c:if test="${ccpiListItem.status.equals('pending')}">
+                              <i class="fas fa-clock ccpiList_icon"></i>
+                           </c:if>
 
-                           <button class="calculateCCPIBtn posAbsolute" type="submit">
-                           </button>
-                        </form>
-                     </td>
-                  </tr>
+                           <c:if test="${ccpiListItem.status.equals('in progress')}">
+                              <i class="fas fa-hammer ccpiList_icon"></i>
+                           </c:if>
 
-                  <tr class="ccpiTable_data posRelative">
-                     <td>02-12-2021</td>
-                     <td>#005</td>
-                     <td>
-                        Carport: 210 x 300 x 270
-                     </td>
-                     <td>
-                        <i class="fas fa-hammer ccpiList_icon"></i>
+                           <c:if test="${ccpiListItem.status.equals('completed')}">
+                              <i class="far fa-check-circle ccpiList_icon"></i>
+                           </c:if>
 
-                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
-                           <input type="hidden" value="1"> <!-- Change value to ccpi id -->
+                           <c:if test="${ccpiListItem.status.equals('cancelled')}">
+                              <i class="far fa-times-circle ccpiList_icon"></i>
+                           </c:if>
 
-                           <button class="calculateCCPIBtn posAbsolute" type="submit">
-                           </button>
-                        </form>
-                     </td>
-                  </tr>
+                           <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
+                              <input type="hidden" value="${ccpiListItem.customCarport.id}">
 
-                  <tr class="ccpiTable_data posRelative">
-                     <td>02-12-2021</td>
-                     <td>#005</td>
-                     <td>
-                        Carport: 210 x 300 x 270<br>
-                        Redskabsrum: 160 x 210
-                     </td>
-                     <td>
-                        <i class="far fa-check-circle ccpiList_icon"></i>
-
-                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
-                           <input type="hidden" value="1"> <!-- Change value to ccpi id -->
-
-                           <button class="calculateCCPIBtn posAbsolute" type="submit">
-                           </button>
-                        </form>
-                     </td>
-                  </tr>
-
-                  <tr class="ccpiTable_data posRelative">
-                     <td>02-12-2021</td>
-                     <td>#005</td>
-                     <td>
-                        Carport: 210 x 300 x 270
-                     </td>
-                     <td>
-                        <i class="far fa-times-circle ccpiList_icon"></i>
-
-                        <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
-                           <input type="hidden" value="1"> <!-- Change value to ccpi id -->
-
-                           <button class="calculateCCPIBtn posAbsolute" type="submit">
-                           </button>
-                        </form>
-                     </td>
-                  </tr>
+                              <button class="calculateCCPIBtn posAbsolute" type="submit">
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                  </c:forEach>
                </table>
+
+               <c:if test="${sessionScope.error != null }">
+                  <div id="errorInfo_container">
+                        ${sessionScope.error}
+                  </div>
+               </c:if>
+
             </div> <!-- #ccpiList_container END -->
          </main>
 
