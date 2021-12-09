@@ -23,19 +23,14 @@
     <body>
         <div id="wrapper">
             <!-- Header include -->
-            <%@include file="WEB-INF/includes/header.txt"%>
+            <%@include file="includes/header.txt"%>
 
             <main>
-                <h2>Error!</h2><br>
-                <c:if test="${requestScope.error != null}">
-                    <div>
-                            ${requestScope.error}
-                    </div>
-                </c:if>
+                <h2>Error!</h2>
             </main>
 
             <!-- Footer include -->
-            <%@include file="WEB-INF/includes/footer.txt"%>
+            <%@include file="includes/footer.txt"%>
         </div> <!-- #wrapper END -->
     </body>
 </html>

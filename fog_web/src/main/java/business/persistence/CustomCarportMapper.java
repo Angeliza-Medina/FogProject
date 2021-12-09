@@ -18,7 +18,7 @@ public class CustomCarportMapper {
     }
 
 
-    public void sendInquiryToDatabase(CustomCarportInquiry ccpi) throws UserException{
+    public void sendInquiryToDB1(CustomCarportInquiry ccpi) throws UserException{
         try (Connection connection = database.connect()) {
 
             String sql =
@@ -65,6 +65,54 @@ public class CustomCarportMapper {
                 System.out.println("Here before execute");
                 ps.executeUpdate();
                 System.out.println("Here after execute");
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Could not establish connection to our database at the moment...");
+        }
+    }
+
+    public void sendInquiryToDB2(CustomCarportInquiry ccpi) throws UserException{
+        try (Connection connection = database.connect()) {
+
+            String sql =
+                  "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
+                  "    VALUES(?, ?, ?, 0.86, ?, ?, ?, ?) ;\n" +
+                  "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
+                  "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+                // Inserts into ccp
+                ps.setInt(1, ccpi.getCustomCarport().getWidth());
+                ps.setInt(2, ccpi.getCustomCarport().getLength());
+                ps.setInt(3, ccpi.getCustomCarport().getHeight());
+                ps.setInt(4, ccpi.getCustomCarport().getRoofTypeId());
+                ps.setInt(5, ccpi.getCustomCarport().getRoofAngle());
+                ps.setInt(6, ccpi.getCustomCarport().getRoofMaterialId());
+                ps.setNull(7, Types.INTEGER);
+
+                // Inserts into ccp_inquiries
+                LocalDate inquiryDate = LocalDate.now();
+                ps.setDate(8, Date.valueOf(inquiryDate));
+
+                if(ccpi.getUserId() != 0){
+                    ps.setInt(9, ccpi.getUserId());
+                }else{
+                    ps.setNull(9, Types.INTEGER);
+                }
+
+                ps.setString(10, ccpi.getContactInfo().getFirstName());
+                ps.setString(11, ccpi.getContactInfo().getLastName());
+                ps.setString(12, ccpi.getContactInfo().getEmail());
+                ps.setString(13, ccpi.getContactInfo().getPhoneNum());
+                ps.setString(14, ccpi.getContactInfo().getAddress());
+                ps.setInt(15, ccpi.getContactInfo().getPostalCode());
+                ps.setString(16, ccpi.getContactInfo().getCity());
+                ps.setString(17, ccpi.getNote());
+
+                ps.executeUpdate();
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
