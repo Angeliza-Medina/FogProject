@@ -83,7 +83,21 @@ main{
   font-size: 1em;
 }
 
+.formRadioLabel{
+  width: 60%;
+}
 
+.radioBtn_container{
+  width: 50%;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.formRadioBtn[type=radio] {
+  border: 0px;
+  width: 30px;
+  height: 1.5em;
+}
 /*----------------------------------- Customer card ---------------------------------*/
 #customerCardContent_container{
   width: 95%;
@@ -132,10 +146,32 @@ main{
   width: 20px;
   margin: 0 15px;
 }
+
+#ccpImg_container{
+  width: 60%;
+  max-width: 200px;
+}
 /*--------------------------------- Carport card END --------------------------------*/
 
 
 /*------------------------------------- Roof card -----------------------------------*/
+#roofCardContent_container{
+  width: 70%;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#roofSettings_container{
+  width: 80%;
+  margin-right: 5px;
+}
+
+#roofSettings_container .radioBtn_container:nth-child(1){
+  margin-right: 5%;
+  border-right: 2px solid var(--darkBlue);
+}
 /*----------------------------------- Roof card END ---------------------------------*/
 
 

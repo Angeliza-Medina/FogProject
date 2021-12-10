@@ -112,7 +112,7 @@
                            </p>
                         </div>
                      </div>
-                  </div> <!-- # .claculatorCard END -->
+                  </div> <!-- #customerCard .claculatorCard END -->
 
                   <div id="carportCard" class="calculatorCard">
                      <div class="cardHeadline_container">
@@ -170,7 +170,6 @@
                            <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == true}">
                               <input type="checkbox" id="middlePost" name="middlePost" value="true" checked>
                            </c:if>
-
                         </div> <!-- #ccpDimension_container END -->
 
                         <div id="ccpImg_container">
@@ -189,6 +188,71 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Tag</h2>
                      </div>
+
+                     <div id="roofCardContent_container" class="flexRow">
+                        <div id="roofSettings_container">
+                           <div id="radioBtns_container" class="flexRow">
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="flatRoof">Fladt tag</label>
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
+                                    <input name="roofType" value="1" type="radio" checked="checked" id="flatRoof" class="formRadioBtn">
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 1}">
+                                    <input name="roofType" value="1" type="radio" id="flatRoof" class="formRadioBtn">
+                                 </c:if>
+                              </div>
+
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="angledRoof">Tag med rejsning</label>
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
+                                    <input name="roofType" value="2" type="radio" checked="checked" id="angledRoof" class="formRadioBtn">
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 2}">
+                                    <input name="roofType" value="2" type="radio" id="angledRoof" class="formRadioBtn">
+                                 </c:if>
+                              </div>
+                           </div> <!-- .radioBtns_container . flexRow END -->
+
+                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
+                              <c:if test="${roofTypeOption.type.equals('flat')}">
+                                 <input name="roofType" type="hidden" value="${roofTypeOption.id}">
+                              </c:if>
+                           </c:forEach>
+
+                           <label for="roofMaterial" class="formLabel">Tag:</label>
+                           <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofMaterialId == roofMaterialOption.id}">
+                                    <option selected value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofMaterialId != roofMaterialOption.id}">
+                                    <option value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+
+                           <label for="roofAngle" class="formLabel">Taghældning:</label>
+                           <select name="roofAngle" id="roofAngle" class="formSelect_element">
+                              <option value="" disabled selected>Vælg taghældning i grader</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.roofAngleOptions}" var="roofAngleOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofAngle == roofAngleOption}">
+                                    <option selected value="${roofAngleOption}">${roofAngleOption} grader</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofAngle != roofAngleOption}">
+                                    <option value="${roofAngleOption}">${roofAngleOption} grader</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+                        </div> <!-- #roofSettings_container END -->
+
+                        <div>
+                           <img src="<%=request.getContextPath()%>/assets/images/ccpiMaterialCalculator/roofExample.png" alt="Picture of a plastic roof">
+                        </div>
+                     </div> <!-- #roofCardContent_container .flexRow END -->
                   </div> <!-- #roofCard .claculatorCard END -->
 
                   <div id="toolshedCard" class="calculatorCard">
