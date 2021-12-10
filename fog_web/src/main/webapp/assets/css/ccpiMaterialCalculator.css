@@ -50,7 +50,7 @@ main{
   z-index: 1;
   width: 100%;
   padding: 15px 5%;
-  min-height: 200px; /*TEMP*/
+  min-height: 450px;
   border: 1px solid var(--darkBlue);
   background-color: var(--white);
 }
@@ -68,11 +68,27 @@ main{
   text-transform: uppercase;
 }
 
+.formLabel, .formDivAsLabel{
+  display: block;
+  margin-bottom: 15px;
+  font-family: roboto;
+}
+
+.formSelect_element{
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 10px 3px;
+  border-color: var(--turquoise);
+  font-family: roboto;
+  font-size: 1em;
+}
+
 
 /*----------------------------------- Customer card ---------------------------------*/
 #customerCardContent_container{
   width: 95%;
   margin: 0 auto;
+  justify-content: center;
   align-items: flex-start;
 }
 
@@ -99,6 +115,23 @@ main{
 
 
 /*----------------------------------- Carport card ----------------------------------*/
+#carportCardContent_container{
+  width: 60%;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#middlePostLabel{
+  display: inline;
+}
+
+#middlePost{
+  height: 20px;
+  width: 20px;
+  margin: 0 15px;
+}
 /*--------------------------------- Carport card END --------------------------------*/
 
 

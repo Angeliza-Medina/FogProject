@@ -32,7 +32,7 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
          ArrayList<Integer> ctsLengthOptions = ccpOptionFacade.getCTSLengthOptions();
          ArrayList<CTSCladdingOption> ctsCladdingOptions = ccpOptionFacade.getCladdingOptions();
 
-         CCPOptionListContainer cCPOptionListContainer = new CCPOptionListContainer(
+         CCPOptionListContainer ccpOptionListContainer = new CCPOptionListContainer(
                 roofTypeOptions,
                 roofAngleOptions,
                 roofMaterialOptions,
@@ -45,7 +45,7 @@ public class GetCCPOptionsCommand extends CommandUnprotectedPage{
 
          HttpSession session = request.getSession();
 
-         session.setAttribute("ccpOptionListContainer", cCPOptionListContainer);
+         session.setAttribute("ccpOptionListContainer", ccpOptionListContainer);
 
          return REDIRECT_INDICATOR + pageToGo;
       } catch (UserException ex) {

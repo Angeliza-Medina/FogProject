@@ -118,7 +118,72 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Carport</h2>
                      </div>
-                  </div> <!-- # .claculatorCard END -->
+
+                     <div id="carportCardContent_container" class="flexRow">
+                        <div id="ccpDimension_container">
+                           <label for="carportWidth" class="formLabel">Carport bredde:</label>
+                           <select name="carportWidth" id="carportWidth" class="formSelect_element">
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpWidthOptions}" var="widthOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.width == widthOption}">
+                                    <option selected value="${widthOption}">${widthOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.width != widthOption}">
+                                    <option value="${widthOption}">${widthOption} cm</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+
+                           <label for="carportLength" class="formLabel">Carport længde:</label>
+                           <select name="carportLength" id="carportLength" class="formSelect_element">
+                              <option value="" disabled selected>Vælg længde i cm</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpLengthOptions}"  var="lengthOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.length == lengthOption}">
+                                    <option selected value="${lengthOption}">${lengthOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.length != lengthOption}">
+                                    <option value="${lengthOption}">${lengthOption} cm</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+
+                           <label for="carportHeight" class="formLabel">Carport højde:</label>
+                           <select name="carportHeight" id="carportHeight" class="formSelect_element">
+                              <option value="" disabled selected>Vælg højde i cm</option>
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpHeightOptions}" var="heightOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.height == heightOption}">
+                                    <option selected value="${heightOption}">${heightOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.height != heightOption}">
+                                    <option value="${heightOption}">${heightOption} cm</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+
+                           <label id="middlePostLabel" for="middlePost" class="formLabel">Tilføj midterstolpe:</label>
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == false}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="false">
+                           </c:if>
+
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == true}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="true" checked>
+                           </c:if>
+
+                        </div> <!-- #ccpDimension_container END -->
+
+                        <div id="ccpImg_container">
+                           <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
+                              <img src="<%=request.getContextPath()%>/assets/images/carport/ccpft.jpg" alt="Image of a carport with a flat roof">
+                           </c:if>
+
+                           <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
+                              <img src="<%=request.getContextPath()%>/assets/images/carport/ccpst.jpg" alt="Image of a carport with an angled roof">
+                           </c:if>
+                        </div>
+                     </div> <!-- #carportCardContent_container .flexRow -->
+                  </div> <!-- #carportCard .claculatorCard END -->
 
                   <div id="roofCard" class="calculatorCard">
                      <div class="cardHeadline_container">

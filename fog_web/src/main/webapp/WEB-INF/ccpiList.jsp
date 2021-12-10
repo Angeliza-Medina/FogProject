@@ -101,6 +101,12 @@
                </form>
             </div> <!-- #filterLinks_container .flex -->
 
+            <c:if test="${requestScope.error != null}">
+               <div>
+                     ${requestScope.error}
+               </div>
+            </c:if>
+
             <div id="ccpiList_container">
 
                <table id="ccpi_Table">
