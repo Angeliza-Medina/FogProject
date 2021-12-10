@@ -176,6 +176,26 @@ main{
 
 
 /*----------------------------------- Toolshed card ---------------------------------*/
+#toolshedCardContent_container{
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#toolshedSettings_container{
+  width: 60%;
+}
+
+#toolshedSettings_container .radioBtn_container:nth-child(1){
+  margin-right: 5%;
+  border-right: 2px solid var(--darkBlue);
+}
+
+#roofSettings_container .formRadioLabel{
+  padding: 0 5%;
+}
 /*--------------------------------- Toolshed card END -------------------------------*/
 
 
