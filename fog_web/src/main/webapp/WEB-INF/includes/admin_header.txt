@@ -4,7 +4,7 @@
             <div id="header_container" class="flexRow">
                <div id="logo_container" class="posRelative">
                   <img src="<%=request.getContextPath()%>/assets/images/logo/logo.png" alt="Johannes Fog logo">
-                  <a id="logo_link" href="${pageContext.request.contextPath}/fc/index"></a>
+                  <a id="logo_link" href="${pageContext.request.contextPath}/fc/ccpiList"></a>
                </div>
 
                <div id="headerNav_container" class="flexColumn">

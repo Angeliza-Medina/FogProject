@@ -47,6 +47,7 @@ public class LoginCommand extends CommandUnprotectedPage {
                 }catch(UserException ex){
                     session.setAttribute("error", ex.getMessage());
                 }
+
             }
 
             return REDIRECT_INDICATOR + pageToShow;

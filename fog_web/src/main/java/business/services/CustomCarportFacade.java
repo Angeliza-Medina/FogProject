@@ -27,4 +27,8 @@ public class CustomCarportFacade {
         return customCarportMapper.getAllCCPI();
     }
 
+    public CustomCarportInquiry getInquiryById(int inquiryId) throws UserException{
+        return customCarportMapper.getInquiryById(inquiryId);
+    }
+
 }

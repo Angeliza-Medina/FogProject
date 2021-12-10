@@ -23,11 +23,22 @@ public class CustomCarportInquiry {
      this.note = note;
   }
 
-  // Constructor used when getting inquiries from the db
+  // Constructor used when getting inquiries from the db to ccpiList.jsp
   public CustomCarportInquiry(int ccpiId, LocalDate inquiryDate, String status, CustomCarport customCarport, Toolshed toolshed){
      this.ccpiId = ccpiId;
      this.inquiryDate = inquiryDate;
      this.status = status;
+     this.customCarport = customCarport;
+     this.toolshed = toolshed;
+  }
+
+  public CustomCarportInquiry(int inquiry_id, LocalDate inquiryDate, String inquiryStatus, String note,
+                              ContactInfo contactInfo, CustomCarport customCarport, Toolshed toolshed){
+     this.ccpiId = inquiry_id;
+     this.inquiryDate = inquiryDate;
+     this.status = inquiryStatus;
+     this.note = note;
+     this.contactInfo = contactInfo;
      this.customCarport = customCarport;
      this.toolshed = toolshed;
   }

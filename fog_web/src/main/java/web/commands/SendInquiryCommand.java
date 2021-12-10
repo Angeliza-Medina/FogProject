@@ -53,7 +53,7 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
       String pageToGoTo = request.getParameter("pageToGoTo");
 
       try {
-         ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum, note);
+         ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum);
          Toolshed toolshed = new Toolshed(toolshedWidth, toolshedLength, toolshedCladdingID);
          CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
          CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, toolshed, note);
