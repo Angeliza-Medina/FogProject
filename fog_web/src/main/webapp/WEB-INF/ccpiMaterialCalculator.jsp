@@ -93,11 +93,14 @@
                            <h3 class="customerCardH3">Kontakoplysninger</h3>
 
                            <p class="customerCardP">
-                              Fornavn: Jane<br>
-                              Efternavn: Doe<br>
-                              E-mail: customer@gmail.com<br>
-                              Telefon: 12345678<br>
-                              Addresse: Somewhere 1 1. tv., 1111 København<br>
+                              Fornavn: ${sessionScope.inquiryById.contactInfo.firstName}<br>
+                              Efternavn: ${sessionScope.inquiryById.contactInfo.lastName}<br>
+                              E-mail: ${sessionScope.inquiryById.contactInfo.email}<br>
+                              Telefon: ${sessionScope.inquiryById.contactInfo.phoneNum}<br>
+                              Addresse:
+                              ${sessionScope.inquiryById.contactInfo.address},
+                              ${sessionScope.inquiryById.contactInfo.postalCode}
+                              ${sessionScope.inquiryById.contactInfo.city}
                            </p>
                         </div>
 
@@ -105,7 +108,7 @@
                            <h3 class="customerCardH3">Kunde note</h3>
 
                            <p class="customerCardP">
-                              Ønsker EKSTA let forståelig bygge guide!
+                              ${sessionScope.inquiryById.note}
                            </p>
                         </div>
                      </div>

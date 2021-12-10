@@ -271,6 +271,7 @@ public class CustomCarportMapper {
 
                     return customCarportInquiry;
                 } else {
+                    System.out.println("Here");
                     throw new UserException("No corresponding inquiry was found in the database...");
                 }
             } catch (SQLException ex) {

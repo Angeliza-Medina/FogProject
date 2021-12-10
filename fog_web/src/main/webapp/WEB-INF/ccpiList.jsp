@@ -145,7 +145,7 @@
                               <i class="far fa-times-circle ccpiList_icon"></i>
                            </c:if>
 
-                           <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
+                           <form action="${pageContext.request.contextPath}/fc/getInquiryByIdCommand" method="GET">
                               <input name="ccpiId" type="hidden" value="${ccpiListItem.ccpiId}">
 
                               <button class="calculateCCPIBtn posAbsolute" type="submit">

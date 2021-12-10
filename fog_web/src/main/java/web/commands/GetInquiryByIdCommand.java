@@ -1,6 +1,5 @@
 package web.commands;
 
-import business.entities.CustomCarport;
 import business.entities.CustomCarportInquiry;
 import business.exceptions.UserException;
 import business.services.CustomCarportFacade;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class GetInquiryByIdCommand extends CommandProtectedPage{
-   public String role;
    public String pageToShow;
    private CustomCarportFacade customCarportFacade;
 
@@ -28,7 +26,8 @@ public class GetInquiryByIdCommand extends CommandProtectedPage{
 
          HttpSession session = request.getSession();
 
-         session.setAttribute("inquiry", customCarportInquiry);
+         session.setAttribute("inquiryById", customCarportInquiry);
+         pageToShow = "ccpiMaterialCalculator";
 
          return REDIRECT_INDICATOR + pageToShow;
       } catch (UserException ex) {
