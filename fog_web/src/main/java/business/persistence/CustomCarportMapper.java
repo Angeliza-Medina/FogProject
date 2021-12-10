@@ -29,9 +29,9 @@ public class CustomCarportMapper {
 
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 // Inserts into cts
-                ps.setInt(1, ccpi.getToolshed().getToolshedWidth());
-                ps.setInt(2, ccpi.getToolshed().getToolshedLength());
-                ps.setInt(3, ccpi.getToolshed().getToolshedCladdingId());
+                ps.setInt(1, ccpi.getCustomCarport().getToolshed().getToolshedWidth());
+                ps.setInt(2, ccpi.getCustomCarport().getToolshed().getToolshedLength());
+                ps.setInt(3, ccpi.getCustomCarport().getToolshed().getToolshedCladdingId());
 
                 // Inserts into ccp
                 ps.setInt(4, ccpi.getCustomCarport().getWidth());
@@ -60,9 +60,7 @@ public class CustomCarportMapper {
                 ps.setString(18, ccpi.getContactInfo().getCity());
                 ps.setString(19, ccpi.getNote());
 
-                System.out.println("Here before execute");
                 ps.executeUpdate();
-                System.out.println("Here after execute");
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
@@ -131,7 +129,8 @@ public class CustomCarportMapper {
                       "       ccp.fk_ccpHeight AS ccpHeight,\n" +
                       "       ccp.fk_cts_id AS cts_id,\n" +
                       "       cts.fk_ctsWidth AS ctsWidth,\n" +
-                      "       cts.fk_ctsLength AS ctsLength\n" +
+                      "       cts.fk_ctsLength AS ctsLength, \n" +
+                      "       cts.fk_cladding_id AS ctsCladding_id \n" +
                       "FROM (((ccp_inquiries\n" +
                       "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
                       "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
@@ -145,11 +144,13 @@ public class CustomCarportMapper {
                 do {
                     // CTS data
                     Toolshed toolshed = null;
+
                     if(rs.getInt("cts_id") != 0){
                         int cts_id = rs.getInt("cts_id");
                         int ctsWidth = rs.getInt("ctsWidth");
                         int ctsLength = rs.getInt("ctsLength");
-                        toolshed = new Toolshed(cts_id, ctsWidth, ctsLength);
+                        int ctsCladding_id = rs.getInt("ctsCladding_id");
+                        toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
                     }
 
                     // CCP data
@@ -158,14 +159,14 @@ public class CustomCarportMapper {
                     int ccpLength = rs.getInt("ccpLength");
                     int ccpHeight = rs.getInt("ccpHeight");
 
-                    CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight);
+                    CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
 
                     // Inquiry data
                     int inquiry_id = rs.getInt("inquiry_id");
                     LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
                     String inquiryStatus = rs.getString("status");
 
-                    CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport, toolshed);
+                    CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
 
                     inquiries.add(inquiry);
                 } while (rs.next());
@@ -266,7 +267,7 @@ public class CustomCarportMapper {
                     String note = rs.getString("note");
 
                     customCarportInquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, note, contactInfo,
-                           customCarport, toolshed);
+                           customCarport);
 
                     return customCarportInquiry;
                 } else {

@@ -25,11 +25,12 @@ public class CustomCarport {
    }
 
    // Constructor used to get data from the db to us in ccpiList.jsp
-   public CustomCarport (int id, int width, int length, int height){
+   public CustomCarport (int id, int width, int length, int height, Toolshed toolshed){
       this.id = id;
       this.width = width;
       this.length = length;
       this.height = height;
+      this.toolshed = toolshed;
    }
 
    // Constructor used to get data from the db to use in ccpMaterialCalculator.jsp

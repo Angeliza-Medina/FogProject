@@ -56,9 +56,9 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
          ContactInfo contactInfo = new ContactInfo(firstName,lastName, address, postalCode, city, email, phoneNum);
          Toolshed toolshed = new Toolshed(toolshedWidth, toolshedLength, toolshedCladdingID);
          CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
-         CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, toolshed, note);
+         CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, note);
 
-         if(cpi.getToolshed().getToolshedLength() == 0){
+         if(cpi.getCustomCarport().getToolshed().getToolshedLength() == 0){
             // When no toolshed was incl.
             customCarportFacade.sendInquiryToDB2(cpi);
          }else{

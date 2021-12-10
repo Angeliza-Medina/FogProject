@@ -10,7 +10,7 @@ public class CTSCladdingOption {
    public CTSCladdingOption(int id, String cladding, double thickness, double width, double price){
       this.id = id;
       this.cladding = cladding;
-      this. thickness = thickness;
+      this.thickness = thickness;
       this.width = width;
       this.price = price;
    }
