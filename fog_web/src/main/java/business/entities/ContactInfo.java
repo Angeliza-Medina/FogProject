@@ -8,10 +8,9 @@ public class ContactInfo {
     private  String city;
     private  String email;
     private  String phoneNum;
-    private  String note;
 
-
-    public ContactInfo(String firstName, String lastName, String address, int postalCode, String city, String email, String phoneNum, String note) {
+    public ContactInfo(String firstName, String lastName, String address, int postalCode, String city, String email,
+                       String phoneNum) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -19,7 +18,6 @@ public class ContactInfo {
         this.city = city;
         this.email = email;
         this.phoneNum = phoneNum;
-        this.note = note;
     }
 
 
@@ -79,11 +77,4 @@ public class ContactInfo {
         this.phoneNum = phoneNum;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
 }

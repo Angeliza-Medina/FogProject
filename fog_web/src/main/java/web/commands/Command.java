@@ -31,6 +31,7 @@ public abstract class Command {
         commands.put("logoutCommand", new LogoutCommand(""));
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
         commands.put("sendInquiryCommand", new SendInquiryCommand(""));
+        commands.put("getInquiryByIdCommand", new GetInquiryByIdCommand("", "admin"));
 
         
         /* Delete later */

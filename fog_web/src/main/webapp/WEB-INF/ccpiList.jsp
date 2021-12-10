@@ -146,7 +146,7 @@
                            </c:if>
 
                            <form action="${pageContext.request.contextPath}/fc/ccpiMaterialCalculator" method="GET">
-                              <input type="hidden" value="${ccpiListItem.customCarport.id}">
+                              <input name="ccpiId" type="hidden" value="${ccpiListItem.ccpiId}">
 
                               <button class="calculateCCPIBtn posAbsolute" type="submit">
                               </button>
