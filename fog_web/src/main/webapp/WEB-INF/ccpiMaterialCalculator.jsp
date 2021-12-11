@@ -336,7 +336,155 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Beregner</h2>
                      </div>
-                  </div> <!-- #calculatorCard .claculatorCard END -->
+
+                     <div id="calculatorCardContent_container">
+                        <div id="materialList_container">
+                           <div id="materialListTable_container">
+                              <div id="tableHeadline_container">
+                                 <h3 id="tableHeadline">Stykliste</h3>
+                              </div>
+
+                              <table class="materialList_table">
+                                 <tr class="materialListHeadRow">
+                                    <th>
+                                       Materiale
+                                    </th>
+
+                                    <th>
+                                       Længde i cm
+                                    </th>
+
+                                    <th>
+                                       Antal
+                                    </th>
+
+                                    <th>
+                                       Enhed
+                                    </th>
+
+                                    <th>
+                                       Beskrivelse
+                                    </th>
+                                 </tr>
+                              </table>
+
+                              <table class="materialList_table">
+                                 <tr class="materialListHeadRow">
+                                    <th>
+                                       Træ & Tagplader
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+                                 </tr>
+
+                                 <tr>
+                                    <td>
+                                       Træ
+                                    </td>
+
+                                    <td>
+                                       300
+                                    </td>
+
+                                    <td>
+                                       11
+                                    </td>
+
+                                    <td>
+                                       stk.
+                                    </td>
+
+                                    <td>
+                                       Til skuret
+                                    </td>
+                                 </tr>
+                              </table>
+
+                              <table class="materialList_table">
+                                 <tr class="materialListHeadRow">
+                                    <th>
+                                       Beslag & Skruer
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                    <th>
+                                    </th>
+                                 </tr>
+
+                                 <tr>
+                                    <td>
+                                       Skruer
+                                    </td>
+
+                                    <td>
+                                       300
+                                    </td>
+
+                                    <td>
+                                       11
+                                    </td>
+
+                                    <td>
+                                       stk.
+                                    </td>
+
+                                    <td>
+                                       Til skuret
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div> <!-- #materialListTable_container END -->
+
+                           <div id="materialListPrintBtn_container">
+                              <button type="button" id="materialListPrint_btn">
+                                 Print
+                              </button>
+                           </div>
+                        </div> <!-- #materialList_container END -->
+
+                        <div class=" calculatorCardBtns_container flexRow">
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" class="calculatorCardBtn">Beregn stykliste</button>
+                           </div>
+
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" formaction="saveInquiryChanges" class="calculatorCardBtn">Gem ændringer</button>
+                           </div>
+                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
+
+                        <div class="calculatorCardBtns_container flexRow">
+                           <div class="calculatorCardBtn_container">
+                              <button  type="submit" formaction="setInquiryAsCompleted" class="calculatorCardBtn">
+                                 Afslut <i class="calculatorCardIcon far fa-check-circle"></i>
+                              </button>
+                           </div>
+
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" formaction="setInquiryAsCancelled" class="calculatorCardBtn">
+                                 Annuller <i class="calculatorCardIcon far fa-times-circle"></i>
+                              </button>
+                           </div>
+                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
+                     </div> <!-- #calculatorCardContent_container END -->
+                  </div> <!-- #calculatorCard .calculatorCard-->
 
                   <div id="sketchCard" class="calculatorCard">
                      <div class="cardHeadline_container">
@@ -357,5 +505,6 @@
       </div> <!-- #wrapper END -->
 
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator.js"></script>
+      <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_print_mlist.js"></script>
    </body>
 </html>
