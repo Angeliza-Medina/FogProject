@@ -261,7 +261,7 @@ CREATE TABLE `ccp_roof_angle_options` (
 
 LOCK TABLES `ccp_roof_angle_options` WRITE;
 /*!40000 ALTER TABLE `ccp_roof_angle_options` DISABLE KEYS */;
-INSERT INTO `ccp_roof_angle_options` VALUES (15),(20),(25),(30),(35),(40),(45),(180);
+INSERT INTO `ccp_roof_angle_options` VALUES (0),(15),(20),(25),(30),(35),(40),(45);
 /*!40000 ALTER TABLE `ccp_roof_angle_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,4 +573,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-08 21:07:01
+-- Dump completed on 2021-12-12 18:53:50

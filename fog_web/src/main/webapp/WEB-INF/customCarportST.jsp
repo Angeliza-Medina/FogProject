@@ -118,7 +118,7 @@
                         <select name="roofAngle" id="roofAngle" class="formSelect_element">
                            <option value="" disabled selected>Vælg taghældning i grader</option>
                            <c:forEach items="${sessionScope.ccpOptionListContainer.roofAngleOptions}" var="roofAngleOption">
-                              <c:if test="${roofAngleOption != 180}">
+                              <c:if test="${roofAngleOption != 0}">
                                  <option value="${roofAngleOption}">${roofAngleOption} grader</option>
                               </c:if>
                            </c:forEach>

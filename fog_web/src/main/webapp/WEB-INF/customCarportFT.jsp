@@ -116,7 +116,7 @@
                         </select>
 
                         <c:forEach items="${sessionScope.ccpOptionListContainer.roofAngleOptions}" var="roofAngleOption">
-                           <c:if test="${roofAngleOption == 180}">
+                           <c:if test="${roofAngleOption == 0}">
                               <input name="roofAngle" type="hidden" id="roofAngle" value="${roofAngleOption}">
                            </c:if>
                         </c:forEach>
