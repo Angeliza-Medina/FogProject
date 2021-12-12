@@ -1,32 +1,13 @@
 // JavaScript Document
 
-// Calculator page buttons
-const customerBtnContainer_element = document.querySelector("#customerSectionBtn_container");
-const carportBtnContainer_element = document.querySelector("#carportSectionBtn_container");
-const roofBtnContainer_element = document.querySelector("#roofSectionBtn_container");
-const toolshedBtnContainer_element = document.querySelector("#toolshedSectionBtn_container");
-const calculatorBtnContainer_element = document.querySelector("#calculatorSectionBtn_container");
-const sketchBtnContainer_element = document.querySelector("#sketchSectionBtn_container");
-const descBtnContainer_element = document.querySelector("#descSectionBtn_container");
-
+// Elements
 const allBtnContainer_elements = document.querySelectorAll(".calculatorBtn_container");
-
-// Calculator pages
-const customerCard_element = document.querySelector("#customerCard");
-const carportCard_element = document.querySelector("#carportCard");
-const roofCard_element = document.querySelector("#roofCard");
-const toolshedCard_element = document.querySelector("#toolshedCard");
-const calculatorCard_element = document.querySelector("#calculatorCard");
-const sketchCard_element = document.querySelector("#sketchCard");
-const descCard_element = document.querySelector("#descCard");
-
 const allCard_elements = document.querySelectorAll(".calculatorCard");
 
-
 // Set default page setting
-changeColor(customerBtnContainer_element);
-changeHeight(customerBtnContainer_element.childNodes[1]);
-bringCardToFront(customerBtnContainer_element);
+changeColor(allBtnContainer_elements[0]);
+changeHeight(allBtnContainer_elements[0].childNodes[1]);
+bringCardToFront(allBtnContainer_elements[0]);
 
 
 // Change default page setting according to button clicked
@@ -69,22 +50,16 @@ function resetHeight(element){
 function bringCardToFront(element){
   allCard_elements.forEach(element => {
     resetCardZIndex(element);
+    makeCardInvisible(element);
   });
 
-  if(element === customerBtnContainer_element){
-    getCorrespondingCard(allCard_elements[0]);
-  }else if(element === carportBtnContainer_element){
-    getCorrespondingCard(allCard_elements[1]);
-  }else if(element === roofBtnContainer_element){
-    getCorrespondingCard(allCard_elements[2]);
-  }else if(element === toolshedBtnContainer_element){
-    getCorrespondingCard(allCard_elements[3]);
-  }else if(element === calculatorBtnContainer_element){
-    getCorrespondingCard(allCard_elements[4]);
-  }else if(element === sketchBtnContainer_element){
-    getCorrespondingCard(allCard_elements[5]);
-  }else if(element === descBtnContainer_element){
-    getCorrespondingCard(allCard_elements[6]);
+  for(let i = 0; i < allCard_elements.length; i++){
+    if(element === allBtnContainer_elements[i]){
+      console.log(allCard_elements[i]);
+      getCorrespondingCard(allCard_elements[i]);
+      makeCardVisible(allCard_elements[i]);
+      break;
+    }
   }
 }
 
@@ -94,5 +69,17 @@ function getCorrespondingCard(card_element){
 
 function resetCardZIndex(card_element){
   card_element.style.zIndex = 1;
+}
+
+function makeCardVisible(card_element){
+  card_element.style.opacity = "1";
+  card_element.style.display = "block";
+  card_element.style.height = "auto";
+}
+
+function makeCardInvisible(card_element){
+  card_element.style.opacity = "0";
+  card_element.style.display = "none";
+  card_element.style.height = "0";
 }
 /*----------------------------- Card preview order functions END -----------------------------*/

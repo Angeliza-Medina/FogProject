@@ -11,7 +11,6 @@ const toolshedCladdingSelect_element = document.querySelector("#toolshedCladding
 
 // Listen to when the radio btn is clicked
 addToolshedFalseBtn_element.addEventListener("click", (event) => {
-alert("Clicked on false btn");
   // Hide the toolshed options when "add toolshed" is false
   defaultLengthOptionChildren_elements.forEach(element => {
     element.style.opacity = "0";
@@ -23,15 +22,11 @@ alert("Clicked on false btn");
   toolshedWidthSelect_element.selectedIndex = "1";
   toolshedLengthSelect_element.selectedIndex = "1";
   toolshedCladdingSelect_element.selctedIndex = "1"; // Currently not working...
-
-  console.log("Toolshed length: " + toolshedLengthSelect_element.options[toolshedLengthSelect_element.selectedIndex].value);
-  console.log("Toolshed cladding: " + toolshedCladdingSelect_element.options[toolshedCladdingSelect_element.selectedIndex].value);
 });
 
 
 // Listen to when the radio btn is clicked
 addToolshedTrueBtn_element.addEventListener("click", (event) => {
-  alert("Clicked on true btn");
   // Show the toolshed options when "add toolshed" is true
   defaultLengthOptionChildren_elements.forEach(element => {
     element.style.opacity = "1";
@@ -43,7 +38,4 @@ addToolshedTrueBtn_element.addEventListener("click", (event) => {
   toolshedWidthSelect_element.selectedIndex = "0";
   toolshedLengthSelect_element.selectedIndex = "0";
   toolshedCladdingSelect_element.selctedIndex = "0"; // Currently not working
-
-  console.log("Toolshed length: " + toolshedLengthSelect_element.options[toolshedLengthSelect_element.selectedIndex].value);
-  console.log("Toolshed cladding: " + toolshedCladdingSelect_element.options[toolshedCladdingSelect_element.selectedIndex].value);
 });
