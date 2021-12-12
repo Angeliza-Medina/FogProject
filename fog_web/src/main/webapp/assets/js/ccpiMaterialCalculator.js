@@ -55,7 +55,6 @@ function bringCardToFront(element){
 
   for(let i = 0; i < allCard_elements.length; i++){
     if(element === allBtnContainer_elements[i]){
-      console.log(allCard_elements[i]);
       getCorrespondingCard(allCard_elements[i]);
       makeCardVisible(allCard_elements[i]);
       break;
