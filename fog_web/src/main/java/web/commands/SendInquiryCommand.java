@@ -42,14 +42,7 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
       // - Toolshed info -
       int toolshedWidth = Integer.parseInt(request.getParameter("toolshedWidth"));
       int toolshedLength = Integer.parseInt(request.getParameter("toolshedLength"));
-      int toolshedCladdingID = 0;
-
-      // Temp. solution
-      if(toolshedLength == 0){
-         toolshedCladdingID = 1;
-      }else{
-         toolshedCladdingID = Integer.parseInt(request.getParameter("toolshedCladding"));
-      }
+      int toolshedCladdingID = Integer.parseInt(request.getParameter("toolshedCladding"));
 
       String pageToGoTo = request.getParameter("pageToGoTo");
 

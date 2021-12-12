@@ -21,7 +21,7 @@ addToolshedFalseBtn_element.addEventListener("click", (event) => {
   // Toolshed width and length are set to 0 and cladding is set to "No cladding"
   toolshedWidthSelect_element.selectedIndex = "1";
   toolshedLengthSelect_element.selectedIndex = "1";
-  toolshedCladdingSelect_element.selctedIndex = "1"; // Currently not working...
+  toolshedCladdingSelect_element.selectedIndex = "1";
 });
 
 
@@ -37,5 +37,5 @@ addToolshedTrueBtn_element.addEventListener("click", (event) => {
   // Set value to placeholder on width, length and cladding select boxes
   toolshedWidthSelect_element.selectedIndex = "0";
   toolshedLengthSelect_element.selectedIndex = "0";
-  toolshedCladdingSelect_element.selctedIndex = "0"; // Currently not working
+  toolshedCladdingSelect_element.selectedIndex = "0";
 });
