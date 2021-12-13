@@ -458,7 +458,7 @@
                               </table>
                            </div> <!-- #materialListTable_container END -->
 
-                           <div id="materialListPrintBtn_container">
+                           <div class="materialListPrintBtn_container">
                               <button type="button" id="materialListPrint_btn">
                                  Print
                               </button>
@@ -539,7 +539,74 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Beskrivelse</h2>
                      </div>
-                  </div> <!-- #calculatorCard .claculatorCard END -->
+
+                     <div id="descPrintBox">
+                        <div id="descHeader">
+                           <div id="descImg_container">
+                              <img src="<%=request.getContextPath()%>/assets/images/logo/logo.png" alt="Johannes Fog logo">
+                           </div>
+                        </div>
+
+                        <div id="desc_container">
+                           <div id="ccpiId_container">
+                              Ordre nr: #5
+                           </div>
+
+                           <div id="desc">
+                              Carport:
+                              ${sessionScope.inquiryById.customCarport.width}cm
+                              x
+                              ${sessionScope.inquiryById.customCarport.length}cm
+                              x
+                              ${sessionScope.inquiryById.customCarport.height}cm
+                              <br>
+
+                              <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
+                                 Redskabsrum:
+                                 ${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth}cm
+                                 x
+                                 ${sessionScope.inquiryById.customCarport.toolshed.toolshedLength}cm<br>
+                              </c:if>
+
+                              <br>
+
+                              Tag:<br>
+                              Tagtype:
+                              <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
+                                 Fladt tag
+                              </c:if>
+                              <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
+                                 Tag med rejsning
+                              </c:if>
+                              <br>
+
+                              Remtype: Ubh. spærtræ 45mm x 195mm<br>
+                              Tagmateriale:
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
+                                 <c:if test="${roofMaterialOption.id == sessionScope.inquiryById.customCarport.roofMaterialId}">
+                                    ${roofMaterialOption.material}
+                                 </c:if>
+                              </c:forEach>
+                           </div> <!-- #desc END -->
+
+                           <div id="descPrice_container" class="flexRow">
+                              <div>
+                                 Pris:
+                              </div>
+
+                              <div>
+                                 22328 kr.
+                              </div>
+                           </div>
+                        </div> <!-- #desc_container END -->
+                     </div>
+
+                     <div class="materialListPrintBtn_container">
+                        <button type="button" id="descPrint_btn">
+                           Print
+                        </button>
+                     </div>
+                  </div> <!-- #calculatorCard .calculatorCard END -->
                </form>
             </div> <!-- #ccpiMaterialCalculator_container END -->
          </main>
@@ -548,6 +615,6 @@
       </div> <!-- #wrapper END -->
 
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator.js"></script>
-      <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_print_mlist.js"></script>
+      <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_print.js"></script>
    </body>
 </html>
