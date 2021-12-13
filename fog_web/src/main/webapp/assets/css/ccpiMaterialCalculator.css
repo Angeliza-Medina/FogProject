@@ -316,6 +316,51 @@ main{
   color: var(--white);
 }
 /*--------------------- MaterialList table END ------------------*/
+
+/*------------------------- Pricing section ---------------------*/
+#pricing_container{
+  margin-bottom: 50px;
+  padding: 15px 25%;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--black);
+}
+
+#pricing_container div:nth-child(1) section:nth-child(1){
+  margin-bottom: 15px;
+}
+
+.pricingSection_headline{
+  margin-bottom: 5px;
+  font-size: 1em;
+}
+
+#adjustedPrice_container{
+  align-items: center;
+}
+
+.price{
+  font-size: 1.2em;
+}
+
+#totalPrice{
+  color: var(--red);
+}
+
+#recommendedPrice{
+  color: var(--green);
+}
+
+#adjustedPrice_container textarea{
+  height: 30px;
+  width: 150px;
+  margin-right: 5px;
+  padding: 2px 3px;
+  font-family: roboto;
+  font-size: 1.2em;
+}
+
+/*----------------------- Pricing section END -------------------*/
 /*-------------------------------- Calculator card END ------------------------------*/
 
 

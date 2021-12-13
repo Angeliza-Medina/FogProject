@@ -89,6 +89,8 @@
                            <i id="customerIcon" class="far fa-user"></i>
                         </div>
 
+                        <input name="inquiryId" type="hidden" value="${sessionScope.inquiryById.ccpiId}">
+
                         <div id="contactInfo_container">
                            <h3 class="customerCardH3">Kontakoplysninger</h3>
 
@@ -339,6 +341,7 @@
 
                      <div id="calculatorCardContent_container">
                         <div id="materialList_container">
+                           <!-- Only show when a material list is saved to the session -->
                            <div id="materialListTable_container">
                               <div id="tableHeadline_container">
                                  <h3 id="tableHeadline">Stykliste</h3>
@@ -368,6 +371,7 @@
                                  </tr>
                               </table>
 
+                              <!-- Make dynamic -->
                               <table class="materialList_table">
                                  <tr class="materialListHeadRow">
                                     <th>
@@ -410,6 +414,7 @@
                                  </tr>
                               </table>
 
+                              <!-- Make dynamic -->
                               <table class="materialList_table">
                                  <tr class="materialListHeadRow">
                                     <th>
@@ -459,6 +464,44 @@
                               </button>
                            </div>
                         </div> <!-- #materialList_container END -->
+
+                        <!-- Make dynamic -->
+                        <div id="pricing_container" class="flexRow">
+                           <div class="pricingSection_container">
+                              <section class="pricing_section">
+                                 <h3 class="pricingSection_headline">Total pris:</h3>
+
+                                 <!-- Make dynamic -->
+                                 <div class="price_container">
+                                    <span id="totalPrice" class="price">0</span> kr.
+                                 </div>
+                              </section>
+
+                              <section class="pricing_section">
+                                 <h3 class="pricingSection_headline">Anbefalet salgspris:</h3>
+
+                                 <!-- Make dynamic -->
+                                 <div class="price_container">
+                                    <span id="recommendedPrice" class="price">0</span> kr.
+                                 </div>
+                              </section>
+                           </div> <!-- .class="pricingSection_container" END -->
+
+                           <div class="pricingSection_container">
+                              <section class="pricing_section">
+                                 <h3 class="pricingSection_headline">Juster salgspris:</h3>
+
+                                 <!-- Make dynamic -->
+                                 <div id="adjustedPrice_container" class="flexRow">
+                                    <textarea name="adjustedPrice"></textarea>
+
+                                    <div>
+                                       Kr.
+                                    </div>
+                                 </div>
+                              </section>
+                           </div>
+                        </div> <!-- #pricing_container END -->
 
                         <div class=" calculatorCardBtns_container flexRow">
                            <div class="calculatorCardBtn_container">
