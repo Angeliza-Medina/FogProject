@@ -49,6 +49,44 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       195, 45, 600
    );
 
+   WoodPiece remForCTSSides = new WoodPiece(
+          8, "Ubh. spærtræ", "stk.", 17.95, "Remme i sider, sadles ned i stolper",
+          195, 45, 480
+   );
+
+   WoodPiece spaer = new WoodPiece(
+          9, "Ubh. spærtræ", "stk.", 17.95, "Spær, monteres på rem", 195,
+          45, 600
+   );
+
+   WoodPiece pillar = new WoodPiece(
+          10, "Trykimp. stolpe", "stk.", 17.95, "Stolper nedgraves 90 cm. i jord",
+          97, 97, 300
+   );
+
+   WoodPiece braeddebeklaedning = new WoodPiece(
+          11, "Trykimp. bræt", "stk.", 17.95, "Til beklædning af skur 1 på 2",
+          100, 19, 210
+   );
+
+   WoodPiece rainBoardForSides = new WoodPiece(
+          12, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i sider",
+          100, 19, 540
+   );
+
+   WoodPiece rainBoardForFront = new WoodPiece(
+          13, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i forende",
+          100, 19, 360
+   );
+
+   RoofMaterialOption roofMaterialBig = new RoofMaterialOption(
+          1, 1, "Plast", 109, 600, 17.95
+   );
+
+   RoofMaterialOption roofMaterialSmall = new RoofMaterialOption(
+          1, 1, "Plast", 109, 360, 17.95
+   );
+
 
    public CalcMaterialListCommand(String pageToShow, String role) {
       super(pageToShow, role);
@@ -117,6 +155,18 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          materialListComponents.add(calcLoesholterForSides(ccp, cts, loesholterForSides));
       }
       materialListComponents.add(calcRemForCCPSides(ccp, remForCCPSides));
+      if(cts != null) {
+         materialListComponents.add(calcRemForCTSSides(cts, remForCTSSides));
+      }
+      materialListComponents.add(calcRafters(ccp, spaer));
+      materialListComponents.add(calcPillars(ccp, cts, pillar));
+      if(cts != null){
+         materialListComponents.add(calcBraeddebeklaedning(cts, braeddebeklaedning));
+      }
+      materialListComponents.add(calcRainBoardOnSides(ccp, rainBoardForSides));
+      materialListComponents.add(calcRainBoardOnFront(ccp, rainBoardForFront));
+      // Todo: add roofMaterial calculation - Big
+      // Todo: add roofMaterial calculation - Small
 
       return materialListComponents;
    }
@@ -242,11 +292,149 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return component;
    }
 
+   // Todo: Fix
    MaterialListComponent calcRemForCCPSides(CustomCarport ccp, WoodPiece spaerWood){
       MaterialListComponent component = null;
 
+      int amountNeeded = (int)Math.ceil((double)ccp.getLength() / spaerWood.getLength()) * 2;
+
+      component = new MaterialListComponent(
+             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(), spaerWood.getDesc());
+
+      component.setAmount(amountNeeded);
 
       return component;
+   }
+
+   // Todo: Fix
+   MaterialListComponent calcRemForCTSSides(Toolshed cts, WoodPiece spaerWood){
+      MaterialListComponent component = null;
+
+      int amountNeeded = (int)Math.ceil((double)cts.getToolshedLength() / spaerWood.getLength()) * 2;
+
+      component = new MaterialListComponent(
+             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(), spaerWood.getDesc());
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   //Todo: Make dynamic after adding rafter options to db
+   MaterialListComponent calcRafters(CustomCarport ccp, WoodPiece spaerWood){
+      final int rafterSpacing = 55; // Remove this and reaplace with ccp.getRafterSpacing
+
+      int amountNeeded = (int)Math.ceil(ccp.getLength() / ((double)spaer.getThickness() / 10 + rafterSpacing) + 1);
+
+      MaterialListComponent component = new MaterialListComponent(
+             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(),
+             spaerWood.getDesc());
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   MaterialListComponent calcPillars(CustomCarport ccp, Toolshed cts, WoodPiece pillarWood){
+      int amountOfPilars = 4;
+
+      if(cts != null){
+         amountOfPilars += 6;
+      }
+
+      final int frontUndergroundLength = 90;
+      final int backUndergroundLength = 100;
+      final int frontAboveGroundLength = ccp.getHeight() - 2;
+      final int backAboveGroundLength = frontAboveGroundLength - ((int)Math.floor((double)ccp.getLength() / 130));
+
+      int lengthNeededForFront = (frontUndergroundLength + frontAboveGroundLength) * 2;
+      int lengthNeededForBack = (backUndergroundLength + backAboveGroundLength) * (amountOfPilars - 2);
+
+      int amountNeeded = (int)Math.ceil((double) (lengthNeededForFront + lengthNeededForBack) / pillarWood.getLength());
+
+      MaterialListComponent component = new MaterialListComponent(
+             pillarWood.getProductId(), pillarWood.getProductName(), pillarWood.getUnit(), pillarWood.getPrice(), pillarWood.getDesc()
+      );
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   // Todo: Fix
+   MaterialListComponent calcBraeddebeklaedning(Toolshed cts, WoodPiece braeddebeklaedning){
+      final int doorWidth = 70;
+
+      int widthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth;
+      int firstLayer = (int)Math.ceil((double)widthToCover / ((double) braeddebeklaedning.getWidth() / 10));
+      int secondLayer = (int)Math.ceil((double)firstLayer / 2);
+
+      int amountNeeded = firstLayer + secondLayer;
+
+      MaterialListComponent component = new MaterialListComponent(
+             braeddebeklaedning.getProductId(), braeddebeklaedning.getProductName(), braeddebeklaedning.getUnit(),
+             braeddebeklaedning.getPrice(), braeddebeklaedning.getDesc()
+      );
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   MaterialListComponent calcRainBoardOnSides(CustomCarport ccp, WoodPiece rainBoard){
+      int amountNeeded = (int)Math.ceil(((double)ccp.getLength() / rainBoard.getLength())) * 2;
+
+      MaterialListComponent component = new MaterialListComponent(
+        rainBoard.getProductId(), rainBoard.getProductName(), rainBoard.getUnit(), rainBoard.getPrice(), rainBoard.getDesc()
+      );
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   MaterialListComponent calcRainBoardOnFront(CustomCarport ccp, WoodPiece rainBoard){
+      int amountNeeded = (int)Math.ceil((double)ccp.getWidth() / rainBoard.getLength());
+
+      MaterialListComponent component = new MaterialListComponent(
+        rainBoard.getProductId(), rainBoard.getProductName(), rainBoard.getUnit(), rainBoard.getPrice(), rainBoard.getDesc()
+      );
+
+      component.setAmount(amountNeeded);
+
+      return component;
+   }
+
+   // Todo: Adjust once RoofMaterialOption has been modified to inherit from MaterialListComponent
+   int calcBigRoofBoards(CustomCarport ccp, RoofMaterialOption roofMaterialBig){
+      int bigBoardsHorizontally = (int)Math.floor( ccp.getWidth() / roofMaterialBig.getMaterialWidth());
+      int bigBoardsVertically = (int)Math.floor((double) ccp.getLength() / roofMaterialBig.getMaterialLength());
+
+      int amountNeeded = bigBoardsHorizontally * bigBoardsVertically;
+
+      return amountNeeded;
+   }
+
+   // Todo: Adjust once RoofMaterialOption has been modified to inherit from MaterialListComponent
+   int calcSmallRoofBoards(CustomCarport ccp, RoofMaterialOption roofMaterialBig, RoofMaterialOption roofMaterialSmall ){
+      int bigBoardsHorizontally = (int)Math.floor((double) ccp.getWidth() / roofMaterialBig.getMaterialWidth());
+      int bigBoardsVertically = (int)Math.floor((double) ccp.getLength() / roofMaterialBig.getMaterialLength());
+
+      int spaceLeftHorizontally = ccp.getWidth() - ((int)roofMaterialBig.getMaterialWidth() * bigBoardsHorizontally);
+      int smallBoardsHorizontally = 0;
+      if(spaceLeftHorizontally < ccp.getWidth()){
+         smallBoardsHorizontally = (int)Math.ceil(spaceLeftHorizontally / roofMaterialSmall.getMaterialWidth());
+      }
+
+      int spaceLeftVertically = ccp.getLength() - ((int)roofMaterialBig.getMaterialLength() * bigBoardsVertically);
+      int smallBoardsVertically = 0;
+      if(spaceLeftVertically < ccp.getLength()){
+         smallBoardsVertically = (int)Math.ceil(spaceLeftVertically / roofMaterialSmall.getMaterialLength());
+      }
+
+      int amountNeeded = smallBoardsHorizontally * smallBoardsVertically;
+
+      return amountNeeded;
    }
 
 }

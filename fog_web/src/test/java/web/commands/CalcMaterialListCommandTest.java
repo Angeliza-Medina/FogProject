@@ -1,9 +1,6 @@
 package web.commands;
 
-import business.entities.CustomCarport;
-import business.entities.MaterialListComponent;
-import business.entities.Toolshed;
-import business.entities.WoodPiece;
+import business.entities.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,4 +91,113 @@ class CalcMaterialListCommandTest {
       assertEquals(4, component.getAmount());
    }
 
+   @Test
+   public void testCalcRemForCCPSides(){
+      WoodPiece remForCCPSides = new WoodPiece(
+             7, "Ubh. spærtræ", "stk.", 17.95, "Remme i sider, sadles ned i stolper",
+             195, 45, 600
+      );
+
+      MaterialListComponent component = calcCommand.calcRemForCCPSides(ccpDemo, remForCCPSides);
+
+      assertEquals(2, component.getAmount());
+   }
+
+   @Test
+   public void testCalcRemForCTSSides(){
+      WoodPiece remForCTSSides = new WoodPiece(
+             8, "Ubh. spærtræ", "stk.", 17.95, "Remme i sider, sadles ned i stolper",
+             195, 45, 480
+      );
+
+      MaterialListComponent component = calcCommand.calcRemForCTSSides(ctsDemo, remForCTSSides);
+
+      assertEquals(1, component.getAmount());
+   }
+
+   @Test
+   public void testCalcRafters(){
+      WoodPiece spaer = new WoodPiece(
+             9, "Ubh. spærtræ", "stk.", 17.95, "Spær, monteres på rem", 195,
+             45, 600
+      );
+
+      MaterialListComponent component = calcCommand.calcRafters(ccpDemo, spaer);
+
+      assertEquals(15, component.getAmount());
+   }
+
+   @Test
+   public void testCalcPillars(){
+      WoodPiece pillarWood = new WoodPiece(
+             10, "Trykimp. stolpe", "stk.", 17.95, "Stolper nedgraves 90 cm. i jord",
+             97, 97, 300
+      );
+
+      MaterialListComponent component = calcCommand.calcPillars(ccpDemo, ctsDemo, pillarWood);
+
+      assertEquals(11, component.getAmount());
+   }
+
+   @Test
+   public void testCalcBraeddebeklaedning(){
+      WoodPiece braeddebeklaedning = new WoodPiece(
+             11, "Trykimp. bræt", "stk.", 17.95, "Til beklædning af skur 1 på 2",
+             100, 19, 210
+      );
+
+      MaterialListComponent component = calcCommand.calcBraeddebeklaedning(ctsDemo, braeddebeklaedning);
+
+      assertEquals(200, component.getAmount());
+   }
+
+   @Test
+   public void testCalcRainBoardOnSides(){
+      WoodPiece rainBoard = new WoodPiece(
+             12, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i sider",
+             100, 19, 540
+      );
+
+      MaterialListComponent component = calcCommand.calcRainBoardOnSides(ccpDemo, rainBoard);
+
+      assertEquals(4, component.getAmount());
+   }
+
+   @Test
+   public void testCalcRainBoardOnFront(){
+      WoodPiece rainBoardForFront = new WoodPiece(
+             13, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i forende",
+             100, 19, 360
+      );
+
+      MaterialListComponent component = calcCommand.calcRainBoardOnFront(ccpDemo, rainBoardForFront);
+
+      assertEquals(2, component.getAmount());
+   }
+
+   @Test
+   public void testCalcBigRoofBoards(){
+      RoofMaterialOption roofMaterialBig = new RoofMaterialOption(
+             1, 1, "Plast", 109, 600, 17.95
+      );
+
+      int amountNeeded = calcCommand.calcBigRoofBoards(ccpDemo, roofMaterialBig);
+
+      assertEquals(6, amountNeeded);
+   }
+
+   @Test
+   public void testCalcSmallRoofBoards(){
+      RoofMaterialOption roofMaterialBig = new RoofMaterialOption(
+             1, 1, "Plast", 109, 600, 17.95
+      );
+
+      RoofMaterialOption roofMaterialSmall = new RoofMaterialOption(
+             1, 1, "Plast", 109, 360, 17.95
+      );
+
+      int amountNeeded = calcCommand.calcSmallRoofBoards(ccpDemo, roofMaterialBig, roofMaterialSmall);
+
+      assertEquals(6, amountNeeded);
+   }
 }
