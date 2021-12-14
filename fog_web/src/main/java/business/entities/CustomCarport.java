@@ -5,7 +5,7 @@ public class CustomCarport {
    private int width;
    private int length;
    private int height;
-   private boolean hasMiddlePilar;
+   private boolean hasMiddlePost;
    private double rafterSpacing;
    private int roofTypeId;
    private int roofAngle;
@@ -33,22 +33,36 @@ public class CustomCarport {
       this.toolshed = toolshed;
    }
 
+
    // Constructor used to get data from the db to use in ccpMaterialCalculator.jsp
    public CustomCarport(
-          int id, int width, int length, int height, boolean hasMiddlePilar, double rafterSpacing, int roofTypeId,
+          int id, int width, int length, int height, boolean hasMiddlePost, double rafterSpacing, int roofTypeId,
           int roofAngle, int roofMaterialId, Toolshed toolshed, double price)
    {
       this.id = id;
       this.width = width;
       this.length = length;
       this.height = height;
-      this.hasMiddlePilar = hasMiddlePilar;
+      this.hasMiddlePost = hasMiddlePost;
       this.rafterSpacing = rafterSpacing;
       this.roofTypeId = roofTypeId;
       this.roofAngle = roofAngle;
       this.roofMaterialId = roofMaterialId;
       this.toolshed = toolshed;
       this.price = price;
+   }
+
+
+   // Constructor used for calculations
+   public CustomCarport (int width, int length, int height, boolean hasMiddlePost, double rafterSpacing, int roofTypeId, int roofMaterialId, int roofAngle){
+      this.width = width;
+      this.length = length;
+      this.height = height;
+      this.hasMiddlePost = hasMiddlePost;
+      this.rafterSpacing = rafterSpacing;
+      this.roofTypeId = roofTypeId;
+      this.roofMaterialId = roofMaterialId;
+      this.roofAngle = roofAngle;
    }
 
 
@@ -84,12 +98,12 @@ public class CustomCarport {
       this.height = height;
    }
 
-   public boolean isHasMiddlePilar() {
-      return hasMiddlePilar;
+   public boolean isHasMiddlePost() {
+      return hasMiddlePost;
    }
 
-   public void setHasMiddlePilar(boolean hasMiddlePilar) {
-      this.hasMiddlePilar = hasMiddlePilar;
+   public void setHasMiddlePost(boolean hasMiddlePost) {
+      this.hasMiddlePost = hasMiddlePost;
    }
 
    public double getRafterSpacing() {

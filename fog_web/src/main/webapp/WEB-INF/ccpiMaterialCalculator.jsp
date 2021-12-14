@@ -78,7 +78,7 @@
                   </div>
                </div> <!-- #calculatorSectionBtns_container .flexRow END -->
 
-               <form id="calculator_form" class="posRelative">
+               <form action="${pageContext.request.contextPath}/fc/calcMaterialListCommand" method="GET" id="calculator_form" class="posRelative">
                   <div id="customerCard" class="calculatorCard">
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Kunde</h2>
@@ -165,12 +165,12 @@
                            </select>
 
                            <label id="middlePostLabel" for="middlePost" class="formLabel">Tilføj midterstolpe:</label>
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == false}">
-                              <input type="checkbox" id="middlePost" name="middlePost" value="false">
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePost == false}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost">
                            </c:if>
 
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == true}">
-                              <input type="checkbox" id="middlePost" name="middlePost" value="true" checked>
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePost == true}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost" checked>
                            </c:if>
                         </div> <!-- #ccpDimension_container END -->
 
@@ -197,34 +197,35 @@
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="flatRoof">Fladt tag</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
-                                    <input name="roofType" value="1" type="radio" checked="checked" id="flatRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="1" type="radio" checked="checked" id="flatRoof" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 1}">
-                                    <input name="roofType" value="1" type="radio" id="flatRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="1" type="radio" id="flatRoof" class="formRadioBtn">
                                  </c:if>
                               </div>
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="angledRoof">Tag med rejsning</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
-                                    <input name="roofType" value="2" type="radio" checked="checked" id="angledRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="2" type="radio" checked="checked" id="angledRoof" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 2}">
-                                    <input name="roofType" value="2" type="radio" id="angledRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="2" type="radio" id="angledRoof" class="formRadioBtn">
                                  </c:if>
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
 
-                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
-                              <c:if test="${roofTypeOption.type.equals('flat')}">
-                                 <input name="roofType" type="hidden" value="${roofTypeOption.id}">
-                              </c:if>
-                           </c:forEach>
+                           <!-- Delete later if not used -->
+<%--                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">--%>
+<%--                              <c:if test="${roofTypeOption.type.equals('flat')}">--%>
+<%--                                 <input name="roofType" type="hidden" value="${roofTypeOption.id}">--%>
+<%--                              </c:if>--%>
+<%--                           </c:forEach>--%>
 
                            <label for="roofMaterial" class="formLabel">Tag:</label>
-                           <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
+                           <select name="roofMaterialId" id="roofMaterial" class="formSelect_element">
                               <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofMaterialId == roofMaterialOption.id}">
                                     <option selected value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
@@ -268,22 +269,22 @@
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedTrue">Redskabsrum incl.</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
-                                    <input name="toolshed" value="true" type="radio" checked="checked" id="toolshedTrue" class="formRadioBtn">
+                                    <input name="hasToolshed" value="true" type="radio" checked="checked" id="toolshedTrue" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                    <input name="toolshed" value="true" type="radio" id="toolshedTrue" class="formRadioBtn">
+                                    <input name="hasToolshed" value="true" type="radio" id="toolshedTrue" class="formRadioBtn">
                                  </c:if>
                               </div>
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedFalse">Redskabsrum excl.</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                    <input name="toolshed" value="false" type="radio" checked="checked" id="toolshedFalse" class="formRadioBtn">
+                                    <input name="hasToolshed" value="false" type="radio" checked="checked" id="toolshedFalse" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
-                                    <input name="toolshed" value="false" type="radio" id="toolshedFalse" class="formRadioBtn">
+                                    <input name="hasToolshed" value="false" type="radio" id="toolshedFalse" class="formRadioBtn">
                                  </c:if>
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
@@ -315,7 +316,7 @@
                            </select>
 
                            <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
-                           <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
+                           <select name="toolshedCladdingId" id="toolshedCladding" class="formSelect_element">
                               <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId == claddingOption.id}">
                                     <option selected value="${claddingOption.id}">${claddingOption.cladding}</option>
