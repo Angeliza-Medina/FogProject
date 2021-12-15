@@ -70,7 +70,10 @@ public class CCPOptionMapper {
       ArrayList<RoofMaterialOption> roofMaterialOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM ccp_roof_material_options ORDER BY roofMaterial_id";
+         String sql = "SELECT * " +
+                "FROM ccp_roof_material_options " +
+                "GROUP BY material " +
+                "ORDER BY roofMaterial_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -80,8 +83,8 @@ public class CCPOptionMapper {
                int id = rs.getInt("roofMaterial_id");
                int roofType = rs.getInt("fk_roofType_id");
                String material = rs.getString("material");
-               double materialWidth = 0; //rs.getDouble("materialWidth");
-               double materialLength = 0; //rs.getDouble("materialLength");
+               int materialWidth = rs.getInt("materialWidth");
+               int materialLength = rs.getInt("materialLength");
                double price = rs.getDouble("price");
 
                RoofMaterialOption roofMaterialOption = new RoofMaterialOption(id, roofType, material, materialWidth, materialLength, price);
