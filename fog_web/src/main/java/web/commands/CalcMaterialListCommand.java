@@ -68,10 +68,14 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
          // Create and calc. the materialList
          MaterialList materialList = calcMaterialList(ccp, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
+         int totalPrice = calcTotalPrice(materialList);
+         int recommendedPrice = calcRecommendedPrice(totalPrice);
 
          HttpSession session = request.getSession();
 
          session.setAttribute("materialList", materialList);
+         session.setAttribute("totalPrice", totalPrice);
+         session.setAttribute("recommendedPrice", recommendedPrice);
 
          return REDIRECT_INDICATOR + super.pageToShow;
       }catch (UserException ex) {
@@ -698,6 +702,50 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       int amountNeeded = amountOfLoesholter * 2;
 
       return amountNeeded;
+   }
+
+   private int calcTotalPrice(MaterialList materialList){
+      int totalPrice = 0;
+
+      ArrayList<WoodPiece> woodPieces = materialList.getWoodPieces();
+      CTSCladdingOption cladding = null;
+      if(materialList.getCladding() != null){
+         cladding = materialList.getCladding();
+      }
+      ArrayList<RoofMaterialOption> roofMaterials = materialList.getRoofMaterials();
+      ArrayList<Screw> screws = materialList.getScrews();
+      ArrayList<WoodConnector> woodConnectors = materialList.getWoodConnectors();
+      ArrayList<CTSDoorComponent> doorComponents = materialList.getDoorComponents();
+
+      for(WoodPiece woodPiece : woodPieces){
+         totalPrice += (woodPiece.getPrice() * woodPiece.getAmount());
+      }
+
+      if(cladding != null){
+         totalPrice += (cladding.getPrice() * cladding.getAmount());
+      }
+
+      for(RoofMaterialOption roofMaterial : roofMaterials){
+         totalPrice += (roofMaterial.getPrice() * roofMaterial.getAmount());
+      }
+
+      for(Screw screw : screws){
+         totalPrice += (screw.getPrice() * screw.getAmount());
+      }
+
+      for(WoodConnector woodConnector : woodConnectors){
+         totalPrice += (woodConnector.getPrice() * woodConnector.getAmount());
+      }
+
+      for(CTSDoorComponent doorComponent : doorComponents){
+         totalPrice += (doorComponent.getPrice() * doorComponent.getAmount());
+      }
+
+      return totalPrice;
+   }
+
+   private int calcRecommendedPrice(int totalPrice){
+      return (int)Math.ceil((double)totalPrice / 100 * 30) + totalPrice;
    }
 
 }

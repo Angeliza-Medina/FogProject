@@ -465,7 +465,9 @@
 
                                     <!-- Make dynamic -->
                                     <div class="price_container">
-                                       <span id="totalPrice" class="price">0</span> kr.
+                                       <span id="totalPrice" class="price">
+                                          ${sessionScope.totalPrice}
+                                       </span> kr.
                                     </div>
                                  </section>
 
@@ -474,7 +476,9 @@
 
                                     <!-- Make dynamic -->
                                     <div class="price_container">
-                                       <span id="recommendedPrice" class="price">0</span> kr.
+                                       <span id="recommendedPrice" class="price">
+                                          ${sessionScope.recommendedPrice}
+                                       </span> kr.
                                     </div>
                                  </section>
                               </div> <!-- .class="pricingSection_container" END -->
@@ -485,7 +489,7 @@
 
                                     <!-- Make dynamic -->
                                     <div id="adjustedPrice_container" class="flexRow">
-                                       <textarea name="adjustedPrice"></textarea>
+                                       <textarea name="adjustedPrice">${sessionScope.recommendedPrice}</textarea>
 
                                        <div>
                                           Kr.
