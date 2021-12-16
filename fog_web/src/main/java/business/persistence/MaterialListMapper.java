@@ -225,8 +225,8 @@ public class MaterialListMapper {
 
          if (rs.next()) {
             do {
-               int productId = rs.getInt("wood_connector_id");
-               String productName = rs.getString("material");
+               int productId = rs.getInt("door_component_id");
+               String productName = rs.getString("productName");
                String unit = rs.getString("unit");
                double price = rs.getDouble("price");
                String desc = "";

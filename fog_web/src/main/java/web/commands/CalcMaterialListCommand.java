@@ -57,25 +57,25 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          ArrayList<RoofMaterialOption> roofMaterials = materialListFacade.getAllRoofMaterial();
          ArrayList<Screw> screws = materialListFacade.getAllScrews();
          ArrayList<WoodConnector> woodConnectors = materialListFacade.getAllWoodConnectors();
-         System.out.println("Here 5");
          ArrayList<CTSDoorComponent> doorComponents = null;
 
          if(ccp.getToolshed() != null){
             cladding = materialListFacade.getCladdingById(ccp.getToolshed().getToolshedCladdingId());
-            System.out.println("Here 6");
          }
 
          if(ccp.getToolshed() != null){
             doorComponents = materialListFacade.getAllDoorComponents();
-            System.out.println("Here 7");
          }
 
          // Create and calc. the materialList
          MaterialList materialList = calcMaterialList(ccp, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
+         System.out.println("Done with calc!");
 
          HttpSession session = request.getSession();
 
          session.setAttribute("materialList", materialList);
+
+         pageToShow = "ccpiMaterialCalculator";
 
          return REDIRECT_INDICATOR + pageToShow;
       }catch (UserException ex) {
@@ -95,7 +95,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
           ArrayList<WoodConnector> woodConnectors,
           ArrayList<CTSDoorComponent> doorComponents
    ) throws UserException {
-
       // Sublists for the material list
       ArrayList<WoodPiece> woodPiecesToList = new ArrayList<>();
       CTSCladdingOption claddingToList = null;
@@ -105,7 +104,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       ArrayList<CTSDoorComponent> doorComponentsToList = new ArrayList<>();
 
       //------------------------------ Understernbrædder for- og bagende ------------------------------
-      WoodPiece understernbraetFrontAndBack = woodPieces.get(1);
+      WoodPiece understernbraetFrontAndBack = woodPieces.get(0);
       understernbraetFrontAndBack.setDesc("Understernbrædder til for- og bagenden");
       understernbraetFrontAndBack.setAmount(calcUnderSternBraedderFrontAndBack(ccp, understernbraetFrontAndBack));
 
@@ -114,7 +113,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //------------------------------- Understernbrædder til siderne ---------------------------------
-      WoodPiece understernbraetSides = woodPieces.get(2);
+      WoodPiece understernbraetSides = woodPieces.get(1);
       understernbraetSides.setDesc("Understernbrædder til siderne");
       understernbraetSides.setAmount(calcUnderSternBraedderSides(ccp, understernbraetSides));
 
@@ -123,7 +122,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //------------------------------- Oversternbrædder til forenden ---------------------------------
-      WoodPiece oversternbraetFront = woodPieces.get(3);
+      WoodPiece oversternbraetFront = woodPieces.get(2);
       oversternbraetFront.setDesc("Oversternbrædder til forenden");
       oversternbraetFront.setAmount(calcOverSternBraetFront(ccp, oversternbraetFront));
 
@@ -132,7 +131,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //------------------------------- Oversternbrædder til siderne ----------------------------------
-      WoodPiece oversternbraetSides = woodPieces.get(4);
+      WoodPiece oversternbraetSides = woodPieces.get(3);
       oversternbraetSides.setDesc("Oversternbrædder til siderne");
       oversternbraetSides.setAmount(calcOverSternBraedderSides(ccp, oversternbraetSides));
 
@@ -142,7 +141,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
       //--------------------------------- Z til bagsiden af døren -------------------------------------
       if(ccp.getToolshed() != null){
-         WoodPiece z = woodPieces.get(5);
+         WoodPiece z = woodPieces.get(4);
          z.setDesc("Til z på bagside af redskebsrummets dør");
          z.setAmount(1);
          woodPiecesToList.add(z);
@@ -153,7 +152,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       //----------------------------- Løsholter til redskabrum gavle ----------------------------------
       WoodPiece loesholtForGables = null;
       if(ccp.getToolshed() != null){
-         loesholtForGables = woodPieces.get(6);
+         loesholtForGables = woodPieces.get(5);
          loesholtForGables.setDesc("Løsholter til redskabsrummets gavle");
          loesholtForGables.setAmount(calcLoesholterForGables(ccp, loesholtForGables));
 
@@ -166,7 +165,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       WoodPiece loesholtForSides = null;
 
       if(ccp.getToolshed() != null){
-         loesholtForSides = woodPieces.get(7);
+         loesholtForSides = woodPieces.get(6);
          loesholtForSides.setDesc("Løsholter til redskabsrummets sider");
          loesholtForSides.setAmount(calcLoesholterForSides(ccp, loesholtForSides));
 
@@ -176,7 +175,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //-------------------------------- Remme til carportens sider -----------------------------------
-      WoodPiece remmeForCarportSides_base = woodPieces.get(8);
+      WoodPiece remmeForCarportSides_base = woodPieces.get(7);
 
       WoodPiece remmeForCarportSides_toList = new WoodPiece(
              remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
@@ -193,7 +192,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
       //----------------------------- Remme til redskabsrummets sider ---------------------------------
       if(ccp.getToolshed() != null){
-         WoodPiece remmeForToolshedSides = woodPieces.get(9);
+         WoodPiece remmeForToolshedSides = woodPieces.get(8);
          remmeForToolshedSides.setDesc("Remme til redskabsrummets sider, sadles ned i stolper (rem deles)");
          remmeForToolshedSides.setAmount(calcRemForCTSSides(ccp.getToolshed(), remmeForToolshedSides));
 
@@ -203,7 +202,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //------------------------------------------- Spær ----------------------------------------------
-      WoodPiece spaer = woodPieces.get(8);
+      WoodPiece spaer = woodPieces.get(7);
       spaer.setDesc("Spær, monteres på rem");
       spaer.setAmount(calcSpaer(ccp, spaer));
       woodPiecesToList.add(spaer);
@@ -211,7 +210,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //------------------------------------------ Stolper --------------------------------------------
-      WoodPiece stolpe = woodPieces.get(10);
+      WoodPiece stolpe = woodPieces.get(9);
       stolpe.setDesc("Stolper nedgraves min. 90cm i jord");
       stolpe.setAmount(calcStolpe(ccp, stolpe));
 
@@ -231,7 +230,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //----------------------------------- Vandbræt til siderne --------------------------------------
-      WoodPiece vandbraetForSides = woodPieces.get(12);
+      WoodPiece vandbraetForSides = woodPieces.get(11);
       vandbraetForSides.setDesc("Vandbrædt på stern i sider");
       vandbraetForSides.setAmount(calcVandbraetOnSides(ccp, vandbraetForSides));
 
@@ -240,11 +239,15 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
       //----------------------------------- Vandbræt til forende --------------------------------------
-      WoodPiece vandbraetFront = woodPieces.get(13);
+      WoodPiece vandbraetFront = woodPieces.get(12);
+      System.out.println("14 a");
       vandbraetFront.setDesc("Vandbrædt på stern i forende");
+      System.out.println("14 b");
       vandbraetFront.setAmount(calcVandbraetOnFront(ccp, vandbraetFront));
+      System.out.println("14 c");
 
       woodPiecesToList.add(vandbraetFront);
+      System.out.println("14");
       //--------------------------------- Vandbræt til forende END ------------------------------------
 
 
@@ -278,6 +281,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
          roofMaterialsToList = roofMaterial_toList;
 
+         System.out.println("15");
       }else if(ccp.getRoofTypeId() == 2){
          // Todo: Add method calls for angled roofs when made
       }
@@ -286,109 +290,123 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
       //------------------------------ Screws for plated roof material --------------------------------
       // Todo: add check if roof material is of the plate type
-      Screw bundskruer = screws.get(1);
+      Screw bundskruer = screws.get(0);
       bundskruer.setDesc("Skruer til tagplader");
       bundskruer.setAmount(calcScrewsForPlateRoofs(ccp, bundskruer));
 
       screwsToList.add(bundskruer);
+      System.out.println("16");
       //------------------------------ Screws for plated roof material --------------------------------
 
 
       //------------------------------------------ Hulbaand -------------------------------------------
-      WoodConnector hulbaand = woodConnectors.get(1);
+      WoodConnector hulbaand = woodConnectors.get(0);
       hulbaand.setDesc("Til vindkryds på spær");
       hulbaand.setAmount(calcHulbaand(ccp));
       woodConnectorsToList.add(hulbaand);
+      System.out.println("17");
       //---------------------------------------- Hulbaand END -----------------------------------------
 
 
       //----------------------------------------- Uni beslag ------------------------------------------
-      WoodConnector uniConnectorR = woodConnectors.get(2);
+      WoodConnector uniConnectorR = woodConnectors.get(1);
       uniConnectorR.setDesc("Til montering af spær på rem");
       uniConnectorR.setAmount(calcUniConnector(uniConnectorR));
       woodConnectorsToList.add(uniConnectorR);
+      System.out.println("18");
 
-      WoodConnector uniConnectorL = woodConnectors.get(3);
+      WoodConnector uniConnectorL = woodConnectors.get(2);
       uniConnectorL.setDesc("Til montering af spær på rem");
       uniConnectorL.setAmount(calcUniConnector(uniConnectorL));
       woodConnectorsToList.add(uniConnectorL);
+      System.out.println("19");
       //--------------------------------------- Uni beslag END ----------------------------------------
 
 
       //------------------------------- Skruer for stern og vandbræt ----------------------------------
-      Screw screwsForSternAndVandbraet = screws.get(2);
+      Screw screwsForSternAndVandbraet = screws.get(1);
       screwsForSternAndVandbraet.setDesc("Til montering af stern & vandbræt");
       screwsForSternAndVandbraet.setAmount(calcScrewsForSternAndVandbraet(ccp,screwsForSternAndVandbraet));
       screwsToList.add(screwsForSternAndVandbraet);
+      System.out.println("20");
       //----------------------------- Skruer for stern og vandbræt END --------------------------------
 
 
       //-------------------------------------- Beslag skruer ------------------------------------------
-      Screw beslagSkruer = screws.get(3);
+      Screw beslagSkruer = screws.get(2);
       beslagSkruer.setDesc("Til montering af universalbeslag & hulbånd");
       beslagSkruer.setAmount(calcBeslagSkruer(ccp, spaer, beslagSkruer));
       screwsToList.add(beslagSkruer);
+      System.out.println("21");
       //------------------------------------ Beslag skruer END ----------------------------------------
 
 
       //--------------------------------------- Bræddebolt --------------------------------------------
-      Screw braeddebolt = screws.get(4);
+      Screw braeddebolt = screws.get(3);
       braeddebolt.setDesc("Til montering af rem på stolper");
       braeddebolt.setAmount(calcBraeddebolt(ccp, braeddebolt));
       screwsToList.add(braeddebolt);
+      System.out.println("22");
       //------------------------------------- Bræddebolt END ------------------------------------------
 
 
       //-------------------------------------- FirkantSkiver ------------------------------------------
-      WoodConnector firkantskiver = woodConnectors.get(4);
+      WoodConnector firkantskiver = woodConnectors.get(3);
       firkantskiver.setDesc("Til montering af rem på stolper");
       firkantskiver.setAmount(calcfirkantskiver(ccp));
       woodConnectorsToList.add(firkantskiver);
+      System.out.println("23");
       //------------------------------------ FirkantSkiver END ----------------------------------------
 
 
       //----------------------------- Skruer til yderste beklædning -----------------------------------
       if(ccp.getToolshed() != null){
-         Screw screwsForOutterCladding = screws.get(5);
+         Screw screwsForOutterCladding = screws.get(4);
          screwsForOutterCladding.setDesc("Til montering af yderste beklædning");
          screwsForOutterCladding.setAmount(calcScrewsForOutterCladding(spaer, screwsForOutterCladding));
          screwsToList.add(screwsForOutterCladding);
+         System.out.println("24");
       }
       //--------------------------- Skruer til yderste beklædning END ---------------------------------
 
 
       //----------------------------- Skruer til inderste beklædning ----------------------------------
       if(ccp.getToolshed() != null){
-         Screw screwsForInnerCladding = screws.get(6);
+         Screw screwsForInnerCladding = screws.get(5);
          screwsForInnerCladding.setDesc("Til montering af inderste beklædning");
          screwsForInnerCladding.setAmount(calcScrewsForInnerCladding(spaer, screwsForInnerCladding));
          screwsToList.add(screwsForInnerCladding);
+         System.out.println("25");
       }
       //--------------------------- Skruer til inderste beklædning END --------------------------------
 
 
       //-------------------------- Komponenter til redskabsrummets dør --------------------------------
       if(ccp.getToolshed() != null){
-         CTSDoorComponent stalddoersgreb = doorComponents.get(1);
+         CTSDoorComponent stalddoersgreb = doorComponents.get(0);
          stalddoersgreb.setDesc("Til lås på redskabsrummets dør");
          stalddoersgreb.setAmount(1);
          doorComponentsToList.add(stalddoersgreb);
+         System.out.println("26");
 
-         CTSDoorComponent thaengsel = doorComponents.get(2);
+         CTSDoorComponent thaengsel = doorComponents.get(1);
          thaengsel.setDesc("Til redskabsrummets dør");
          thaengsel.setAmount(2);
          doorComponentsToList.add(thaengsel);
+         System.out.println("27");
       }
       //------------------------ Komponenter til redskabsrummets dør END ------------------------------
 
 
       //------------------------------------- Vinkelbeslag --------------------------------------------
       if(ccp.getToolshed() != null) {
-         WoodConnector vinkelbeslag = woodConnectors.get(5);
+         WoodConnector vinkelbeslag = woodConnectors.get(4);
          vinkelbeslag.setDesc("Til montering af løsholter i skur");
+         System.out.println("28");
 
          if(loesholtForGables != null && loesholtForSides != null){
             vinkelbeslag.setAmount(calcVinkelbeslag(loesholtForGables, loesholtForSides));
+            System.out.println("29");
          }
       }
       //----------------------------------- Vinkelbeslag END ------------------------------------------
@@ -397,6 +415,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
              woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
       );
 
+      System.out.println("30");
       return  materialList;
    }
 
