@@ -13,85 +13,11 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
    public String pageToShow;
    public MaterialListFacade materialListFacade;
 
-   // Todo: Delete once db is ready
-   WoodPiece understernbraetFrontAndBack = new WoodPiece(
-          1, "Trykimp. bræt", "stk.", 17.95, "Understerbrædder til for- og bagenden",
-          200, 25, 360);
-   // Todo: Make dynamic once db is done -> materialListFacade.getWoodByProductId(1)
-
-   WoodPiece understernbraetSides = new WoodPiece(
-          2, "Trykimp. bræt", "stk.", 17.95, "UnderSternbrædder til siderne",
-          200, 25, 540);
-
-   WoodPiece overSternBraetFront = new WoodPiece(
-          1, "Trykimp. bræt", "stk.", 17.95, "Oversternbrædder til forenden",
-          200, 25, 360);
-
-   WoodPiece overSternBraetSides = new WoodPiece(
-          3, "Trykimpg. bræt", "stk.", 17.95, "Oversternbrædder til forenden",
-          125, 25, 540);
-
-   WoodPiece zDoorPiece = new WoodPiece(
-          4, "Ubh. lægte", "stk.", 17.95, "Til z på bagside af dør",
-          73, 38, 420);
-
-   WoodPiece loesholterForGables = new WoodPiece(
-          5, "Ubh. reglar", "stk.", 17.95, "Løsholter til skur gavle", 95,
-          45, 270);
-
-   WoodPiece loesholterForSides = new WoodPiece(
-      6, "Ubh. reglar", "stk.", 17.95, "Løsholter til skur sider", 95,
-      45, 240
-   );
-
-   WoodPiece remForCCPSides = new WoodPiece(
-      7, "Ubh. spærtræ", "stk.", 17.95, "Remme i sider, sadles ned i stolper",
-      195, 45, 600
-   );
-
-   WoodPiece remForCTSSides = new WoodPiece(
-          8, "Ubh. spærtræ", "stk.", 17.95, "Remme i sider, sadles ned i stolper",
-          195, 45, 480
-   );
-
-   WoodPiece spaer = new WoodPiece(
-          9, "Ubh. spærtræ", "stk.", 17.95, "Spær, monteres på rem", 195,
-          45, 600
-   );
-
-   WoodPiece pillar = new WoodPiece(
-          10, "Trykimp. stolpe", "stk.", 17.95, "Stolper nedgraves 90 cm. i jord",
-          97, 97, 300
-   );
-
-   WoodPiece braeddebeklaedning = new WoodPiece(
-          11, "Trykimp. bræt", "stk.", 17.95, "Til beklædning af skur 1 på 2",
-          100, 19, 210
-   );
-
-   WoodPiece rainBoardForSides = new WoodPiece(
-          12, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i sider",
-          100, 19, 540
-   );
-
-   WoodPiece rainBoardForFront = new WoodPiece(
-          13, "Trykimp. bræt", "stk.", 17.95, "Vandbrædt på stern i forende",
-          100, 19, 360
-   );
-
-   RoofMaterialOption roofMaterialBig = new RoofMaterialOption(
-          1, 1, "Plast", 109, 600, 17.95
-   );
-
-   RoofMaterialOption roofMaterialSmall = new RoofMaterialOption(
-          1, 1, "Plast", 109, 360, 17.95
-   );
-
-
    public CalcMaterialListCommand(String pageToShow, String role) {
       super(pageToShow, role);
       materialListFacade = new MaterialListFacade(database);
    }
+
 
    @Override
    public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -103,14 +29,10 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       int carportLength = Integer.parseInt(request.getParameter("carportLength"));
       int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
       boolean addMiddlePost = request.getParameter("middlePost") != null;
-      double rafterSpacing = 0.86; // Todo: Make dynamic. Add data to db. Get data from db. Add options to frontend.
+      int rafterSpacing = 55; // Todo: Make dynamic. Get data from db. Add options to frontend.
       int roofTypeId = Integer.parseInt(request.getParameter("roofType"));
       int roofMaterialId = Integer.parseInt(request.getParameter("roofMaterialId"));
       int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
-
-      CustomCarport ccp = new CustomCarport(
-             carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle
-      );
 
       // Toolshed
       boolean hasToolshed = Boolean.parseBoolean(request.getParameter("hasToolshed"));
@@ -124,12 +46,29 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          cts = new Toolshed(toolshedWidth, toolshedLength, claddingId);
       }
 
-      ArrayList<MaterialListComponent> materialListComponents = null;
+      CustomCarport ccp = new CustomCarport(
+             carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
+      );
 
       try{
+         // Get all needed materialList components from the db
+         ArrayList<WoodPiece> woodPieces = materialListFacade.getAllWoodPieces();
+         CTSCladdingOption cladding = null;
+         ArrayList<RoofMaterialOption> roofMaterials = materialListFacade.getAllRoofMaterial();
+         ArrayList<Screw> screws = materialListFacade.getAllScrews();
+         ArrayList<WoodConnector> woodConnectors = materialListFacade.getAllWoodConnectors();
+         ArrayList<CTSDoorComponent> doorComponents = null;
 
-         materialListComponents = calcMaterialList(ccp, cts);
-         MaterialList materialList = new MaterialList(materialListComponents);
+         if(ccp.getToolshed() != null){
+            cladding = materialListFacade.getCladdingById(ccp.getToolshed().getToolshedCladdingId());
+         }
+
+         if(ccp.getToolshed() != null){
+            doorComponents = materialListFacade.getAllDoorComponents();
+         }
+
+         // Create and calc. the materialList
+         MaterialList materialList = calcMaterialList(ccp, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
 
          HttpSession session = request.getSession();
 
@@ -142,94 +81,353 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       }
    }
 
-   private ArrayList<MaterialListComponent> calcMaterialList(CustomCarport ccp, Toolshed cts) throws UserException{
-      ArrayList<MaterialListComponent> materialListComponents = new ArrayList<>();
 
-      materialListComponents.add(calcUnderSternBraetFrontAndBack(ccp, understernbraetFrontAndBack));
-      materialListComponents.add(calcUnderSternBraetSides(ccp, understernbraetSides));
-      materialListComponents.add(calcOverSternBraetFront(ccp, overSternBraetFront));
-      materialListComponents.add(calcOverSternBraetSides(ccp, overSternBraetSides));
-      if(cts != null){
-         materialListComponents.add(zDoorPiece);
-         materialListComponents.add(calcLoesholterForGables(ccp, cts, loesholterForGables));
-         materialListComponents.add(calcLoesholterForSides(ccp, cts, loesholterForSides));
-      }
-      materialListComponents.add(calcRemForCCPSides(ccp, remForCCPSides));
-      if(cts != null) {
-         materialListComponents.add(calcRemForCTSSides(cts, remForCTSSides));
-      }
-      materialListComponents.add(calcRafters(ccp, spaer));
-      materialListComponents.add(calcPillars(ccp, cts, pillar));
-      if(cts != null){
-         materialListComponents.add(calcBraeddebeklaedning(cts, braeddebeklaedning));
-      }
-      materialListComponents.add(calcRainBoardOnSides(ccp, rainBoardForSides));
-      materialListComponents.add(calcRainBoardOnFront(ccp, rainBoardForFront));
-      // Todo: add roofMaterial calculation - Big
-      // Todo: add roofMaterial calculation - Small
+   private MaterialList calcMaterialList(
+          CustomCarport ccp,
+          ArrayList<WoodPiece> woodPieces,
+          CTSCladdingOption cladding,
+          ArrayList<RoofMaterialOption> roofMaterials,
+          ArrayList<Screw> screws,
+          ArrayList<WoodConnector> woodConnectors,
+          ArrayList<CTSDoorComponent> doorComponents
+   ) throws UserException {
 
-      return materialListComponents;
+      // Sublists for the material list
+      ArrayList<WoodPiece> woodPiecesToList = new ArrayList<>();
+      CTSCladdingOption claddingToList = null;
+      ArrayList<RoofMaterialOption> roofMaterialsToList = new ArrayList<>();
+      ArrayList<Screw> screwsToList = new ArrayList<>();
+      ArrayList<WoodConnector> woodConnectorsToList = new ArrayList<>();
+      ArrayList<CTSDoorComponent> doorComponentsToList = new ArrayList<>();
+
+      //------------------------------ Understernbrædder for- og bagende ------------------------------
+      WoodPiece understernbraetFrontAndBack = woodPieces.get(1);
+      understernbraetFrontAndBack.setDesc("Understernbrædder til for- og bagenden");
+      understernbraetFrontAndBack.setAmount(calcUnderSternBraedderFrontAndBack(ccp, understernbraetFrontAndBack));
+
+      woodPiecesToList.add(understernbraetFrontAndBack);
+      //---------------------------- Understernbrædder for- og bagende END ----------------------------
+
+
+      //------------------------------- Understernbrædder til siderne ---------------------------------
+      WoodPiece understernbraetSides = woodPieces.get(2);
+      understernbraetSides.setDesc("Understernbrædder til siderne");
+      understernbraetSides.setAmount(calcUnderSternBraedderSides(ccp, understernbraetSides));
+
+      woodPiecesToList.add(understernbraetSides);
+      //----------------------------- Understernbrædder til siderne END -------------------------------
+
+
+      //------------------------------- Oversternbrædder til forenden ---------------------------------
+      WoodPiece oversternbraetFront = woodPieces.get(3);
+      oversternbraetFront.setDesc("Oversternbrædder til forenden");
+      oversternbraetFront.setAmount(calcOverSternBraetFront(ccp, oversternbraetFront));
+
+      woodPiecesToList.add(oversternbraetFront);
+      //----------------------------- Oversternbrædder til forenden END -------------------------------
+
+
+      //------------------------------- Oversternbrædder til siderne ----------------------------------
+      WoodPiece oversternbraetSides = woodPieces.get(4);
+      oversternbraetSides.setDesc("Oversternbrædder til siderne");
+      oversternbraetSides.setAmount(calcOverSternBraedderSides(ccp, oversternbraetSides));
+
+      woodPiecesToList.add(oversternbraetSides);
+      //----------------------------- Oversternbrædder til siderne END --------------------------------
+
+
+      //--------------------------------- Z til bagsiden af døren -------------------------------------
+      if(ccp.getToolshed() != null){
+         WoodPiece z = woodPieces.get(5);
+         z.setDesc("Til z på bagside af redskebsrummets dør");
+         z.setAmount(1);
+         woodPiecesToList.add(z);
+      }
+      //------------------------------- Z til bagsiden af døren END -----------------------------------
+
+
+      //----------------------------- Løsholter til redskabrum gavle ----------------------------------
+      WoodPiece loesholtForGables = null;
+      if(ccp.getToolshed() != null){
+         loesholtForGables = woodPieces.get(6);
+         loesholtForGables.setDesc("Løsholter til redskabsrummets gavle");
+         loesholtForGables.setAmount(calcLoesholterForGables(ccp, loesholtForGables));
+
+         woodPiecesToList.add(loesholtForGables);
+      }
+      //--------------------------- Løsholter til redskabrum gavle END --------------------------------
+
+
+      //----------------------------- Løsholter til redskabrum sider ----------------------------------
+      WoodPiece loesholtForSides = null;
+
+      if(ccp.getToolshed() != null){
+         loesholtForSides = woodPieces.get(7);
+         loesholtForSides.setDesc("Løsholter til redskabsrummets sider");
+         loesholtForSides.setAmount(calcLoesholterForSides(ccp, loesholtForSides));
+
+         woodPiecesToList.add(loesholtForSides);
+      }
+      //--------------------------- Løsholter til redskabrum sider END --------------------------------
+
+
+      //-------------------------------- Remme til carportens sider -----------------------------------
+      WoodPiece remmeForCarportSides_base = woodPieces.get(8);
+
+      WoodPiece remmeForCarportSides_toList = new WoodPiece(
+             remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
+             remmeForCarportSides_base.getUnit(), remmeForCarportSides_base.getPrice(),
+             "Remme til sider, sadles ned i stolperne", remmeForCarportSides_base.getWidth(),
+             remmeForCarportSides_base.getThickness(), remmeForCarportSides_base.getLength()
+      );
+
+      remmeForCarportSides_toList.setAmount(calcRemForCCPSides(ccp, remmeForCarportSides_base));
+
+      woodPiecesToList.add(remmeForCarportSides_toList);
+      //------------------------------ Remme til carportens sider END ---------------------------------
+
+
+      //----------------------------- Remme til redskabsrummets sider ---------------------------------
+      if(ccp.getToolshed() != null){
+         WoodPiece remmeForToolshedSides = woodPieces.get(9);
+         remmeForToolshedSides.setDesc("Remme til redskabsrummets sider, sadles ned i stolper (rem deles)");
+         remmeForToolshedSides.setAmount(calcRemForCTSSides(ccp.getToolshed(), remmeForToolshedSides));
+
+         woodPiecesToList.add(remmeForToolshedSides);
+      }
+      //--------------------------- Remme til redskabsrummets sider END -------------------------------
+
+
+      //------------------------------------------- Spær ----------------------------------------------
+      WoodPiece spaer = woodPieces.get(8);
+      spaer.setDesc("Spær, monteres på rem");
+      spaer.setAmount(calcSpaer(ccp, spaer));
+      woodPiecesToList.add(spaer);
+      //----------------------------------------- Spær END --------------------------------------------
+
+
+      //------------------------------------------ Stolper --------------------------------------------
+      WoodPiece stolpe = woodPieces.get(10);
+      stolpe.setDesc("Stolper nedgraves min. 90cm i jord");
+      stolpe.setAmount(calcStolpe(ccp, stolpe));
+
+      woodPiecesToList.add(stolpe);
+      //---------------------------------------- Stolper END ------------------------------------------
+
+
+      //------------------------------------- Bræddebeklædning ----------------------------------------
+      if(ccp.getToolshed() != null){
+         cladding.setDesc("Til beklædning af redskabsrum 1 på 2");
+
+         cladding.setAmount(calcBraeddebeklaedning(ccp.getToolshed(), cladding));
+
+         claddingToList = cladding;
+      }
+      //----------------------------------- Bræddebeklædning END --------------------------------------
+
+
+      //----------------------------------- Vandbræt til siderne --------------------------------------
+      WoodPiece vandbraetForSides = woodPieces.get(12);
+      vandbraetForSides.setDesc("Vandbrædt på stern i sider");
+      vandbraetForSides.setAmount(calcVandbraetOnSides(ccp, vandbraetForSides));
+
+      woodPiecesToList.add(vandbraetForSides);
+      //--------------------------------- Vandbræt til siderne END ------------------------------------
+
+
+      //----------------------------------- Vandbræt til forende --------------------------------------
+      WoodPiece vandbraetFront = woodPieces.get(13);
+      vandbraetFront.setDesc("Vandbrædt på stern i forende");
+      vandbraetFront.setAmount(calcVandbraetOnFront(ccp, vandbraetFront));
+
+      woodPiecesToList.add(vandbraetFront);
+      //--------------------------------- Vandbræt til forende END ------------------------------------
+
+
+      //-------------------------------------- Tag-materiale ------------------------------------------
+      if(ccp.getRoofTypeId() == 1){
+         ArrayList<RoofMaterialOption> roofMaterial_toList = new ArrayList<>();
+
+         String roofMaterialProductName = "";
+
+         // Find roof material product name
+         for(RoofMaterialOption roofMaterial : roofMaterials){
+            if(ccp.getRoofMaterialId() == roofMaterial.getProductId()){
+               roofMaterialProductName = roofMaterial.getProductName();
+            }
+         }
+
+         // Find all varieties of the roof material found above and add to list
+         for(RoofMaterialOption roofMaterial : roofMaterials){
+            if(roofMaterialProductName.equals(roofMaterial.getProductName())){
+               roofMaterial_toList.add(roofMaterial);
+            }
+         }
+
+         roofMaterial_toList.get(0).setDesc("Tagplader, monteres på spær");
+         roofMaterial_toList.get(0).setAmount(calcFlatRoofOverCTS(ccp, roofMaterial_toList.get(0)));
+
+         if(roofMaterial_toList.size() > 1 && ccp.getToolshed() != null){
+            roofMaterial_toList.get(1).setDesc("Tagplader, monteres på spær");
+            roofMaterial_toList.get(1).setAmount(calcFlatRoofOverCCP(ccp, roofMaterial_toList.get(1)));
+         }
+
+         roofMaterialsToList = roofMaterial_toList;
+
+      }else if(ccp.getRoofTypeId() == 2){
+         // Todo: Add method calls for angled roofs when made
+      }
+      //------------------------------------- Tag-materiale END ---------------------------------------
+
+
+      //------------------------------ Screws for plated roof material --------------------------------
+      // Todo: add check if roof material is of the plate type
+      Screw bundskruer = screws.get(1);
+      bundskruer.setDesc("Skruer til tagplader");
+      bundskruer.setAmount(calcScrewsForPlateRoofs(ccp, bundskruer));
+
+      screwsToList.add(bundskruer);
+      //------------------------------ Screws for plated roof material --------------------------------
+
+
+      //------------------------------------------ Hulbaand -------------------------------------------
+      WoodConnector hulbaand = woodConnectors.get(1);
+      hulbaand.setDesc("Til vindkryds på spær");
+      hulbaand.setAmount(calcHulbaand(ccp));
+      woodConnectorsToList.add(hulbaand);
+      //---------------------------------------- Hulbaand END -----------------------------------------
+
+
+      //----------------------------------------- Uni beslag ------------------------------------------
+      WoodConnector uniConnectorR = woodConnectors.get(2);
+      uniConnectorR.setDesc("Til montering af spær på rem");
+      uniConnectorR.setAmount(calcUniConnector(uniConnectorR));
+      woodConnectorsToList.add(uniConnectorR);
+
+      WoodConnector uniConnectorL = woodConnectors.get(3);
+      uniConnectorL.setDesc("Til montering af spær på rem");
+      uniConnectorL.setAmount(calcUniConnector(uniConnectorL));
+      woodConnectorsToList.add(uniConnectorL);
+      //--------------------------------------- Uni beslag END ----------------------------------------
+
+
+      //------------------------------- Skruer for stern og vandbræt ----------------------------------
+      Screw screwsForSternAndVandbraet = screws.get(2);
+      screwsForSternAndVandbraet.setDesc("Til montering af stern & vandbræt");
+      screwsForSternAndVandbraet.setAmount(calcScrewsForSternAndVandbraet(ccp,screwsForSternAndVandbraet));
+      screwsToList.add(screwsForSternAndVandbraet);
+      //----------------------------- Skruer for stern og vandbræt END --------------------------------
+
+
+      //-------------------------------------- Beslag skruer ------------------------------------------
+      Screw beslagSkruer = screws.get(3);
+      beslagSkruer.setDesc("Til montering af universalbeslag & hulbånd");
+      beslagSkruer.setAmount(calcBeslagSkruer(ccp, spaer, beslagSkruer));
+      screwsToList.add(beslagSkruer);
+      //------------------------------------ Beslag skruer END ----------------------------------------
+
+
+      //--------------------------------------- Bræddebolt --------------------------------------------
+      Screw braeddebolt = screws.get(4);
+      braeddebolt.setDesc("Til montering af rem på stolper");
+      braeddebolt.setAmount(calcBraeddebolt(ccp, braeddebolt));
+      screwsToList.add(braeddebolt);
+      //------------------------------------- Bræddebolt END ------------------------------------------
+
+
+      //-------------------------------------- FirkantSkiver ------------------------------------------
+      WoodConnector firkantskiver = woodConnectors.get(4);
+      firkantskiver.setDesc("Til montering af rem på stolper");
+      firkantskiver.setAmount(calcfirkantskiver(ccp));
+      woodConnectorsToList.add(firkantskiver);
+      //------------------------------------ FirkantSkiver END ----------------------------------------
+
+
+      //----------------------------- Skruer til yderste beklædning -----------------------------------
+      if(ccp.getToolshed() != null){
+         Screw screwsForOutterCladding = screws.get(5);
+         screwsForOutterCladding.setDesc("Til montering af yderste beklædning");
+         screwsForOutterCladding.setAmount(calcScrewsForOutterCladding(spaer, screwsForOutterCladding));
+         screwsToList.add(screwsForOutterCladding);
+      }
+      //--------------------------- Skruer til yderste beklædning END ---------------------------------
+
+
+      //----------------------------- Skruer til inderste beklædning ----------------------------------
+      if(ccp.getToolshed() != null){
+         Screw screwsForInnerCladding = screws.get(6);
+         screwsForInnerCladding.setDesc("Til montering af inderste beklædning");
+         screwsForInnerCladding.setAmount(calcScrewsForInnerCladding(spaer, screwsForInnerCladding));
+         screwsToList.add(screwsForInnerCladding);
+      }
+      //--------------------------- Skruer til inderste beklædning END --------------------------------
+
+
+      //-------------------------- Komponenter til redskabsrummets dør --------------------------------
+      if(ccp.getToolshed() != null){
+         CTSDoorComponent stalddoersgreb = doorComponents.get(1);
+         stalddoersgreb.setDesc("Til lås på redskabsrummets dør");
+         stalddoersgreb.setAmount(1);
+         doorComponentsToList.add(stalddoersgreb);
+
+         CTSDoorComponent thaengsel = doorComponents.get(2);
+         thaengsel.setDesc("Til redskabsrummets dør");
+         thaengsel.setAmount(2);
+         doorComponentsToList.add(thaengsel);
+      }
+      //------------------------ Komponenter til redskabsrummets dør END ------------------------------
+
+
+      //------------------------------------- Vinkelbeslag --------------------------------------------
+      if(ccp.getToolshed() != null) {
+         WoodConnector vinkelbeslag = woodConnectors.get(5);
+         vinkelbeslag.setDesc("Til montering af løsholter i skur");
+
+         if(loesholtForGables != null && loesholtForSides != null){
+            vinkelbeslag.setAmount(calcVinkelbeslag(loesholtForGables, loesholtForSides));
+         }
+      }
+      //----------------------------------- Vinkelbeslag END ------------------------------------------
+
+      MaterialList materialList = new MaterialList(
+             woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
+      );
+
+      return  materialList;
    }
 
-   MaterialListComponent calcUnderSternBraetFrontAndBack(CustomCarport ccp, WoodPiece understernbraet){
-      MaterialListComponent component = null;
 
+   private int calcUnderSternBraedderFrontAndBack(CustomCarport ccp, WoodPiece understernbraet){
       final int sidesToCalculate = 2;
 
-      int amountNeeded = (int)Math.ceil((double)ccp.getWidth() / understernbraet.getLength()) * sidesToCalculate;
+      int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / understernbraet.getLength()) * sidesToCalculate;
 
-      component = new MaterialListComponent(understernbraet.getProductId(), understernbraet.getProductName(), understernbraet.getUnit(),
-             understernbraet.getPrice(), understernbraet.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcUnderSternBraetSides(CustomCarport ccp, WoodPiece understernbraet){
-      MaterialListComponent component = null;
-
+   private int calcUnderSternBraedderSides(CustomCarport ccp, WoodPiece understernbraet){
       final int sidesToCalculate = 2;
 
-      int amountNeeded = (int)Math.ceil((double)ccp.getLength() / understernbraet.getLength()) * sidesToCalculate;
+      int amountNeeded = (int) Math.ceil((double) ccp.getLength() / understernbraet.getLength()) * sidesToCalculate;
 
-      component = new MaterialListComponent(understernbraet.getProductId(), understernbraet.getProductName(), understernbraet.getUnit(),
-             understernbraet.getPrice(), understernbraet.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcOverSternBraetFront(CustomCarport ccp, WoodPiece overSternBraet){
-      MaterialListComponent component = null;
+   private int calcOverSternBraetFront (CustomCarport ccp, WoodPiece overSternBraet){
+      int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / overSternBraet.getLength());
 
-      int amountNeeded = (int)Math.ceil((double) ccp.getWidth() / overSternBraet.getLength());
-
-      component = new MaterialListComponent(overSternBraet.getProductId(), overSternBraet.getProductName(), overSternBraet.getUnit(),
-             overSternBraet.getPrice(), overSternBraet.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcOverSternBraetSides(CustomCarport ccp, WoodPiece overSternBraetSides){
-      MaterialListComponent component = null;
-
+   private int calcOverSternBraedderSides(CustomCarport ccp, WoodPiece overSternBraetSides){
       final int sidesToCalculate = 2;
 
-      int amountNeeded = (int)Math.ceil((double)ccp.getLength() / overSternBraetSides.getLength()) * sidesToCalculate;
+      int amountNeeded = (int) Math.ceil((double) ccp.getLength() / overSternBraetSides.getLength()) * sidesToCalculate;
 
-      component = new MaterialListComponent(overSternBraetSides.getProductId(), overSternBraetSides.getProductName(),
-             overSternBraetSides.getUnit(), overSternBraetSides.getPrice(), overSternBraetSides.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcLoesholterForGables(CustomCarport ccp, Toolshed cts, WoodPiece reglar){
+   private int calcLoesholterForGables (CustomCarport ccp, WoodPiece loesholt){
       /*
          Calculating on the assumption that:
          - The top løsholt is placed 30 cm below the top pilar
@@ -237,30 +435,23 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          - The recommended max. space between two løsholt, which is 60 cm, is being followed
       */
 
-      MaterialListComponent component = null;
-
       final int surfacesToCalculate = 2;
       final int recommendedMaxSpace = 60;
       final int minAmountOfLoesholt = 2;
 
-      int amountNeededHorizontally = (int) Math.ceil((double)cts.getToolshedWidth() / reglar.getLength());
+      int amountNeededHorizontally = (int) Math.ceil((double) ccp.getToolshed().getToolshedWidth() / loesholt.getLength());
 
-      double airBetweenTheTopAndBottomLoesholt = (double)ccp.getHeight() - (double)recommendedMaxSpace - (double)reglar.getWidth() / 10 * 2;
+      double airBetweenTheTopAndBottomLoesholt = (double) ccp.getHeight() - (double) recommendedMaxSpace - (double) loesholt.getWidth() / 10 * 2;
       // 2 = Top and bottom løsholt
 
       int additionalLoesholtBetweenTopAndBottom = (int) Math.floor(airBetweenTheTopAndBottomLoesholt / recommendedMaxSpace) / 2;
 
       int amountNeeded = (minAmountOfLoesholt + additionalLoesholtBetweenTopAndBottom) * amountNeededHorizontally * surfacesToCalculate;
 
-      component = new MaterialListComponent(reglar.getProductId(), reglar.getProductName(), reglar.getUnit(), reglar.getPrice(),
-             reglar.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcLoesholterForSides(CustomCarport ccp, Toolshed cts, WoodPiece reglar){
+   private int calcLoesholterForSides (CustomCarport ccp, WoodPiece loesholt){
      /*
          Calculating on the assumption that:
          - The top løsholt is placed 30 cm below the top pilar
@@ -269,170 +460,243 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
            First one to fit from 60 was 64 cm so that is what we are calculating on.
       */
 
-      MaterialListComponent component = null;
-
       final int surfacesToCalculate = 2;
       final int recommendedMaxSpace = 64;
       final int minAmountOfLoesholt = 2;
 
-      int amountNeededHorizontally = (int) Math.ceil((double)cts.getToolshedLength() / reglar.getLength());
+      int amountNeededHorizontally = (int) Math.ceil((double) ccp.getToolshed().getToolshedLength() / loesholt.getLength());
 
-      double airBetweenTheTopAndBottomLoesholt = (double)ccp.getHeight() - (double)recommendedMaxSpace - (double)reglar.getWidth() / 10 * 2;
+      double airBetweenTheTopAndBottomLoesholt = (double) ccp.getHeight() - (double) recommendedMaxSpace - (double) loesholt.getWidth() / 10 * 2;
       // 2 = Top and bottom løsholt
 
       int additionalLoesholtBetweenTopAndBottom = (int) Math.floor(airBetweenTheTopAndBottomLoesholt / recommendedMaxSpace) / 2;
 
       int amountNeeded = (minAmountOfLoesholt + additionalLoesholtBetweenTopAndBottom) * amountNeededHorizontally * surfacesToCalculate;
 
-      component = new MaterialListComponent(reglar.getProductId(), reglar.getProductName(), reglar.getUnit(), reglar.getPrice(),
-             reglar.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   // Todo: Fix
-   MaterialListComponent calcRemForCCPSides(CustomCarport ccp, WoodPiece spaerWood){
-      MaterialListComponent component = null;
+   private int calcRemForCCPSides (CustomCarport ccp, WoodPiece rem){
+      int lengthToCover = ccp.getLength();
+      if (ccp.getToolshed() != null) {
+         lengthToCover -= ccp.getToolshed().getToolshedLength();
+      }
 
-      int amountNeeded = (int)Math.ceil((double)ccp.getLength() / spaerWood.getLength()) * 2;
+      int amountNeeded = (int) Math.ceil(((double) lengthToCover / rem.getLength())) * 2;
 
-      component = new MaterialListComponent(
-             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(), spaerWood.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   // Todo: Fix
-   MaterialListComponent calcRemForCTSSides(Toolshed cts, WoodPiece spaerWood){
-      MaterialListComponent component = null;
+   private int calcRemForCTSSides (Toolshed cts, WoodPiece rem){
+      int amountNeeded = (int) Math.ceil((double) cts.getToolshedLength() / rem.getLength());
 
-      int amountNeeded = (int)Math.ceil((double)cts.getToolshedLength() / spaerWood.getLength()) * 2;
-
-      component = new MaterialListComponent(
-             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(), spaerWood.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   //Todo: Make dynamic after adding rafter options to db
-   MaterialListComponent calcRafters(CustomCarport ccp, WoodPiece spaerWood){
-      final int rafterSpacing = 55; // Remove this and reaplace with ccp.getRafterSpacing
+   private int calcSpaer(CustomCarport ccp, WoodPiece spaer){
+      final int rafterSpacing = ccp.getRafterSpacing();
+      double spaerThicknessIncm = (double) spaer.getThickness() / 10;
 
-      int amountNeeded = (int)Math.ceil(ccp.getLength() / ((double)spaer.getThickness() / 10 + rafterSpacing) + 1);
+      int amountNeeded = (int) Math.ceil(ccp.getLength() / (spaerThicknessIncm + rafterSpacing) + 1);
 
-      MaterialListComponent component = new MaterialListComponent(
-             spaerWood.getProductId(), spaerWood.getProductName(), spaerWood.getUnit(), spaerWood.getPrice(),
-             spaerWood.getDesc());
-
-      component.setAmount(amountNeeded);
-
-      return component;
+      return amountNeeded;
    }
 
-   MaterialListComponent calcPillars(CustomCarport ccp, Toolshed cts, WoodPiece pillarWood){
+   private int calcStolpe(CustomCarport ccp, WoodPiece stolpe){
       int amountOfPilars = 4;
 
-      if(cts != null){
+      if (ccp.getToolshed() != null) {
          amountOfPilars += 6;
+      }
+
+      if (ccp.isHasMiddlePillar()) {
+         amountOfPilars++;
       }
 
       final int frontUndergroundLength = 90;
       final int backUndergroundLength = 100;
       final int frontAboveGroundLength = ccp.getHeight() - 2;
-      final int backAboveGroundLength = frontAboveGroundLength - ((int)Math.floor((double)ccp.getLength() / 130));
+      final int backAboveGroundLength = frontAboveGroundLength - ((int) Math.floor((double) ccp.getLength() / 130));
 
       int lengthNeededForFront = (frontUndergroundLength + frontAboveGroundLength) * 2;
       int lengthNeededForBack = (backUndergroundLength + backAboveGroundLength) * (amountOfPilars - 2);
 
-      int amountNeeded = (int)Math.ceil((double) (lengthNeededForFront + lengthNeededForBack) / pillarWood.getLength());
-
-      MaterialListComponent component = new MaterialListComponent(
-             pillarWood.getProductId(), pillarWood.getProductName(), pillarWood.getUnit(), pillarWood.getPrice(), pillarWood.getDesc()
-      );
-
-      component.setAmount(amountNeeded);
-
-      return component;
-   }
-
-   // Todo: Fix
-   MaterialListComponent calcBraeddebeklaedning(Toolshed cts, WoodPiece braeddebeklaedning){
-      final int doorWidth = 70;
-
-      int widthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth;
-      int firstLayer = (int)Math.ceil((double)widthToCover / ((double) braeddebeklaedning.getWidth() / 10));
-      int secondLayer = (int)Math.ceil((double)firstLayer / 2);
-
-      int amountNeeded = firstLayer + secondLayer;
-
-      MaterialListComponent component = new MaterialListComponent(
-             braeddebeklaedning.getProductId(), braeddebeklaedning.getProductName(), braeddebeklaedning.getUnit(),
-             braeddebeklaedning.getPrice(), braeddebeklaedning.getDesc()
-      );
-
-      component.setAmount(amountNeeded);
-
-      return component;
-   }
-
-   MaterialListComponent calcRainBoardOnSides(CustomCarport ccp, WoodPiece rainBoard){
-      int amountNeeded = (int)Math.ceil(((double)ccp.getLength() / rainBoard.getLength())) * 2;
-
-      MaterialListComponent component = new MaterialListComponent(
-        rainBoard.getProductId(), rainBoard.getProductName(), rainBoard.getUnit(), rainBoard.getPrice(), rainBoard.getDesc()
-      );
-
-      component.setAmount(amountNeeded);
-
-      return component;
-   }
-
-   MaterialListComponent calcRainBoardOnFront(CustomCarport ccp, WoodPiece rainBoard){
-      int amountNeeded = (int)Math.ceil((double)ccp.getWidth() / rainBoard.getLength());
-
-      MaterialListComponent component = new MaterialListComponent(
-        rainBoard.getProductId(), rainBoard.getProductName(), rainBoard.getUnit(), rainBoard.getPrice(), rainBoard.getDesc()
-      );
-
-      component.setAmount(amountNeeded);
-
-      return component;
-   }
-
-   // Todo: Adjust once RoofMaterialOption has been modified to inherit from MaterialListComponent
-   int calcBigRoofBoards(CustomCarport ccp, RoofMaterialOption roofMaterialBig){
-      int bigBoardsHorizontally = (int)Math.floor( ccp.getWidth() / roofMaterialBig.getMaterialWidth());
-      int bigBoardsVertically = (int)Math.floor((double) ccp.getLength() / roofMaterialBig.getMaterialLength());
-
-      int amountNeeded = bigBoardsHorizontally * bigBoardsVertically;
+      int amountNeeded = (int) Math.ceil((double) (lengthNeededForFront + lengthNeededForBack) / stolpe.getLength());
 
       return amountNeeded;
    }
 
-   // Todo: Adjust once RoofMaterialOption has been modified to inherit from MaterialListComponent
-   int calcSmallRoofBoards(CustomCarport ccp, RoofMaterialOption roofMaterialBig, RoofMaterialOption roofMaterialSmall ){
-      int bigBoardsHorizontally = (int)Math.floor((double) ccp.getWidth() / roofMaterialBig.getMaterialWidth());
-      int bigBoardsVertically = (int)Math.floor((double) ccp.getLength() / roofMaterialBig.getMaterialLength());
+   private int calcBraeddebeklaedning (Toolshed cts, CTSCladdingOption braeddebeklaedning){
+      final int doorWidth = 70;
 
-      int spaceLeftHorizontally = ccp.getWidth() - ((int)roofMaterialBig.getMaterialWidth() * bigBoardsHorizontally);
-      int smallBoardsHorizontally = 0;
-      if(spaceLeftHorizontally < ccp.getWidth()){
-         smallBoardsHorizontally = (int)Math.ceil(spaceLeftHorizontally / roofMaterialSmall.getMaterialWidth());
+      int widthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth;
+      int firstLayer = (int) Math.ceil((double) widthToCover / ((double) braeddebeklaedning.getWidth() / 10));
+      int secondLayer = (int) Math.ceil((double) firstLayer / 2);
+
+      int amountNeeded = firstLayer + secondLayer;
+
+      return amountNeeded;
+   }
+
+   private int calcVandbraetOnSides(CustomCarport ccp, WoodPiece vandbraet){
+      int amountNeeded = (int) Math.ceil(((double) ccp.getLength() / vandbraet.getLength())) * 2;
+
+      return amountNeeded;
+   }
+
+   private int calcVandbraetOnFront(CustomCarport ccp, WoodPiece vandbraet){
+      int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / vandbraet.getLength());
+
+      return amountNeeded;
+   }
+
+   private int calcFlatRoofOverCCP(CustomCarport ccp, RoofMaterialOption roofMaterial){
+      int toolshedLength = 0;
+
+      if (ccp.getToolshed() != null) {
+         toolshedLength = ccp.getToolshed().getToolshedLength();
       }
 
-      int spaceLeftVertically = ccp.getLength() - ((int)roofMaterialBig.getMaterialLength() * bigBoardsVertically);
-      int smallBoardsVertically = 0;
-      if(spaceLeftVertically < ccp.getLength()){
-         smallBoardsVertically = (int)Math.ceil(spaceLeftVertically / roofMaterialSmall.getMaterialLength());
+      int piecesNeededHorizontally = (int) Math.ceil((double) ccp.getWidth() / roofMaterial.getMaterialWidth());
+      int piecesNeededVertically = (int) Math.ceil((double) (ccp.getLength() - toolshedLength) / roofMaterial.getMaterialLength());
+
+      int amountNeeded = piecesNeededHorizontally * piecesNeededVertically;
+
+      return amountNeeded;
+   }
+
+   private int calcFlatRoofOverCTS(CustomCarport ccp, RoofMaterialOption roofMaterial ){
+      int piecesNeededHorizontally = (int) Math.ceil((double) ccp.getWidth() / roofMaterial.getMaterialWidth());
+      int piecesNeededVertically = (int) Math.ceil((double) ccp.getToolshed().getToolshedLength() / roofMaterial.getMaterialLength());
+
+      int amountNeeded = piecesNeededHorizontally * piecesNeededVertically;
+
+      return amountNeeded;
+   }
+
+   // Todo: make calc. for non-plate types of roof options
+
+   // Todo: make calc. for angled roofs (3 methods)
+
+   private int calcScrewsForPlateRoofs(CustomCarport ccp, Screw screw){
+      /*
+         Assuming you need 12 screws for every m2
+      */
+
+      final int screwsNeededForEveryM2 = 12;
+      int roofAreaInM2 = (int) Math.ceil(((double) ccp.getWidth() / 100) * ((double) ccp.getLength() / 100));
+      int screwsNeeded = screwsNeededForEveryM2 * roofAreaInM2;
+
+      int amountNeeded = (int) Math.ceil((double) screwsNeeded / screw.getPiecesPrPack());
+
+      return amountNeeded;
+   }
+
+   private int calcHulbaand (CustomCarport ccp){
+      /*
+         Assuming that all hulbånd comes in 10m length
+      */
+
+      int toolshedLength = 0;
+
+      if (ccp.getToolshed() != null) {
+         toolshedLength = ccp.getToolshed().getToolshedLength();
       }
 
-      int amountNeeded = smallBoardsHorizontally * smallBoardsVertically;
+      int a = ccp.getWidth();
+      int b = ccp.getLength() - toolshedLength;
+
+      int hulbaandLengthNeeded = (int) (Math.ceil(Math.sqrt(a ^ 2 + b ^ 2)));
+
+      int amountNeeded = (int) Math.ceil((double) hulbaandLengthNeeded / 1000);
+
+      return amountNeeded;
+   }
+
+   private int calcUniConnector (MaterialListComponent spaer){
+
+      int amountNeeded = spaer.getAmount();
+
+      return amountNeeded;
+   }
+
+   private int calcScrewsForSternAndVandbraet(CustomCarport ccp, Screw screwsForSternAndVandbraet){
+      int ccpOutlineInM = (int) Math.ceil((ccp.getWidth() * 2) + ((double) ccp.getLength() * 2) / 100);
+      int screwsPerM = 8;
+
+      int amountNeeded = (int) Math.ceil((double) screwsForSternAndVandbraet.getPiecesPrPack() / (ccpOutlineInM * screwsPerM));
+
+      return amountNeeded;
+   }
+
+   private int calcBeslagSkruer(CustomCarport ccp, WoodPiece spaer, Screw beslagSkruer){
+      int widthToCover = ccp.getLength() - spaer.getWidth() + ccp.getRafterSpacing();
+
+      if (ccp.getToolshed() != null) {
+         widthToCover -= ccp.getToolshed().getToolshedLength();
+      }
+
+      final int rafterSpacing = ccp.getRafterSpacing();
+      double spaerThicknessIncm = (double) spaer.getThickness() / 10;
+
+      int screwsForHulbaand = (int) Math.ceil((double) widthToCover / (spaerThicknessIncm + rafterSpacing) + 1) * 2;
+
+      int screwsForBeslag = (int) Math.ceil(ccp.getLength() / (spaerThicknessIncm + rafterSpacing) + 1) * 4 * 9;
+
+      int amountNeeded = (int) Math.ceil((double) (screwsForBeslag + screwsForHulbaand) / beslagSkruer.getPiecesPrPack());
+
+      return amountNeeded;
+   }
+
+   private int calcBraeddebolt (CustomCarport ccp, Screw braeddebolt){
+      final int amountPerPillar = 2;
+
+      int amountOfPillars = 4;
+
+      if (ccp.getToolshed() != null) {
+         amountOfPillars += 6;
+      }
+
+      int amountNeeded = (amountOfPillars * amountPerPillar / braeddebolt.getPiecesPrPack());
+
+      if(ccp.getToolshed() != null){
+         amountNeeded += 2;
+      }
+
+      return amountNeeded;
+   }
+
+   private int calcfirkantskiver(CustomCarport ccp){
+      int amountOfPillars = 4;
+
+      if (ccp.getToolshed() != null) {
+         amountOfPillars += 6;
+      }
+
+      int amountNeeded = amountOfPillars;
+
+      if(ccp.getToolshed() != null){
+         amountNeeded += 2;
+      }
+
+      return amountNeeded;
+   }
+
+   private int calcScrewsForOutterCladding(WoodPiece spaer, Screw screwsForOutterCladding){
+      int amountNeeded = (int)Math.ceil((double)spaer.getAmount() * 3 / screwsForOutterCladding.getPiecesPrPack());
+
+      return amountNeeded;
+   }
+
+   private int calcScrewsForInnerCladding(WoodPiece spaer, Screw screwsForInnerCladding){
+      int amountNeeded = (int)Math.ceil((double)spaer.getAmount() * 3 / screwsForInnerCladding.getPiecesPrPack());
+
+      return amountNeeded;
+   }
+
+   private int calcVinkelbeslag(WoodPiece loesholtForGables, WoodPiece loesholtForSides){
+      int amountOfLoesholter = loesholtForGables.getAmount() + loesholtForSides.getAmount();
+      int amountNeeded = amountOfLoesholter * 2;
 
       return amountNeeded;
    }

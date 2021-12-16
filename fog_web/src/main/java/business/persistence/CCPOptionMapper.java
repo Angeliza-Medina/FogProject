@@ -70,8 +70,10 @@ public class CCPOptionMapper {
       ArrayList<RoofMaterialOption> roofMaterialOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * " +
-                "FROM ccp_roof_material_options " +
+         String sql = "SELECT " +
+                "roofMaterial_id, fk_roofType_id, material, materialWidth, materialLength, price, units.unit AS unit " +
+                "FROM ccp_roof_material_options\n" +
+                  "INNER JOIN units ON ccp_roof_material_options.fk_unit_id = units.unit_id " +
                 "GROUP BY material " +
                 "ORDER BY roofMaterial_id";
 
@@ -85,9 +87,14 @@ public class CCPOptionMapper {
                String material = rs.getString("material");
                int materialWidth = rs.getInt("materialWidth");
                int materialLength = rs.getInt("materialLength");
+               String unit = rs.getString("unit");
                double price = rs.getDouble("price");
+               String desc = "";
 
-               RoofMaterialOption roofMaterialOption = new RoofMaterialOption(id, roofType, material, materialWidth, materialLength, price);
+               RoofMaterialOption roofMaterialOption = new RoofMaterialOption(
+               id, material, unit, price, desc, roofType, materialWidth, materialLength);
+
+//               RoofMaterialOption roofMaterialOption = new RoofMaterialOption(id, roofType, material, materialWidth, materialLength, price);
                roofMaterialOptions.add(roofMaterialOption);
             } while (rs.next());
 
@@ -229,7 +236,11 @@ public class CCPOptionMapper {
       ArrayList<CTSCladdingOption> ctsCladdingOptions = new ArrayList<>();
 
       try (Connection connection = database.connect()) {
-         String sql = "SELECT * FROM cts_cladding_options ORDER BY cts_cladding_id";
+         String sql =
+                "SELECT cts_cladding_id, cladding, thickness, width, length, price, units.unit AS unit " +
+                "FROM cts_cladding_options " +
+                  "INNER JOIN units ON cts_cladding_options.fk_unit_id = units.unit_id " +
+                "ORDER BY cts_cladding_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -238,11 +249,13 @@ public class CCPOptionMapper {
             do {
                int id = rs.getInt("cts_cladding_id");
                String cladding = rs.getString("cladding");
-               double thickness = rs.getDouble("thickness");
-               double width = rs.getDouble("width");
+               String unit = rs.getString("unit");
                double price = rs.getInt("price");
+               String desc = "";
 
-               CTSCladdingOption ctsCladdingOption = new CTSCladdingOption(id, cladding, thickness, width, price);
+               CTSCladdingOption ctsCladdingOption = new CTSCladdingOption(
+                      id, cladding, unit, price, desc);
+
                ctsCladdingOptions.add(ctsCladdingOption);
             } while (rs.next());
 

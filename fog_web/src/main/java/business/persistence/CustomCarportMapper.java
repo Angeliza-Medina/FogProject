@@ -23,7 +23,7 @@ public class CustomCarportMapper {
                    "INSERT INTO cts (fk_ctsWidth, fk_ctsLength, fk_cladding_id)\n" +
                    "    VALUES(?, ?, ?);\n" +
                    "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
-                   "    VALUES(?, ?, ?, 0.86, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
+                   "    VALUES(?, ?, ?, 55, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
                    "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
                    "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n";
 
@@ -74,7 +74,7 @@ public class CustomCarportMapper {
 
             String sql =
                   "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
-                  "    VALUES(?, ?, ?, 0.86, ?, ?, ?, ?) ;\n" +
+                  "    VALUES(?, ?, ?, 55, ?, ?, ?, ?) ;\n" +
                   "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
                   "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n";
 
@@ -195,7 +195,7 @@ public class CustomCarportMapper {
                    "    ccp.fk_ccpWidth AS ccpWidth,\n" +
                    "    ccp.fk_ccpLength AS ccpLength,\n" +
                    "    ccp.fk_ccpHeight AS ccpHeight,\n" +
-                   "    ccp.middlePilar AS middlePilar,\n" +
+                   "    ccp.middlePillar AS middlePillar,\n" +
                    "    ccp.fk_rafterSpacing AS rafterSpacing,\n" +
                    "    ccp.fk_ccpRoofType_id AS roofType_id,\n" +
                    "    ccp.fk_ccpRoofAngle AS roofAngle,\n" +
@@ -236,8 +236,8 @@ public class CustomCarportMapper {
                     int ccpWidth = rs.getInt("ccpWidth");
                     int ccpLength = rs.getInt("ccpLength");
                     int ccpHeight = rs.getInt("ccpHeight");
-                    boolean middlePilar = rs.getBoolean("middlePilar");
-                    double rafterSpacing = rs.getDouble("rafterSpacing");
+                    boolean middlePilar = rs.getBoolean("middlePillar");
+                    int rafterSpacing = rs.getInt("rafterSpacing");
                     int roofType_id = rs.getInt("roofType_id");
                     int roofAngle = rs.getInt("roofAngle");
                     int roofMaterial_id = rs.getInt("roofMaterial_id");
@@ -271,7 +271,6 @@ public class CustomCarportMapper {
 
                     return customCarportInquiry;
                 } else {
-                    System.out.println("Here");
                     throw new UserException("No corresponding inquiry was found in the database...");
                 }
             } catch (SQLException ex) {

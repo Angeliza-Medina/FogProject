@@ -165,11 +165,11 @@
                            </select>
 
                            <label id="middlePostLabel" for="middlePost" class="formLabel">Tilføj midterstolpe:</label>
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePost == false}">
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePillar == false}">
                               <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost">
                            </c:if>
 
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePost == true}">
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePillar == true}">
                               <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost" checked>
                            </c:if>
                         </div> <!-- #ccpDimension_container END -->

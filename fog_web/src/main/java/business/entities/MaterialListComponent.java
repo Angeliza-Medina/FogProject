@@ -1,12 +1,12 @@
 package business.entities;
 
 public class MaterialListComponent {
-   int productId;
-   String productName;
-   int amount;
-   String unit;
-   double price;
-   String desc;
+   private int productId;
+   private String productName;
+   private int amount;
+   private String unit;
+   private double price;
+   private String desc;
 
    public MaterialListComponent(int productId, String productName, String unit, double price, String desc) {
       this.productId = productId;
