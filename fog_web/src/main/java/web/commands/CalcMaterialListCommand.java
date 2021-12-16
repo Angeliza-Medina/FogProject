@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 public class CalcMaterialListCommand extends CommandProtectedPage{
-   public String pageToShow;
    public MaterialListFacade materialListFacade;
 
    public CalcMaterialListCommand(String pageToShow, String role) {
@@ -69,15 +68,12 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
          // Create and calc. the materialList
          MaterialList materialList = calcMaterialList(ccp, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
-         System.out.println("Done with calc!");
 
          HttpSession session = request.getSession();
 
          session.setAttribute("materialList", materialList);
 
-         pageToShow = "ccpiMaterialCalculator";
-
-         return REDIRECT_INDICATOR + pageToShow;
+         return REDIRECT_INDICATOR + super.pageToShow;
       }catch (UserException ex) {
          request.setAttribute("error", ex.getMessage());
          System.out.println(ex.getMessage());

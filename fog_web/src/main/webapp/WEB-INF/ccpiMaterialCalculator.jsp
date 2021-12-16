@@ -217,13 +217,6 @@
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
 
-                           <!-- Delete later if not used -->
-<%--                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">--%>
-<%--                              <c:if test="${roofTypeOption.type.equals('flat')}">--%>
-<%--                                 <input name="roofType" type="hidden" value="${roofTypeOption.id}">--%>
-<%--                              </c:if>--%>
-<%--                           </c:forEach>--%>
-
                            <label for="roofMaterial" class="formLabel">Tag:</label>
                            <select name="roofMaterialId" id="roofMaterial" class="formSelect_element">
                               <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
@@ -341,168 +334,167 @@
                      </div>
 
                      <div id="calculatorCardContent_container">
-                        <div id="materialList_container">
-                           <!-- Only show when a material list is saved to the session -->
-                           <div id="materialListTable_container">
-                              <div id="tableHeadline_container">
-                                 <h3 id="tableHeadline">Stykliste</h3>
+                        <c:if test="${sessionScope.materialList != null}">
+                           <div id="materialList_container">
+                              <!-- Only show when a material list is saved to the session -->
+                              <div id="materialListTable_container">
+                                 <div id="tableHeadline_container">
+                                    <h3 id="tableHeadline">Stykliste</h3>
+                                 </div>
+
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Materiale</th>
+
+                                       <th>Længde i cm</th>
+
+                                       <th>Antal</th>
+
+                                       <th>Enhed</th>
+
+                                       <th>Beskrivelse</th>
+                                    </tr>
+                                 </table>
+
+                                 <!-- Make dynamic -->
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Træ & Tagplader</th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                    </tr>
+
+                                    <c:forEach items="${sessionScope.materialList.woodPieces}" var="woodpiece">
+                                       <tr>
+                                          <td>
+                                             ${woodpiece.productName}
+                                             ${woodpiece.thickness} x
+                                             ${woodpiece.width}mm
+                                          </td>
+
+                                          <td>${woodpiece.length}</td>
+
+                                          <td>${woodpiece.amount}</td>
+
+                                          <td>${woodpiece.unit}</td>
+
+                                          <td>${woodpiece.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:if test="${sessionScope.materialList.cladding != null}">
+                                       <tr>
+                                          <td>
+                                             ${sessionScope.materialList.cladding.productName}
+                                             ${sessionScope.materialList.cladding.thickness} x
+                                             ${sessionScope.materialList.cladding.width}mm
+                                          </td>
+                                          <td>${sessionScope.materialList.cladding.length}</td>
+                                          <td>${sessionScope.materialList.cladding.amount}</td>
+                                          <td>${sessionScope.materialList.cladding.unit}</td>
+                                          <td>${sessionScope.materialList.cladding.desc}</td>
+                                       </tr>
+                                    </c:if>
+
+                                    <c:forEach items="${sessionScope.materialList.roofMaterials}" var="roofMaterial">
+                                       <tr>
+                                          <td>${roofMaterial.productName}</td>
+                                          <td>${roofMaterial.materialLength}</td>
+                                          <td>${roofMaterial.amount}</td>
+                                          <td>${roofMaterial.unit}</td>
+                                          <td>${roofMaterial.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+                                 </table>
+
+                                 <!-- Make dynamic -->
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Beslag & Skruer</th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                    </tr>
+
+                                    <c:forEach items="${sessionScope.materialList.screws}" var="screw">
+                                       <tr>
+                                          <td>${screw.productName}</td>
+                                          <td></td>
+                                          <td>${screw.amount}</td>
+                                          <td>${screw.unit}</td>
+                                          <td>${screw.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:forEach items="${sessionScope.materialList.woodConnectors}" var="woodConnector">
+                                       <tr>
+                                          <td>${woodConnector.productName}</td>
+                                          <td></td>
+                                          <td>${woodConnector.amount}</td>
+                                          <td>${woodConnector.unit}</td>
+                                          <td>${woodConnector.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:forEach items="${sessionScope.materialList.doorComponents}" var="doorComponent">
+                                       <tr>
+                                          <td>${doorComponent.productName}</td>
+                                          <td></td>
+                                          <td>${doorComponent.amount}</td>
+                                          <td>${doorComponent.unit}</td>
+                                          <td>${doorComponent.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+                                 </table>
+                              </div> <!-- #materialListTable_container END -->
+
+                              <div class="materialListPrintBtn_container">
+                                 <button type="button" id="materialListPrint_btn">
+                                    Print
+                                 </button>
                               </div>
+                           </div> <!-- #materialList_container END -->
 
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Materiale
-                                    </th>
+                           <div id="pricing_container" class="flexRow">
+                              <div class="pricingSection_container">
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Total pris:</h3>
 
-                                    <th>
-                                       Længde i cm
-                                    </th>
-
-                                    <th>
-                                       Antal
-                                    </th>
-
-                                    <th>
-                                       Enhed
-                                    </th>
-
-                                    <th>
-                                       Beskrivelse
-                                    </th>
-                                 </tr>
-                              </table>
-
-                              <!-- Make dynamic -->
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Træ & Tagplader
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-                                 </tr>
-
-                                 <tr>
-                                    <td>
-                                       Træ
-                                    </td>
-
-                                    <td>
-                                       300
-                                    </td>
-
-                                    <td>
-                                       11
-                                    </td>
-
-                                    <td>
-                                       stk.
-                                    </td>
-
-                                    <td>
-                                       Til skuret
-                                    </td>
-                                 </tr>
-                              </table>
-
-                              <!-- Make dynamic -->
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Beslag & Skruer
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-                                 </tr>
-
-                                 <tr>
-                                    <td>
-                                       Skruer
-                                    </td>
-
-                                    <td>
-                                       300
-                                    </td>
-
-                                    <td>
-                                       11
-                                    </td>
-
-                                    <td>
-                                       stk.
-                                    </td>
-
-                                    <td>
-                                       Til skuret
-                                    </td>
-                                 </tr>
-                              </table>
-                           </div> <!-- #materialListTable_container END -->
-
-                           <div class="materialListPrintBtn_container">
-                              <button type="button" id="materialListPrint_btn">
-                                 Print
-                              </button>
-                           </div>
-                        </div> <!-- #materialList_container END -->
-
-                        <!-- Make dynamic -->
-                        <div id="pricing_container" class="flexRow">
-                           <div class="pricingSection_container">
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Total pris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div class="price_container">
-                                    <span id="totalPrice" class="price">0</span> kr.
-                                 </div>
-                              </section>
-
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Anbefalet salgspris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div class="price_container">
-                                    <span id="recommendedPrice" class="price">0</span> kr.
-                                 </div>
-                              </section>
-                           </div> <!-- .class="pricingSection_container" END -->
-
-                           <div class="pricingSection_container">
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Juster salgspris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div id="adjustedPrice_container" class="flexRow">
-                                    <textarea name="adjustedPrice"></textarea>
-
-                                    <div>
-                                       Kr.
+                                    <!-- Make dynamic -->
+                                    <div class="price_container">
+                                       <span id="totalPrice" class="price">0</span> kr.
                                     </div>
-                                 </div>
-                              </section>
-                           </div>
-                        </div> <!-- #pricing_container END -->
+                                 </section>
+
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Anbefalet salgspris:</h3>
+
+                                    <!-- Make dynamic -->
+                                    <div class="price_container">
+                                       <span id="recommendedPrice" class="price">0</span> kr.
+                                    </div>
+                                 </section>
+                              </div> <!-- .class="pricingSection_container" END -->
+
+                              <div class="pricingSection_container">
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Juster salgspris:</h3>
+
+                                    <!-- Make dynamic -->
+                                    <div id="adjustedPrice_container" class="flexRow">
+                                       <textarea name="adjustedPrice"></textarea>
+
+                                       <div>
+                                          Kr.
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                           </div> <!-- #pricing_container END -->
+                        </c:if>
 
                         <div class=" calculatorCardBtns_container flexRow">
                            <div class="calculatorCardBtn_container">
