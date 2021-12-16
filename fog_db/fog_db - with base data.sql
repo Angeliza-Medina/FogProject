@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fog_db
+-- Host: 127.0.0.1    Database: new_fog
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -27,8 +27,8 @@ CREATE TABLE `ccp` (
   `fk_ccpWidth` int NOT NULL,
   `fk_ccpLength` int NOT NULL,
   `fk_ccpHeight` int NOT NULL,
-  `middlePilar` tinyint NOT NULL DEFAULT '0',
-  `fk_rafterSpacing` double NOT NULL,
+  `middlePillar` tinyint NOT NULL DEFAULT '0',
+  `fk_rafterSpacing` int NOT NULL DEFAULT '55',
   `fk_ccpRoofType_id` int NOT NULL,
   `fk_ccpRoofAngle` int NOT NULL,
   `fk_ccpRoofMaterial_id` int NOT NULL,
@@ -50,7 +50,8 @@ CREATE TABLE `ccp` (
   CONSTRAINT `fk_ccpRoofMaterial_id` FOREIGN KEY (`fk_ccpRoofMaterial_id`) REFERENCES `ccp_roof_material_options` (`roofMaterial_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_ccpRoofType_id` FOREIGN KEY (`fk_ccpRoofType_id`) REFERENCES `ccp_roof_type_options` (`roofType_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_ccpWidth` FOREIGN KEY (`fk_ccpWidth`) REFERENCES `ccp_width_options` (`ccpWidth`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_cts_id` FOREIGN KEY (`fk_cts_id`) REFERENCES `cts` (`cts_id`) ON DELETE SET NULL ON UPDATE RESTRICT
+  CONSTRAINT `fk_cts_id` FOREIGN KEY (`fk_cts_id`) REFERENCES `cts` (`cts_id`) ON DELETE SET NULL ON UPDATE RESTRICT,
+  CONSTRAINT `fk_rafterSpacing_id` FOREIGN KEY (`fk_rafterSpacing`) REFERENCES `rafter_spacing_options` (`rafterSpacing`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,40 +62,6 @@ CREATE TABLE `ccp` (
 LOCK TABLES `ccp` WRITE;
 /*!40000 ALTER TABLE `ccp` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ccp` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ccp_components`
---
-
-DROP TABLE IF EXISTS `ccp_components`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ccp_components` (
-  `ccpComponent_id` int NOT NULL AUTO_INCREMENT,
-  `productName` varchar(150) NOT NULL,
-  `widthInMM` int DEFAULT NULL,
-  `lengthInCM` int DEFAULT NULL,
-  `thicknessInMM` int DEFAULT NULL,
-  `piecesPrPack` int DEFAULT NULL,
-  `price` double NOT NULL,
-  `fk_unit_id` int NOT NULL,
-  `desc` varchar(500) NOT NULL,
-  PRIMARY KEY (`ccpComponent_id`),
-  UNIQUE KEY `ccpComponent_id_UNIQUE` (`ccpComponent_id`),
-  KEY `fk_unit_id_idx` (`fk_unit_id`),
-  CONSTRAINT `fk_unit_id` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ccp_components`
---
-
-LOCK TABLES `ccp_components` WRITE;
-/*!40000 ALTER TABLE `ccp_components` DISABLE KEYS */;
-INSERT INTO `ccp_components` VALUES (1,'Trykimp. bræt',200,360,25,NULL,140.22,1,'Understernbrædder til for & bag ende'),(2,'Trykimp. bræt',200,540,25,NULL,210.33,1,'Understernbrædder til siderne'),(3,'Trykimp. bræt',125,360,25,NULL,140.22,1,'Oversternbrædder til forenden'),(4,'Trykimp. bræt',125,540,25,NULL,210.33,1,'Oversternbrædder til siderne'),(5,'Lægte ubh.',73,420,38,NULL,188.79,1,'Til z på bagside af dør'),(6,'Reglar. ubh.',95,270,45,NULL,102.46,1,'Løsholter til skur gavle'),(7,'Reglar ubh.',95,240,45,NULL,91.08,1,'Løsholter til skur sider'),(8,'Spærtræ ubh.',195,600,45,NULL,636,1,'Remme i sider, sadles ned i stopler'),(9,'Spærtræ ubh.',195,480,45,NULL,508.8,1,'Remme i sider, sadles ned i stopler (skur del, deles)'),(10,'Spærtræ ubh.',195,600,45,NULL,636,1,'Spær, monteres på rem'),(11,'Trykimp. stolpe',97,300,97,NULL,248.85,1,'Stolper nedgraves 90 cm. i jord'),(12,'Trykimp. bræt',100,210,19,NULL,48.19,1,'Til beklædning af skur 1 på 2'),(13,'Trykimp. bræt',100,540,19,NULL,123.9,1,'Vandbræt på stern i sider'),(14,'Trykimp.bræt',100,360,19,NULL,82.61,1,'Vandbræt på stern i forende'),(15,'Tagplade',109,600,NULL,NULL,284,1,'Tagplader monteres på spær'),(16,'Tagplade',109,360,NULL,NULL,169,1,'Tagplader monteres på spær'),(17,'Plastmo bundskruer',NULL,NULL,NULL,200,359,2,'Skruer til tagplader'),(18,'Hulbånd 1x20mm',NULL,1000,NULL,1,269,3,'Til vindkryds på spær'),(19,'Universalbeslag 190mm højre',NULL,NULL,NULL,1,24.95,1,'Til montering af spær på rem'),(20,'Universalbeslag 190mm venstre',NULL,NULL,NULL,1,24.95,1,'Til montering af spær på rem'),(21,'NKT Basic skruer 4,5x60mm',NULL,NULL,NULL,200,79.95,2,'Til montering af stern og vandbrædt'),(22,'Beslagskruer 4,5x50mm',NULL,NULL,NULL,250,244.95,2,'Til montering af universalbeslag og hulbånd'),(23,'Bræddebolte 10x120mm',NULL,NULL,NULL,25,23.03,1,'Til montering af rem på stolper'),(24,'Firkantskiver 40x40x11mm',NULL,NULL,NULL,50,11.86,1,'Til montering af rem på stolper'),(25,'NKT Basic skruer 4,5x70mm',NULL,NULL,NULL,400,199,2,'Til montering af yderste beklædning'),(26,'NKT Basic skruer 4,5x50mm',NULL,NULL,NULL,300,109,2,'Til montering af inderste beklædning'),(27,'Stalddørsgreb 50x75',NULL,NULL,NULL,1,249,4,'Til lås på dør i skur'),(28,'T-hængsel 390mm',NULL,NULL,NULL,1,69.95,1,'Til skurdør'),(29,'Vinkelbeslag S35 VFZ 50x50x2,5x35mm',NULL,NULL,NULL,100,12.95,1,'Til montering af løsholter i skur');
-/*!40000 ALTER TABLE `ccp_components` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -276,15 +243,17 @@ CREATE TABLE `ccp_roof_material_options` (
   `roofMaterial_id` int NOT NULL AUTO_INCREMENT,
   `fk_roofType_id` int NOT NULL,
   `material` varchar(100) NOT NULL,
-  `materialWidth` double DEFAULT NULL,
-  `materialLength` double DEFAULT NULL,
+  `materialWidth` int NOT NULL,
+  `materialLength` int NOT NULL,
   `price` double NOT NULL,
+  `fk_unit_id` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`roofMaterial_id`),
   UNIQUE KEY `idcarport_roof_materials_UNIQUE` (`roofMaterial_id`),
-  UNIQUE KEY `material_UNIQUE` (`material`),
   KEY `fk_roofType_id_idx` (`fk_roofType_id`),
-  CONSTRAINT `fk_roofType_id2` FOREIGN KEY (`fk_roofType_id`) REFERENCES `ccp_roof_type_options` (`roofType_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_unit_id` (`fk_unit_id`),
+  CONSTRAINT `fk_roofType_id2` FOREIGN KEY (`fk_roofType_id`) REFERENCES `ccp_roof_type_options` (`roofType_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_unit_id` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +262,7 @@ CREATE TABLE `ccp_roof_material_options` (
 
 LOCK TABLES `ccp_roof_material_options` WRITE;
 /*!40000 ALTER TABLE `ccp_roof_material_options` DISABLE KEYS */;
-INSERT INTO `ccp_roof_material_options` VALUES (1,1,'Trapezplader i plast',NULL,NULL,114),(2,1,'Trapezplader i stål',NULL,NULL,114),(3,1,'Tagpap',NULL,NULL,114),(4,2,'Betontagsten - Rød',NULL,NULL,114),(5,2,'Betontagsten - Teglrød',NULL,NULL,114),(6,2,'Betontagsten - Brun',NULL,NULL,114),(7,2,'Betontagsten - Sort',NULL,NULL,114),(8,2,'Eternittag B6 - Grå',NULL,NULL,114),(9,2,'Eternittag B6 - Sort ',NULL,NULL,114),(10,2,'Eternittag B6 - Mokka (brun)',NULL,NULL,114),(11,2,'Eternittag B6 - Rødbrun',NULL,NULL,114),(12,2,'Eternittag B6 - Teglrød',NULL,NULL,114),(13,2,'Eternittag B7 - Grå',NULL,NULL,114),(14,2,'Eternittag B7 - Sort',NULL,NULL,114),(15,2,'Eternittag B7 - Mokka (brun)',NULL,NULL,114),(16,2,'Eternittag B7 - Rødbrun',NULL,NULL,114),(17,2,'Eternittag B7 - Teglrød',NULL,NULL,114),(18,2,'Eternittag B7 - Rødflammet',NULL,NULL,114);
+INSERT INTO `ccp_roof_material_options` VALUES (1,1,'Trapezplader i plast',109,360,169,1),(2,1,'Trapezplader i stål',109,360,307.91,1),(3,1,'Tagpap',109,360,169,1),(4,2,'Betontagsten - Rød',28,44,18.95,1),(5,2,'Betontagsten - Teglrød',28,44,18.95,1),(6,2,'Betontagsten - Brun',28,44,18.95,1),(7,2,'Betontagsten - Sort',28,44,18.95,1),(8,2,'Eternittag B6 - Grå',28,44,18.95,1),(9,2,'Eternittag B6 - Sort ',28,44,18.95,1),(10,2,'Eternittag B6 - Mokka (brun)',28,44,18.95,1),(11,2,'Eternittag B6 - Rødbrun',28,44,18.95,1),(12,2,'Eternittag B6 - Teglrød',28,44,18.95,1),(13,2,'Eternittag B7 - Grå',28,44,18.95,1),(14,2,'Eternittag B7 - Sort',28,44,18.95,1),(15,2,'Eternittag B7 - Mokka (brun)',28,44,18.95,1),(16,2,'Eternittag B7 - Rødbrun',28,44,18.95,1),(17,2,'Eternittag B7 - Teglrød',28,44,18.95,1),(18,2,'Eternittag B7 - Rødflammet',28,44,18.95,1),(19,1,'Trapezplader i plast',109,600,284,1),(20,1,'Trapezplader i stål',109,600,615.83,1),(21,1,'Tagpap',109,600,284,1);
 /*!40000 ALTER TABLE `ccp_roof_material_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,11 +360,15 @@ CREATE TABLE `cts_cladding_options` (
   `cladding` varchar(100) NOT NULL,
   `thickness` double NOT NULL,
   `width` double NOT NULL,
+  `length` int NOT NULL,
   `price` double NOT NULL,
+  `fk_unit_id` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`cts_cladding_id`),
   UNIQUE KEY `cladding_id_UNIQUE` (`cts_cladding_id`),
-  UNIQUE KEY `cladding_UNIQUE` (`cladding`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `cladding_UNIQUE` (`cladding`),
+  KEY `fk_unit_id_idx` (`fk_unit_id`),
+  CONSTRAINT `fk_unit_id6` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,8 +377,37 @@ CREATE TABLE `cts_cladding_options` (
 
 LOCK TABLES `cts_cladding_options` WRITE;
 /*!40000 ALTER TABLE `cts_cladding_options` DISABLE KEYS */;
-INSERT INTO `cts_cladding_options` VALUES (1,'No cladding',0,0,0),(2,'Fyr',19,100,54.95),(3,'Ask',19,100,124.95),(4,'Eg',19,100,119.95),(5,'Mahogni',19,100,144.95),(6,'Gran',19,100,45.95),(7,'Teak',19,100,249.95);
+INSERT INTO `cts_cladding_options` VALUES (1,'No cladding',0,0,0,0,1),(2,'Fyr',19,100,210,54.95,1),(3,'Ask',19,100,210,124.95,1),(4,'Eg',19,100,210,119.95,1),(5,'Mahogni',19,100,210,144.95,1),(6,'Gran',19,100,210,45.95,1),(7,'Teak',19,100,210,249.95,1),(8,'Alm. trykimp. bræt',19,100,210,48.19,1);
 /*!40000 ALTER TABLE `cts_cladding_options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cts_door_components`
+--
+
+DROP TABLE IF EXISTS `cts_door_components`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cts_door_components` (
+  `door_component_id` int NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100) DEFAULT NULL,
+  `price` double NOT NULL,
+  `fk_unit_id` int NOT NULL,
+  PRIMARY KEY (`door_component_id`),
+  UNIQUE KEY `miscs_id_UNIQUE` (`door_component_id`),
+  KEY `fk_unit_id4` (`fk_unit_id`),
+  CONSTRAINT `fk_unit_id4` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cts_door_components`
+--
+
+LOCK TABLES `cts_door_components` WRITE;
+/*!40000 ALTER TABLE `cts_door_components` DISABLE KEYS */;
+INSERT INTO `cts_door_components` VALUES (1,'Stalddørsgreb 50x75 mm ',249,4),(2,'T hængsel 390 mm',129,1);
+/*!40000 ALTER TABLE `cts_door_components` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -464,9 +466,9 @@ DROP TABLE IF EXISTS `rafter_spacing_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rafter_spacing_options` (
-  `rafterSpacingInM` double NOT NULL,
-  PRIMARY KEY (`rafterSpacingInM`),
-  UNIQUE KEY `rafterSpacing_UNIQUE` (`rafterSpacingInM`)
+  `rafterSpacing` int NOT NULL,
+  PRIMARY KEY (`rafterSpacing`),
+  UNIQUE KEY `rafterSpacing_UNIQUE` (`rafterSpacing`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -476,7 +478,7 @@ CREATE TABLE `rafter_spacing_options` (
 
 LOCK TABLES `rafter_spacing_options` WRITE;
 /*!40000 ALTER TABLE `rafter_spacing_options` DISABLE KEYS */;
-INSERT INTO `rafter_spacing_options` VALUES (0.86);
+INSERT INTO `rafter_spacing_options` VALUES (55),(60),(65),(70),(75),(80),(85),(90),(95),(100);
 /*!40000 ALTER TABLE `rafter_spacing_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,6 +506,36 @@ LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` VALUES (1,'admin'),(2,'customer');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `screws`
+--
+
+DROP TABLE IF EXISTS `screws`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `screws` (
+  `screws_id` int NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100) NOT NULL,
+  `piecesPrPak` int NOT NULL,
+  `prices` double NOT NULL,
+  `fk_unit_id` int NOT NULL,
+  PRIMARY KEY (`screws_id`),
+  UNIQUE KEY `screws_id_UNIQUE` (`screws_id`),
+  KEY `fk_unit_id3` (`fk_unit_id`),
+  CONSTRAINT `fk_unit_id3` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `screws`
+--
+
+LOCK TABLES `screws` WRITE;
+/*!40000 ALTER TABLE `screws` DISABLE KEYS */;
+INSERT INTO `screws` VALUES (1,'Plastmo bundskruer',200,359,2),(2,'Skruer 4,50x60 mm',200,79.95,2),(3,'Beslagskruer 4,0x50 mm',250,249,2),(4,'Bræddebolt 10x120 mm',25,329,1),(5,'Skruer 4,5x70 mm',400,199,2),(6,'Skruer 4,5x50 mm',300,109,2);
+/*!40000 ALTER TABLE `screws` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -563,6 +595,67 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,1,'admin@gmail.com','John','Doe','123'),(2,2,'customer@gmail.com','Jane','Doe','123');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `wood_connectors`
+--
+
+DROP TABLE IF EXISTS `wood_connectors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wood_connectors` (
+  `wood_connectors_id` int NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100) NOT NULL,
+  `price` double NOT NULL,
+  `fk_unit_id` int NOT NULL,
+  PRIMARY KEY (`wood_connectors_id`),
+  UNIQUE KEY `idwood_connectors_UNIQUE` (`wood_connectors_id`),
+  KEY `fk_unit_id2` (`fk_unit_id`),
+  CONSTRAINT `fk_unit_id2` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wood_connectors`
+--
+
+LOCK TABLES `wood_connectors` WRITE;
+/*!40000 ALTER TABLE `wood_connectors` DISABLE KEYS */;
+INSERT INTO `wood_connectors` VALUES (1,'Hulbånd 1x20 mm 10 mtr',254.95,3),(2,'Universal 190 mm (højre)',24.95,1),(3,'Universal 190 mm (venstre)',24.95,1),(4,'Firkantskiver 40x40x11 mm',11.86,1),(5,'Vinkelbeslag 35',32.95,1);
+/*!40000 ALTER TABLE `wood_connectors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wood_pieces`
+--
+
+DROP TABLE IF EXISTS `wood_pieces`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wood_pieces` (
+  `wood_pieces_id` int NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100) NOT NULL,
+  `width` int NOT NULL,
+  `thickness` int NOT NULL,
+  `length` int NOT NULL,
+  `price` double NOT NULL,
+  `fk_unit_id` int NOT NULL,
+  PRIMARY KEY (`wood_pieces_id`),
+  UNIQUE KEY `wood_pieces_id_UNIQUE` (`wood_pieces_id`),
+  KEY `fk_unit_id1` (`fk_unit_id`),
+  CONSTRAINT `fk_unit_id1` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wood_pieces`
+--
+
+LOCK TABLES `wood_pieces` WRITE;
+/*!40000 ALTER TABLE `wood_pieces` DISABLE KEYS */;
+INSERT INTO `wood_pieces` VALUES (1,'Trykimp. Bræt',200,25,360,259.01,1),(2,'Trykimp. Bræt',200,25,540,388.53,1),(3,'Trykimp. Bræt',125,25,360,140.21,1),(4,'Trykimp. Bræt',125,25,540,210.33,1),(5,'Ubh. Lægte',73,38,420,134.19,1),(6,'Ubh. Reglar',95,45,270,102.46,1),(7,'Ubh. Reglar',95,45,240,91.08,1),(8,'Ubh. Spærtræ',195,45,600,894,1),(9,'Ubh. Spærtræ',195,45,480,508.8,1),(10,'Trykimp. Stolpe',97,97,300,114.79,1),(11,'Trykimp. Bræt',100,19,210,48.19,1),(12,'Trykimp. Bræt',100,19,540,162.79,1),(13,'Trykimp. Bræt',100,19,360,107.81,1);
+/*!40000 ALTER TABLE `wood_pieces` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -573,4 +666,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-12 18:53:50
+-- Dump completed on 2021-12-15 17:19:42
