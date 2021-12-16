@@ -304,12 +304,12 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       //----------------------------------------- Uni beslag ------------------------------------------
       WoodConnector uniConnectorR = woodConnectors.get(1);
       uniConnectorR.setDesc("Til montering af spær på rem");
-      uniConnectorR.setAmount(calcUniConnector(uniConnectorR));
+      uniConnectorR.setAmount(calcUniConnector(spaer));
       woodConnectorsToList.add(uniConnectorR);
 
       WoodConnector uniConnectorL = woodConnectors.get(2);
       uniConnectorL.setDesc("Til montering af spær på rem");
-      uniConnectorL.setAmount(calcUniConnector(uniConnectorL));
+      uniConnectorL.setAmount(calcUniConnector(spaer));
       woodConnectorsToList.add(uniConnectorL);
       //--------------------------------------- Uni beslag END ----------------------------------------
 
@@ -617,7 +617,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
    }
 
    private int calcUniConnector (MaterialListComponent spaer){
-
       int amountNeeded = spaer.getAmount();
 
       return amountNeeded;
