@@ -22,7 +22,7 @@ public class MaterialListMapper {
                 "SELECT * " +
                 "FROM wood_pieces " +
                        "INNER JOIN units ON wood_pieces.fk_unit_id = units.unit_id " +
-                "ORDER BY wood_pieces_id";
+                "ORDER BY wood_piece_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -50,7 +50,7 @@ public class MaterialListMapper {
             throw new UserException("No data on wood pieces from the database could be retrieved at the moment");
          }
       } catch (SQLException ex) {
-         throw new UserException("Connection to database could not be established");
+         throw new UserException(ex.getMessage());
       }
    }
 
@@ -148,7 +148,7 @@ public class MaterialListMapper {
          if (rs.next()) {
             do {
                int productId = rs.getInt("wood_connector_id");
-               String productName = rs.getString("material");
+               String productName = rs.getString("productName");
                String unit = rs.getString("unit");
                double price = rs.getDouble("price");
                String desc = "";

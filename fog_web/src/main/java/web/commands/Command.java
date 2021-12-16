@@ -32,7 +32,7 @@ public abstract class Command {
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
         commands.put("sendInquiryCommand", new SendInquiryCommand(""));
         commands.put("getInquiryByIdCommand", new GetInquiryByIdCommand("", "admin"));
-        commands.put("calcMaterialListCommand", new CalcMaterialListCommand("ccpiMaterialCalculator", "admin"));
+        commands.put("calcMaterialListCommand", new CalcMaterialListCommand("", "admin"));
 
         
         /* Delete later */

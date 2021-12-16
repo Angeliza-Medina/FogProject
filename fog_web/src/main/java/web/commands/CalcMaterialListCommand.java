@@ -30,7 +30,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
       boolean addMiddlePost = request.getParameter("middlePost") != null;
       int rafterSpacing = 55; // Todo: Make dynamic. Get data from db. Add options to frontend.
-      int roofTypeId = Integer.parseInt(request.getParameter("roofType"));
+      int roofTypeId = Integer.parseInt(request.getParameter("roofTypeId"));
       int roofMaterialId = Integer.parseInt(request.getParameter("roofMaterialId"));
       int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
 
@@ -57,14 +57,17 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          ArrayList<RoofMaterialOption> roofMaterials = materialListFacade.getAllRoofMaterial();
          ArrayList<Screw> screws = materialListFacade.getAllScrews();
          ArrayList<WoodConnector> woodConnectors = materialListFacade.getAllWoodConnectors();
+         System.out.println("Here 5");
          ArrayList<CTSDoorComponent> doorComponents = null;
 
          if(ccp.getToolshed() != null){
             cladding = materialListFacade.getCladdingById(ccp.getToolshed().getToolshedCladdingId());
+            System.out.println("Here 6");
          }
 
          if(ccp.getToolshed() != null){
             doorComponents = materialListFacade.getAllDoorComponents();
+            System.out.println("Here 7");
          }
 
          // Create and calc. the materialList
@@ -77,7 +80,8 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          return REDIRECT_INDICATOR + pageToShow;
       }catch (UserException ex) {
          request.setAttribute("error", ex.getMessage());
-         return pageToShow;
+         System.out.println(ex.getMessage());
+         return "error";
       }
    }
 
