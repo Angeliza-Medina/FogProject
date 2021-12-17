@@ -221,7 +221,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       //------------------------------------- Bræddebeklædning ----------------------------------------
       if(ccp.getToolshed() != null){
          cladding.setDesc("Til beklædning af redskabsrum 1 på 2");
-
          cladding.setAmount(calcBraeddebeklaedning(ccp.getToolshed(), cladding));
 
          claddingToList = cladding;
@@ -532,8 +531,8 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
    private int calcBraeddebeklaedning (Toolshed cts, CTSCladdingOption braeddebeklaedning){
       final int doorWidth = 70;
 
-      int widthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth;
-      int firstLayer = (int) Math.ceil((double) widthToCover / ((double) braeddebeklaedning.getWidth() / 10));
+      double outlineLengthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth - (10 + 1.6);
+      int firstLayer = (int) Math.ceil(outlineLengthToCover / ((double) braeddebeklaedning.getWidth() / 10 + 1.6));
       int secondLayer = (int) Math.ceil((double) firstLayer / 2);
 
       int amountNeeded = firstLayer + secondLayer;
