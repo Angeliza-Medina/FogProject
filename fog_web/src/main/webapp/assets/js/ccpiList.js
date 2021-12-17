@@ -11,6 +11,9 @@ const currentLocation = window.location.href;
 const url = new URL(currentLocation);
 const filterParam = url.searchParams.get("filterType");
 
+// For the ccpiMaterialCalculator.jsp - Set card order to default
+document.cookie = "currentCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
 // Reset all button background-color and its icon color
 filterBtn_elements.forEach(element => {
     element.style.backgroundColor = "var(--darkBlue)";{}

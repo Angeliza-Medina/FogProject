@@ -4,11 +4,29 @@
 const allBtnContainer_elements = document.querySelectorAll(".calculatorBtn_container");
 const allCard_elements = document.querySelectorAll(".calculatorCard");
 
-// Set default page setting
-changeColor(allBtnContainer_elements[0]);
-changeHeight(allBtnContainer_elements[0].childNodes[1]);
-bringCardToFront(allBtnContainer_elements[0]);
+const buttonContainerIds =
+    ["customerSectionBtn_container", "carportSectionBtn_container", "roofSectionBtn_container",
+    "toolshedSectionBtn_container", "calculatorSectionBtn_container", "sketchSectionBtn_container",
+     "descSectionBtn_container"];
 
+const cookieValues = ["customerCard", "carportCard", "roofCard", "toolshedCard", "calculatorCard", "sketchCard", "descCard"];
+
+
+// Set default page setting
+if(getCookie("currentCard") === ""){
+  changeColor(allBtnContainer_elements[0]);
+  changeHeight(allBtnContainer_elements[0].childNodes[1]);
+  bringCardToFront(allBtnContainer_elements[0]);
+}else{
+  for(let i = 0; i < allBtnContainer_elements.length; i++){
+    if(getCookie("currentCard") === cookieValues[i]){
+      changeColor(allBtnContainer_elements[i]);
+      changeHeight(allBtnContainer_elements[i].childNodes[1]);
+      bringCardToFront(allBtnContainer_elements[i]);
+      break;
+    }
+  }
+}
 
 // Change default page setting according to button clicked
 allBtnContainer_elements.forEach(element => {
@@ -21,7 +39,14 @@ allBtnContainer_elements.forEach(element => {
     changeColor(element); // Button container
     changeHeight(element.childNodes[1]); // Button
     bringCardToFront(element);
-  })
+
+    for(let i = 0; i < allBtnContainer_elements.length; i++){
+      if(element.id === buttonContainerIds[i]){
+        document.cookie = "currentCard=" + cookieValues[i];
+        break;
+      }
+    }
+  });
 });
 
 
@@ -82,3 +107,19 @@ function makeCardInvisible(card_element){
   card_element.style.height = "0";
 }
 /*----------------------------- Card preview order functions END -----------------------------*/
+
+function getCookie(cookieName) {
+  let name = cookieName + "=";
+  let ca = document.cookie.split(';');
+
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
