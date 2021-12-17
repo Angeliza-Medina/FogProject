@@ -6,6 +6,7 @@ public class CCPOptionListContainer {
    private ArrayList<RoofTypeOption> roofTypeOptions;
    private ArrayList<Integer> roofAngleOptions;
    private ArrayList<RoofMaterialOption> roofMaterialOptions;
+   private ArrayList<Integer> ccpRafterSpacingOptions;
    private ArrayList<Integer> ccpWidthOptions;
    private ArrayList<Integer> ccpLengthOptions;
    private ArrayList<Integer> ccpHeightOptions;
@@ -17,6 +18,7 @@ public class CCPOptionListContainer {
    public CCPOptionListContainer(ArrayList<RoofTypeOption> roofTypeOptions,
                                  ArrayList<Integer> roofAngleOptions,
                                  ArrayList<RoofMaterialOption> roofMaterialOptions,
+                                 ArrayList<Integer> ccpRafterSpacingOptions,
                                  ArrayList<Integer> ccpWidthOptions,
                                  ArrayList<Integer> ccpLengthOptions,
                                  ArrayList<Integer> ccpHeightOptions,
@@ -27,6 +29,7 @@ public class CCPOptionListContainer {
       this.roofTypeOptions = roofTypeOptions;
       this.roofAngleOptions = roofAngleOptions;
       this.roofMaterialOptions = roofMaterialOptions;
+      this.ccpRafterSpacingOptions = ccpRafterSpacingOptions;
       this.ccpWidthOptions = ccpWidthOptions;
       this.ccpLengthOptions = ccpLengthOptions;
       this.ccpHeightOptions = ccpHeightOptions;
@@ -58,6 +61,14 @@ public class CCPOptionListContainer {
 
    public void setRoofMaterialOptions(ArrayList<RoofMaterialOption> roofMaterialOptions) {
       this.roofMaterialOptions = roofMaterialOptions;
+   }
+
+   public ArrayList<Integer> getCcpRafterSpacingOptions() {
+      return ccpRafterSpacingOptions;
+   }
+
+   public void setCcpRafterSpacingOptions(ArrayList<Integer> ccpRafterSpacingOptions) {
+      this.ccpRafterSpacingOptions = ccpRafterSpacingOptions;
    }
 
    public ArrayList<Integer> getCcpWidthOptions() {
@@ -107,4 +118,5 @@ public class CCPOptionListContainer {
    public void setCtsCladdingOptions(ArrayList<CTSCladdingOption> ctsCladdingOptions) {
       this.ctsCladdingOptions = ctsCladdingOptions;
    }
+
 }

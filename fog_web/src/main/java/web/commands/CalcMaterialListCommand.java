@@ -20,15 +20,12 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
    @Override
    public String execute(HttpServletRequest request, HttpServletResponse response) {
-      // Use on desc card
-      int inquiryId = Integer.parseInt(request.getParameter("inquiryId"));
-
       // Carport
       int carportWidth = Integer.parseInt(request.getParameter("carportWidth"));
       int carportLength = Integer.parseInt(request.getParameter("carportLength"));
       int carportHeight = Integer.parseInt(request.getParameter("carportHeight"));
       boolean addMiddlePost = request.getParameter("middlePost") != null;
-      int rafterSpacing = 55; // Todo: Make dynamic. Get data from db. Add options to frontend.
+      int rafterSpacing = Integer.parseInt(request.getParameter("rafterSpacing"));
       int roofTypeId = Integer.parseInt(request.getParameter("roofTypeId"));
       int roofMaterialId = Integer.parseInt(request.getParameter("roofMaterialId"));
       int roofAngle = Integer.parseInt(request.getParameter("roofAngle"));
@@ -45,7 +42,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          cts = new Toolshed(toolshedWidth, toolshedLength, claddingId);
       }
 
-      CustomCarport ccp = new CustomCarport(
+      CustomCarport updatedCCP = new CustomCarport(
              carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
       );
 
@@ -58,21 +55,28 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          ArrayList<WoodConnector> woodConnectors = materialListFacade.getAllWoodConnectors();
          ArrayList<CTSDoorComponent> doorComponents = null;
 
-         if(ccp.getToolshed() != null){
-            cladding = materialListFacade.getCladdingById(ccp.getToolshed().getToolshedCladdingId());
+         if(updatedCCP.getToolshed() != null){
+            cladding = materialListFacade.getCladdingById(updatedCCP.getToolshed().getToolshedCladdingId());
          }
 
-         if(ccp.getToolshed() != null){
+         if(updatedCCP.getToolshed() != null){
             doorComponents = materialListFacade.getAllDoorComponents();
          }
 
+
          // Create and calc. the materialList
-         MaterialList materialList = calcMaterialList(ccp, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
+         MaterialList materialList = calcMaterialList(updatedCCP, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
          int totalPrice = calcTotalPrice(materialList);
          int recommendedPrice = calcRecommendedPrice(totalPrice);
 
          HttpSession session = request.getSession();
 
+         // Update the opened inquiry's carport with the possible changes the employee has made
+         // Will NOT change the info on the database!
+         CustomCarportInquiry inquiry = (CustomCarportInquiry) session.getAttribute("inquiryById");
+         inquiry.setCustomCarport(updatedCCP);
+
+         session.setAttribute("inquiryById", inquiry);
          session.setAttribute("materialList", materialList);
          session.setAttribute("totalPrice", totalPrice);
          session.setAttribute("recommendedPrice", recommendedPrice);
@@ -85,7 +89,51 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       }
    }
 
+   private int calcTotalPrice(MaterialList materialList){
+      int totalPrice = 0;
 
+      ArrayList<WoodPiece> woodPieces = materialList.getWoodPieces();
+      CTSCladdingOption cladding = null;
+      if(materialList.getCladding() != null){
+         cladding = materialList.getCladding();
+      }
+      ArrayList<RoofMaterialOption> roofMaterials = materialList.getRoofMaterials();
+      ArrayList<Screw> screws = materialList.getScrews();
+      ArrayList<WoodConnector> woodConnectors = materialList.getWoodConnectors();
+      ArrayList<CTSDoorComponent> doorComponents = materialList.getDoorComponents();
+
+      for(WoodPiece woodPiece : woodPieces){
+         totalPrice += (woodPiece.getPrice() * woodPiece.getAmount());
+      }
+
+      if(cladding != null){
+         totalPrice += (cladding.getPrice() * cladding.getAmount());
+      }
+
+      for(RoofMaterialOption roofMaterial : roofMaterials){
+         totalPrice += (roofMaterial.getPrice() * roofMaterial.getAmount());
+      }
+
+      for(Screw screw : screws){
+         totalPrice += (screw.getPrice() * screw.getAmount());
+      }
+
+      for(WoodConnector woodConnector : woodConnectors){
+         totalPrice += (woodConnector.getPrice() * woodConnector.getAmount());
+      }
+
+      for(CTSDoorComponent doorComponent : doorComponents){
+         totalPrice += (doorComponent.getPrice() * doorComponent.getAmount());
+      }
+
+      return totalPrice;
+   }
+
+   private int calcRecommendedPrice(int totalPrice){
+      return (int)Math.ceil((double)totalPrice / 100 * 30) + totalPrice;
+   }
+
+   // Method that calls all the different calculation methods and saves the results in multiple ArrayLists
    private MaterialList calcMaterialList(
           CustomCarport ccp,
           ArrayList<WoodPiece> woodPieces,
@@ -399,6 +447,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
    }
 
 
+   // ----------------------------------- Material calculations -----------------------------------
    private int calcUnderSternBraedderFrontAndBack(CustomCarport ccp, WoodPiece understernbraet){
       final int sidesToCalculate = 2;
 
@@ -702,49 +751,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
       return amountNeeded;
    }
-
-   private int calcTotalPrice(MaterialList materialList){
-      int totalPrice = 0;
-
-      ArrayList<WoodPiece> woodPieces = materialList.getWoodPieces();
-      CTSCladdingOption cladding = null;
-      if(materialList.getCladding() != null){
-         cladding = materialList.getCladding();
-      }
-      ArrayList<RoofMaterialOption> roofMaterials = materialList.getRoofMaterials();
-      ArrayList<Screw> screws = materialList.getScrews();
-      ArrayList<WoodConnector> woodConnectors = materialList.getWoodConnectors();
-      ArrayList<CTSDoorComponent> doorComponents = materialList.getDoorComponents();
-
-      for(WoodPiece woodPiece : woodPieces){
-         totalPrice += (woodPiece.getPrice() * woodPiece.getAmount());
-      }
-
-      if(cladding != null){
-         totalPrice += (cladding.getPrice() * cladding.getAmount());
-      }
-
-      for(RoofMaterialOption roofMaterial : roofMaterials){
-         totalPrice += (roofMaterial.getPrice() * roofMaterial.getAmount());
-      }
-
-      for(Screw screw : screws){
-         totalPrice += (screw.getPrice() * screw.getAmount());
-      }
-
-      for(WoodConnector woodConnector : woodConnectors){
-         totalPrice += (woodConnector.getPrice() * woodConnector.getAmount());
-      }
-
-      for(CTSDoorComponent doorComponent : doorComponents){
-         totalPrice += (doorComponent.getPrice() * doorComponent.getAmount());
-      }
-
-      return totalPrice;
-   }
-
-   private int calcRecommendedPrice(int totalPrice){
-      return (int)Math.ceil((double)totalPrice / 100 * 30) + totalPrice;
-   }
+   // --------------------------------- Material calculations END ---------------------------------
 
 }

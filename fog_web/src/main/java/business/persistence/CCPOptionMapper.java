@@ -107,6 +107,31 @@ public class CCPOptionMapper {
       }
    }
 
+   public ArrayList<Integer> getCCPRafterSpacingOptions() throws UserException{
+      ArrayList<Integer> cCPRafterSpacingOptions = new ArrayList<>();
+
+      try (Connection connection = database.connect()) {
+         String sql = "SELECT * FROM rafter_spacing_options ORDER BY rafterSpacing";
+
+         Statement statement = connection.createStatement();
+         ResultSet rs = statement.executeQuery(sql);
+
+         if (rs.next()) {
+            do {
+               int rafterSpacing = rs.getInt("rafterSpacing");
+
+               cCPRafterSpacingOptions.add(rafterSpacing);
+            } while (rs.next());
+
+            return cCPRafterSpacingOptions;
+         } else {
+            throw new UserException("Could retrieve custom carport rafter spacing options from our database at the moment");
+         }
+      } catch (SQLException ex) {
+         throw new UserException("Connection to database could not be established");
+      }
+   }
+
    public ArrayList<Integer> getCCPWidthOptions() throws UserException {
       ArrayList<Integer> ccpWidthOptions = new ArrayList<>();
 

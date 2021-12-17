@@ -89,8 +89,6 @@
                            <i id="customerIcon" class="far fa-user"></i>
                         </div>
 
-                        <input name="inquiryId" type="hidden" value="${sessionScope.inquiryById.ccpiId}">
-
                         <div id="contactInfo_container">
                            <h3 class="customerCardH3">Kontakoplysninger</h3>
 
@@ -113,7 +111,7 @@
                               ${sessionScope.inquiryById.note}
                            </p>
                         </div>
-                     </div>
+                     </div> <!-- #customerCardContent_container .flexRow END -->
                   </div> <!-- #customerCard .claculatorCard END -->
 
                   <div id="carportCard" class="calculatorCard">
@@ -240,6 +238,19 @@
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofAngle != roofAngleOption}">
                                     <option value="${roofAngleOption}">${roofAngleOption} grader</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
+
+                           <label for="rafterSpacing" class="formLabel">Spærafstand:</label>
+                           <select name="rafterSpacing" id="rafterSpacing" class="formSelect_element">
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpRafterSpacingOptions}" var="rafterSpacingOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing == rafterSpacingOption}">
+                                    <option selected value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing != rafterSpacingOption}">
+                                    <option value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
                                  </c:if>
                               </c:forEach>
                            </select>
