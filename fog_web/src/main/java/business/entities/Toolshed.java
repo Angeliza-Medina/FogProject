@@ -6,7 +6,7 @@ public class Toolshed {
     private int toolshedLength;
     private int toolshedCladdingId;
 
-    // Constructor used for sending data to db
+    // Constructor used for sending data to db + Calc. method
     public Toolshed(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {
         this.toolshedWidth = toolshedWidth;
         this.toolshedLength = toolshedLength;
