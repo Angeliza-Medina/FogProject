@@ -89,8 +89,6 @@
                            <i id="customerIcon" class="far fa-user"></i>
                         </div>
 
-                        <input name="inquiryId" type="hidden" value="${sessionScope.inquiryById.ccpiId}">
-
                         <div id="contactInfo_container">
                            <h3 class="customerCardH3">Kontakoplysninger</h3>
 
@@ -113,7 +111,7 @@
                               ${sessionScope.inquiryById.note}
                            </p>
                         </div>
-                     </div>
+                     </div> <!-- #customerCardContent_container .flexRow END -->
                   </div> <!-- #customerCard .claculatorCard END -->
 
                   <div id="carportCard" class="calculatorCard">
@@ -243,6 +241,19 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <label for="rafterSpacing" class="formLabel">Spærafstand:</label>
+                           <select name="rafterSpacing" id="rafterSpacing" class="formSelect_element">
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpRafterSpacingOptions}" var="rafterSpacingOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing == rafterSpacingOption}">
+                                    <option selected value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing != rafterSpacingOption}">
+                                    <option value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
                         </div> <!-- #roofSettings_container END -->
 
                         <div>
@@ -320,6 +331,18 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <div class="radioBtns_container flexRow">
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
+                                 <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                              </div>
+
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
+                                 <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                              </div>
+                           </div> <!-- .radioBtns_container . flexRow END -->
                         </div> <!-- #toolshedSettings_container END -->
 
                         <div>

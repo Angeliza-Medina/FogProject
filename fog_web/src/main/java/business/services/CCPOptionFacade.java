@@ -28,6 +28,10 @@ public class CCPOptionFacade {
       return ccpOptionMapper.getCCPRoofMaterialOptions();
    }
 
+   public ArrayList<Integer> getCCPRafterSpacingOptions() throws UserException{
+      return ccpOptionMapper.getCCPRafterSpacingOptions();
+   }
+
    public ArrayList<Integer> getCCPWidthOptions() throws UserException{
       return ccpOptionMapper.getCCPWidthOptions();
    }

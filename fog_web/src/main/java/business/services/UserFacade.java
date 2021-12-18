@@ -16,10 +16,12 @@ public class UserFacade {
         return userMapper.login(email, password);
     }
 
+    // Todo: Delete from here!!
     public User createUser(String email, String password) throws UserException {
         User user = new User(email, password, "customer", "dummyFirstName", "dummyLastName");
         userMapper.createUser(user);
         return user;
     }
+    // Todo: To here!!!
 
 }
