@@ -13,6 +13,7 @@ public class UserMapper {
         this.database = database;
     }
 
+    // Todo: Delete from here!!!
     public void createUser(User user) throws UserException {
         try (Connection connection = database.connect()) {
             String sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
@@ -33,6 +34,7 @@ public class UserMapper {
             throw new UserException(ex.getMessage());
         }
     }
+    // Todo: To here!!!
 
     public User login(String email, String password) throws UserException {
         try (Connection connection = database.connect()) {

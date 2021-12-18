@@ -40,6 +40,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          int claddingId = Integer.parseInt(request.getParameter("toolshedCladdingId"));
 
          cts = new Toolshed(toolshedWidth, toolshedLength, claddingId);
+         cts.setPlacement(request.getParameter("toolshedPlacement"));
       }
 
       CustomCarport updatedCCP = new CustomCarport(

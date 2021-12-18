@@ -35,7 +35,7 @@ public abstract class Command {
         commands.put("calcMaterialListCommand", new CalcMaterialListCommand("ccpiMaterialCalculator", "admin"));
 
         
-        /* Delete later */
+        // Todo: Delete from here!!!
         commands.put("loginpage", new CommandUnprotectedPage("loginpage"));
         commands.put("logincommand", new LoginCommand(""));
         commands.put("logoutcommand", new LogoutCommand(""));
@@ -43,6 +43,7 @@ public abstract class Command {
         commands.put("registercommand", new RegisterCommand(""));
         commands.put("customerpage", new CommandProtectedPage("customerpage", "customer"));
         commands.put("employeepage", new CommandProtectedPage("employeepage", "employee"));
+        // Todo: To here!!!
 
     }
 

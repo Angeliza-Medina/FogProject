@@ -331,6 +331,18 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <div class="radioBtns_container flexRow">
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
+                                 <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                              </div>
+
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
+                                 <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                              </div>
+                           </div> <!-- .radioBtns_container . flexRow END -->
                         </div> <!-- #toolshedSettings_container END -->
 
                         <div>
