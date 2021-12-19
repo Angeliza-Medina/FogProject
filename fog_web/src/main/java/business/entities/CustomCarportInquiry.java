@@ -39,7 +39,6 @@ public class CustomCarportInquiry {
      this.customCarport = customCarport;
   }
 
-
    public int getCcpiId() {
       return ccpiId;
    }

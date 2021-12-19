@@ -31,4 +31,8 @@ public class CustomCarportFacade {
         return customCarportMapper.getInquiryById(inquiryId);
     }
 
+    public CustomCarportInquiry getSearchInquiryById(String searchInput) throws UserException{
+        return customCarportMapper.(searchInput);
+    }
+
 }

@@ -34,7 +34,7 @@
             </div>
 
             <div id="search_container"> <!-- Todo: Add functionality -->
-               <form action="" method="GET" id="search_form" class="flexRow">
+               <form action="${pageContext.request.contextPath}/fc/SearchInquiryCommand" method="GET" id="search_form" class="flexRow">
                   <div id="searchInput_container">
                      <input name="search_input" type="text" id="search_input">
                   </div>
