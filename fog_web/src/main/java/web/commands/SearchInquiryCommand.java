@@ -45,5 +45,6 @@ public class SearchInquiryCommand extends CommandUnprotectedPage {
             session.setAttribute("cppiId", ccpiArr);
         }
 
+        return search_input;
     }
 }

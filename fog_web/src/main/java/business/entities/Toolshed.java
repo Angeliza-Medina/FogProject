@@ -6,11 +6,14 @@ public class Toolshed {
     private int toolshedLength;
     private int toolshedCladdingId;
 
-    // Constructor used for sending data to db
+    private String placement;
+
+    // Constructor used for sending data to db + Calc. method
     public Toolshed(int toolshedWidth, int toolshedLength, int toolshedCladdingId) {
         this.toolshedWidth = toolshedWidth;
         this.toolshedLength = toolshedLength;
         this.toolshedCladdingId = toolshedCladdingId;
+        this.placement = "left";
     }
 
     // Constructor used for getting ccpi by id from db
@@ -19,6 +22,7 @@ public class Toolshed {
         this.toolshedWidth = ctsWidth;
         this.toolshedLength = ctsLength;
         this.toolshedCladdingId = ctsCladding_id;
+        this.placement = "left";
     }
 
 
@@ -52,6 +56,14 @@ public class Toolshed {
 
     public void setToolshedCladdingId(int toolshedCladdingId) {
         this.toolshedCladdingId = toolshedCladdingId;
+    }
+
+    public String getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(String placement) {
+        this.placement = placement;
     }
 
 }

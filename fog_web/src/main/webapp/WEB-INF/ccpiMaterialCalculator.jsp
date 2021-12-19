@@ -78,7 +78,7 @@
                   </div>
                </div> <!-- #calculatorSectionBtns_container .flexRow END -->
 
-               <form id="calculator_form" class="posRelative">
+               <form action="${pageContext.request.contextPath}/fc/calcMaterialListCommand" method="GET" id="calculator_form" class="posRelative">
                   <div id="customerCard" class="calculatorCard">
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Kunde</h2>
@@ -88,8 +88,6 @@
                         <div id="customerIcon_container">
                            <i id="customerIcon" class="far fa-user"></i>
                         </div>
-
-                        <input name="inquiryId" type="hidden" value="${sessionScope.inquiryById.ccpiId}">
 
                         <div id="contactInfo_container">
                            <h3 class="customerCardH3">Kontakoplysninger</h3>
@@ -113,7 +111,7 @@
                               ${sessionScope.inquiryById.note}
                            </p>
                         </div>
-                     </div>
+                     </div> <!-- #customerCardContent_container .flexRow END -->
                   </div> <!-- #customerCard .claculatorCard END -->
 
                   <div id="carportCard" class="calculatorCard">
@@ -165,12 +163,12 @@
                            </select>
 
                            <label id="middlePostLabel" for="middlePost" class="formLabel">Tilføj midterstolpe:</label>
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == false}">
-                              <input type="checkbox" id="middlePost" name="middlePost" value="false">
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePillar == false}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost">
                            </c:if>
 
-                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePilar == true}">
-                              <input type="checkbox" id="middlePost" name="middlePost" value="true" checked>
+                           <c:if test="${sessionScope.inquiryById.customCarport.hasMiddlePillar == true}">
+                              <input type="checkbox" id="middlePost" name="middlePost" value="addMiddlePost" checked>
                            </c:if>
                         </div> <!-- #ccpDimension_container END -->
 
@@ -197,34 +195,28 @@
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="flatRoof">Fladt tag</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
-                                    <input name="roofType" value="1" type="radio" checked="checked" id="flatRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="1" type="radio" checked="checked" id="flatRoof" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 1}">
-                                    <input name="roofType" value="1" type="radio" id="flatRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="1" type="radio" id="flatRoof" class="formRadioBtn">
                                  </c:if>
                               </div>
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="angledRoof">Tag med rejsning</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
-                                    <input name="roofType" value="2" type="radio" checked="checked" id="angledRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="2" type="radio" checked="checked" id="angledRoof" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId != 2}">
-                                    <input name="roofType" value="2" type="radio" id="angledRoof" class="formRadioBtn">
+                                    <input name="roofTypeId" value="2" type="radio" id="angledRoof" class="formRadioBtn">
                                  </c:if>
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
 
-                           <c:forEach items="${sessionScope.ccpOptionListContainer.roofTypeOptions}" var="roofTypeOption">
-                              <c:if test="${roofTypeOption.type.equals('flat')}">
-                                 <input name="roofType" type="hidden" value="${roofTypeOption.id}">
-                              </c:if>
-                           </c:forEach>
-
                            <label for="roofMaterial" class="formLabel">Tag:</label>
-                           <select name="roofMaterial" id="roofMaterial" class="formSelect_element">
+                           <select name="roofMaterialId" id="roofMaterial" class="formSelect_element">
                               <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
                                  <c:if test="${sessionScope.inquiryById.customCarport.roofMaterialId == roofMaterialOption.id}">
                                     <option selected value="${roofMaterialOption.id}">${roofMaterialOption.material}</option>
@@ -249,6 +241,19 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <label for="rafterSpacing" class="formLabel">Spærafstand:</label>
+                           <select name="rafterSpacing" id="rafterSpacing" class="formSelect_element">
+                              <c:forEach items="${sessionScope.ccpOptionListContainer.ccpRafterSpacingOptions}" var="rafterSpacingOption">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing == rafterSpacingOption}">
+                                    <option selected value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.rafterSpacing != rafterSpacingOption}">
+                                    <option value="${rafterSpacingOption}">${rafterSpacingOption} cm</option>
+                                 </c:if>
+                              </c:forEach>
+                           </select>
                         </div> <!-- #roofSettings_container END -->
 
                         <div>
@@ -268,22 +273,22 @@
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedTrue">Redskabsrum incl.</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
-                                    <input name="toolshed" value="true" type="radio" checked="checked" id="toolshedTrue" class="formRadioBtn">
+                                    <input name="hasToolshed" value="true" type="radio" checked="checked" id="toolshedTrue" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                    <input name="toolshed" value="true" type="radio" id="toolshedTrue" class="formRadioBtn">
+                                    <input name="hasToolshed" value="true" type="radio" id="toolshedTrue" class="formRadioBtn">
                                  </c:if>
                               </div>
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedFalse">Redskabsrum excl.</label>
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                    <input name="toolshed" value="false" type="radio" checked="checked" id="toolshedFalse" class="formRadioBtn">
+                                    <input name="hasToolshed" value="false" type="radio" checked="checked" id="toolshedFalse" class="formRadioBtn">
                                  </c:if>
 
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
-                                    <input name="toolshed" value="false" type="radio" id="toolshedFalse" class="formRadioBtn">
+                                    <input name="hasToolshed" value="false" type="radio" id="toolshedFalse" class="formRadioBtn">
                                  </c:if>
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
@@ -315,7 +320,7 @@
                            </select>
 
                            <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
-                           <select name="toolshedCladding" id="toolshedCladding" class="formSelect_element">
+                           <select name="toolshedCladdingId" id="toolshedCladding" class="formSelect_element">
                               <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId == claddingOption.id}">
                                     <option selected value="${claddingOption.id}">${claddingOption.cladding}</option>
@@ -326,6 +331,18 @@
                                  </c:if>
                               </c:forEach>
                            </select>
+
+                           <div class="radioBtns_container flexRow">
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
+                                 <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                              </div>
+
+                              <div class="radioBtn_container flexRow">
+                                 <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
+                                 <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                              </div>
+                           </div> <!-- .radioBtns_container . flexRow END -->
                         </div> <!-- #toolshedSettings_container END -->
 
                         <div>
@@ -340,168 +357,171 @@
                      </div>
 
                      <div id="calculatorCardContent_container">
-                        <div id="materialList_container">
-                           <!-- Only show when a material list is saved to the session -->
-                           <div id="materialListTable_container">
-                              <div id="tableHeadline_container">
-                                 <h3 id="tableHeadline">Stykliste</h3>
+                        <c:if test="${sessionScope.materialList != null}">
+                           <div id="materialList_container">
+                              <!-- Only show when a material list is saved to the session -->
+                              <div id="materialListTable_container">
+                                 <div id="tableHeadline_container">
+                                    <h3 id="tableHeadline">Stykliste</h3>
+                                 </div>
+
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Materiale</th>
+
+                                       <th>Længde i cm</th>
+
+                                       <th>Antal</th>
+
+                                       <th>Enhed</th>
+
+                                       <th>Beskrivelse</th>
+                                    </tr>
+                                 </table>
+
+                                 <!-- Make dynamic -->
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Træ & Tagplader</th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                    </tr>
+
+                                    <c:forEach items="${sessionScope.materialList.woodPieces}" var="woodpiece">
+                                       <tr>
+                                          <td>
+                                             ${woodpiece.productName}
+                                             ${woodpiece.thickness} x
+                                             ${woodpiece.width}mm
+                                          </td>
+
+                                          <td>${woodpiece.length}</td>
+
+                                          <td>${woodpiece.amount}</td>
+
+                                          <td>${woodpiece.unit}</td>
+
+                                          <td>${woodpiece.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:if test="${sessionScope.materialList.cladding != null}">
+                                       <tr>
+                                          <td>
+                                             ${sessionScope.materialList.cladding.productName}
+                                             ${sessionScope.materialList.cladding.thickness} x
+                                             ${sessionScope.materialList.cladding.width}mm
+                                          </td>
+                                          <td>${sessionScope.materialList.cladding.length}</td>
+                                          <td>${sessionScope.materialList.cladding.amount}</td>
+                                          <td>${sessionScope.materialList.cladding.unit}</td>
+                                          <td>${sessionScope.materialList.cladding.desc}</td>
+                                       </tr>
+                                    </c:if>
+
+                                    <c:forEach items="${sessionScope.materialList.roofMaterials}" var="roofMaterial">
+                                       <tr>
+                                          <td>${roofMaterial.productName}</td>
+                                          <td>${roofMaterial.materialLength}</td>
+                                          <td>${roofMaterial.amount}</td>
+                                          <td>${roofMaterial.unit}</td>
+                                          <td>${roofMaterial.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+                                 </table>
+
+                                 <!-- Make dynamic -->
+                                 <table class="materialList_table">
+                                    <tr class="materialListHeadRow">
+                                       <th>Beslag & Skruer</th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
+                                    </tr>
+
+                                    <c:forEach items="${sessionScope.materialList.screws}" var="screw">
+                                       <tr>
+                                          <td>${screw.productName}</td>
+                                          <td></td>
+                                          <td>${screw.amount}</td>
+                                          <td>${screw.unit}</td>
+                                          <td>${screw.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:forEach items="${sessionScope.materialList.woodConnectors}" var="woodConnector">
+                                       <tr>
+                                          <td>${woodConnector.productName}</td>
+                                          <td></td>
+                                          <td>${woodConnector.amount}</td>
+                                          <td>${woodConnector.unit}</td>
+                                          <td>${woodConnector.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+
+                                    <c:forEach items="${sessionScope.materialList.doorComponents}" var="doorComponent">
+                                       <tr>
+                                          <td>${doorComponent.productName}</td>
+                                          <td></td>
+                                          <td>${doorComponent.amount}</td>
+                                          <td>${doorComponent.unit}</td>
+                                          <td>${doorComponent.desc}</td>
+                                       </tr>
+                                    </c:forEach>
+                                 </table>
+                              </div> <!-- #materialListTable_container END -->
+
+                              <div class="materialListPrintBtn_container">
+                                 <button type="button" id="materialListPrint_btn">
+                                    Print
+                                 </button>
                               </div>
+                           </div> <!-- #materialList_container END -->
 
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Materiale
-                                    </th>
+                           <div id="pricing_container" class="flexRow">
+                              <div class="pricingSection_container">
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Total pris:</h3>
 
-                                    <th>
-                                       Længde i cm
-                                    </th>
-
-                                    <th>
-                                       Antal
-                                    </th>
-
-                                    <th>
-                                       Enhed
-                                    </th>
-
-                                    <th>
-                                       Beskrivelse
-                                    </th>
-                                 </tr>
-                              </table>
-
-                              <!-- Make dynamic -->
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Træ & Tagplader
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-                                 </tr>
-
-                                 <tr>
-                                    <td>
-                                       Træ
-                                    </td>
-
-                                    <td>
-                                       300
-                                    </td>
-
-                                    <td>
-                                       11
-                                    </td>
-
-                                    <td>
-                                       stk.
-                                    </td>
-
-                                    <td>
-                                       Til skuret
-                                    </td>
-                                 </tr>
-                              </table>
-
-                              <!-- Make dynamic -->
-                              <table class="materialList_table">
-                                 <tr class="materialListHeadRow">
-                                    <th>
-                                       Beslag & Skruer
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-
-                                    <th>
-                                    </th>
-                                 </tr>
-
-                                 <tr>
-                                    <td>
-                                       Skruer
-                                    </td>
-
-                                    <td>
-                                       300
-                                    </td>
-
-                                    <td>
-                                       11
-                                    </td>
-
-                                    <td>
-                                       stk.
-                                    </td>
-
-                                    <td>
-                                       Til skuret
-                                    </td>
-                                 </tr>
-                              </table>
-                           </div> <!-- #materialListTable_container END -->
-
-                           <div class="materialListPrintBtn_container">
-                              <button type="button" id="materialListPrint_btn">
-                                 Print
-                              </button>
-                           </div>
-                        </div> <!-- #materialList_container END -->
-
-                        <!-- Make dynamic -->
-                        <div id="pricing_container" class="flexRow">
-                           <div class="pricingSection_container">
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Total pris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div class="price_container">
-                                    <span id="totalPrice" class="price">0</span> kr.
-                                 </div>
-                              </section>
-
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Anbefalet salgspris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div class="price_container">
-                                    <span id="recommendedPrice" class="price">0</span> kr.
-                                 </div>
-                              </section>
-                           </div> <!-- .class="pricingSection_container" END -->
-
-                           <div class="pricingSection_container">
-                              <section class="pricing_section">
-                                 <h3 class="pricingSection_headline">Juster salgspris:</h3>
-
-                                 <!-- Make dynamic -->
-                                 <div id="adjustedPrice_container" class="flexRow">
-                                    <textarea name="adjustedPrice"></textarea>
-
-                                    <div>
-                                       Kr.
+                                    <!-- Make dynamic -->
+                                    <div class="price_container">
+                                       <span id="totalPrice" class="price">
+                                          ${sessionScope.totalPrice}
+                                       </span> kr.
                                     </div>
-                                 </div>
-                              </section>
-                           </div>
-                        </div> <!-- #pricing_container END -->
+                                 </section>
+
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Anbefalet salgspris:</h3>
+
+                                    <!-- Make dynamic -->
+                                    <div class="price_container">
+                                       <span id="recommendedPrice" class="price">
+                                          ${sessionScope.recommendedPrice}
+                                       </span> kr.
+                                    </div>
+                                 </section>
+                              </div> <!-- .class="pricingSection_container" END -->
+
+                              <div class="pricingSection_container">
+                                 <section class="pricing_section">
+                                    <h3 class="pricingSection_headline">Juster salgspris:</h3>
+
+                                    <!-- Make dynamic -->
+                                    <div id="adjustedPrice_container" class="flexRow">
+                                       <textarea name="adjustedPrice">${sessionScope.recommendedPrice}</textarea>
+
+                                       <div>
+                                          Kr.
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                           </div> <!-- #pricing_container END -->
+                        </c:if>
 
                         <div class=" calculatorCardBtns_container flexRow">
                            <div class="calculatorCardBtn_container">
@@ -539,74 +559,79 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Beskrivelse</h2>
                      </div>
+                     <c:if test="${sessionScope.materialList == null}">
+                        Beregn styklisten for at se en samlet beskrivelse af bestillingen
+                     </c:if>
 
-                     <div id="descPrintBox">
-                        <div id="descHeader">
-                           <div id="descImg_container">
-                              <img src="<%=request.getContextPath()%>/assets/images/logo/logo.png" alt="Johannes Fog logo">
+                     <c:if test="${sessionScope.materialList != null}">
+                        <div id="descPrintBox">
+                           <div id="descHeader">
+                              <div id="descImg_container">
+                                 <img src="<%=request.getContextPath()%>/assets/images/logo/logo.png" alt="Johannes Fog logo">
+                              </div>
                            </div>
+
+                           <div id="desc_container">
+                              <div id="ccpiId_container">
+                                 Ordre nr: #${sessionScope.inquiryById.ccpiId}
+                              </div>
+
+                              <div id="desc">
+                                 Carport:
+                                 ${sessionScope.inquiryById.customCarport.width}
+                                 x
+                                 ${sessionScope.inquiryById.customCarport.length}
+                                 x
+                                 ${sessionScope.inquiryById.customCarport.height} cm
+                                 <br>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
+                                    Redskabsrum:
+                                    ${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth}
+                                    x
+                                    ${sessionScope.inquiryById.customCarport.toolshed.toolshedLength} cm<br>
+                                 </c:if>
+
+                                 <br>
+
+                                 Tag:<br>
+                                 Tagtype:
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
+                                    Fladt tag
+                                 </c:if>
+                                 <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
+                                    Tag med rejsning
+                                 </c:if>
+                                 <br>
+
+                                 Remtype: Ubh. spærtræ 45x195mm<br>
+                                 Tagmateriale:
+                                 <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
+                                    <c:if test="${roofMaterialOption.id == sessionScope.inquiryById.customCarport.roofMaterialId}">
+                                       ${roofMaterialOption.material}
+                                    </c:if>
+                                 </c:forEach>
+                              </div> <!-- #desc END -->
+
+                              <div id="descPrice_container" class="flexRow">
+                                 <div>
+                                    Pris:
+                                 </div>
+
+                                 <div>
+                                    ${sessionScope.recommendedPrice} kr.
+                                 </div>
+                              </div>
+                           </div> <!-- #desc_container END -->
                         </div>
 
-                        <div id="desc_container">
-                           <div id="ccpiId_container">
-                              Ordre nr: #5
-                           </div>
-
-                           <div id="desc">
-                              Carport:
-                              ${sessionScope.inquiryById.customCarport.width}cm
-                              x
-                              ${sessionScope.inquiryById.customCarport.length}cm
-                              x
-                              ${sessionScope.inquiryById.customCarport.height}cm
-                              <br>
-
-                              <c:if test="${sessionScope.inquiryById.customCarport.toolshed != null}">
-                                 Redskabsrum:
-                                 ${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth}cm
-                                 x
-                                 ${sessionScope.inquiryById.customCarport.toolshed.toolshedLength}cm<br>
-                              </c:if>
-
-                              <br>
-
-                              Tag:<br>
-                              Tagtype:
-                              <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 1}">
-                                 Fladt tag
-                              </c:if>
-                              <c:if test="${sessionScope.inquiryById.customCarport.roofTypeId == 2}">
-                                 Tag med rejsning
-                              </c:if>
-                              <br>
-
-                              Remtype: Ubh. spærtræ 45mm x 195mm<br>
-                              Tagmateriale:
-                              <c:forEach items="${sessionScope.ccpOptionListContainer.roofMaterialOptions}" var="roofMaterialOption">
-                                 <c:if test="${roofMaterialOption.id == sessionScope.inquiryById.customCarport.roofMaterialId}">
-                                    ${roofMaterialOption.material}
-                                 </c:if>
-                              </c:forEach>
-                           </div> <!-- #desc END -->
-
-                           <div id="descPrice_container" class="flexRow">
-                              <div>
-                                 Pris:
-                              </div>
-
-                              <div>
-                                 22328 kr.
-                              </div>
-                           </div>
-                        </div> <!-- #desc_container END -->
-                     </div>
-
-                     <div class="materialListPrintBtn_container">
-                        <button type="button" id="descPrint_btn">
-                           Print
-                        </button>
-                     </div>
-                  </div> <!-- #calculatorCard .calculatorCard END -->
+                        <div class="materialListPrintBtn_container">
+                           <button type="button" id="descPrint_btn">
+                              Print
+                           </button>
+                        </div>
+                     </c:if>
+                  </div> <!-- #descCard .calculatorCard END -->
                </form>
             </div> <!-- #ccpiMaterialCalculator_container END -->
          </main>

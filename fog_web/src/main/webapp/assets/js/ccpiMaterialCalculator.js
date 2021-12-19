@@ -3,12 +3,32 @@
 // Elements
 const allBtnContainer_elements = document.querySelectorAll(".calculatorBtn_container");
 const allCard_elements = document.querySelectorAll(".calculatorCard");
+const main_element = document.querySelector("main")
+
+const buttonContainerIds =
+    ["customerSectionBtn_container", "carportSectionBtn_container", "roofSectionBtn_container",
+    "toolshedSectionBtn_container", "calculatorSectionBtn_container", "sketchSectionBtn_container",
+     "descSectionBtn_container"];
+
+const cookieValues = ["customerCard", "carportCard", "roofCard", "toolshedCard", "calculatorCard", "sketchCard", "descCard"];
 
 // Set default page setting
-changeColor(allBtnContainer_elements[0]);
-changeHeight(allBtnContainer_elements[0].childNodes[1]);
-bringCardToFront(allBtnContainer_elements[0]);
-
+if(getCookie("currentCard") === ""){
+  changeColor(allBtnContainer_elements[0]);
+  changeHeight(allBtnContainer_elements[0].childNodes[1]);
+  bringCardToFront(allBtnContainer_elements[0]);
+  adjustMainHeight(allBtnContainer_elements[0]);
+}else{
+  for(let i = 0; i < allBtnContainer_elements.length; i++){
+    if(getCookie("currentCard") === cookieValues[i]){
+      changeColor(allBtnContainer_elements[i]);
+      changeHeight(allBtnContainer_elements[i].childNodes[1]);
+      bringCardToFront(allBtnContainer_elements[i]);
+      adjustMainHeight(allBtnContainer_elements[i]);
+      break;
+    }
+  }
+}
 
 // Change default page setting according to button clicked
 allBtnContainer_elements.forEach(element => {
@@ -21,7 +41,16 @@ allBtnContainer_elements.forEach(element => {
     changeColor(element); // Button container
     changeHeight(element.childNodes[1]); // Button
     bringCardToFront(element);
-  })
+    adjustMainHeight(element);
+
+    // Set session cookie
+    for(let i = 0; i < allBtnContainer_elements.length; i++){
+      if(element.id === buttonContainerIds[i]){
+        document.cookie = "currentCard=" + cookieValues[i];
+        break;
+      }
+    }
+  });
 });
 
 
@@ -57,6 +86,7 @@ function bringCardToFront(element){
     if(element === allBtnContainer_elements[i]){
       getCorrespondingCard(allCard_elements[i]);
       makeCardVisible(allCard_elements[i]);
+      // main_element.style.height = allCard_elements[i].offsetHeight + 200 + 'px';
       break;
     }
   }
@@ -81,4 +111,31 @@ function makeCardInvisible(card_element){
   card_element.style.display = "none";
   card_element.style.height = "0";
 }
+
+function adjustMainHeight(element){
+  for(let i = 0; i < allCard_elements.length; i++){
+    if(element === allBtnContainer_elements[i]){
+      main_element.style.height = allCard_elements[i].offsetHeight + 200 + 'px';
+      break;
+    }
+  }
+}
 /*----------------------------- Card preview order functions END -----------------------------*/
+
+
+/*-------------------------------- Standard get cookie funktion ------------------------------*/
+function getCookie(cookieName) {
+  let name = cookieName + "=";
+  let ca = document.cookie.split(';');
+
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}

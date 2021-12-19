@@ -5,8 +5,8 @@ public class CustomCarport {
    private int width;
    private int length;
    private int height;
-   private boolean hasMiddlePilar;
-   private double rafterSpacing;
+   private boolean hasMiddlePillar;
+   private int rafterSpacing;
    private int roofTypeId;
    private int roofAngle;
    private int roofMaterialId;
@@ -33,22 +33,39 @@ public class CustomCarport {
       this.toolshed = toolshed;
    }
 
+
    // Constructor used to get data from the db to use in ccpMaterialCalculator.jsp
    public CustomCarport(
-          int id, int width, int length, int height, boolean hasMiddlePilar, double rafterSpacing, int roofTypeId,
+          int id, int width, int length, int height, boolean hasMiddlePillar, int rafterSpacing, int roofTypeId,
           int roofAngle, int roofMaterialId, Toolshed toolshed, double price)
    {
       this.id = id;
       this.width = width;
       this.length = length;
       this.height = height;
-      this.hasMiddlePilar = hasMiddlePilar;
+      this.hasMiddlePillar = hasMiddlePillar;
       this.rafterSpacing = rafterSpacing;
       this.roofTypeId = roofTypeId;
       this.roofAngle = roofAngle;
       this.roofMaterialId = roofMaterialId;
       this.toolshed = toolshed;
       this.price = price;
+   }
+
+
+   // Constructor used for calculations
+   public CustomCarport (
+          int width, int length, int height, boolean hasMiddlePillar, int rafterSpacing, int roofTypeId,
+          int roofMaterialId, int roofAngle, Toolshed toolshed){
+      this.width = width;
+      this.length = length;
+      this.height = height;
+      this.hasMiddlePillar = hasMiddlePillar;
+      this.rafterSpacing = rafterSpacing;
+      this.roofTypeId = roofTypeId;
+      this.roofMaterialId = roofMaterialId;
+      this.roofAngle = roofAngle;
+      this.toolshed = toolshed;
    }
 
 
@@ -84,19 +101,19 @@ public class CustomCarport {
       this.height = height;
    }
 
-   public boolean isHasMiddlePilar() {
-      return hasMiddlePilar;
+   public boolean isHasMiddlePillar() {
+      return hasMiddlePillar;
    }
 
-   public void setHasMiddlePilar(boolean hasMiddlePilar) {
-      this.hasMiddlePilar = hasMiddlePilar;
+   public void setHasMiddlePillar(boolean hasMiddlePillar) {
+      this.hasMiddlePillar = hasMiddlePillar;
    }
 
-   public double getRafterSpacing() {
+   public int getRafterSpacing() {
       return rafterSpacing;
    }
 
-   public void setRafterSpacing(double rafterSpacing) {
+   public void setRafterSpacing(int rafterSpacing) {
       this.rafterSpacing = rafterSpacing;
    }
 

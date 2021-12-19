@@ -23,7 +23,7 @@ public class CustomCarportMapper {
                    "INSERT INTO cts (fk_ctsWidth, fk_ctsLength, fk_cladding_id)\n" +
                    "    VALUES(?, ?, ?);\n" +
                    "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
-                   "    VALUES(?, ?, ?, 0.86, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
+                   "    VALUES(?, ?, ?, 55, ?, ?, ?, LAST_INSERT_ID()) ;\n" +
                    "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
                    "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n";
 
@@ -74,7 +74,7 @@ public class CustomCarportMapper {
 
             String sql =
                   "INSERT INTO ccp (fk_ccpWidth, fk_ccpLength, fk_ccpHeight, fk_rafterSpacing, fk_ccpRoofType_id, fk_ccpRoofAngle, fk_ccpRoofMaterial_id, fk_cts_id)\n" +
-                  "    VALUES(?, ?, ?, 0.86, ?, ?, ?, ?) ;\n" +
+                  "    VALUES(?, ?, ?, 55, ?, ?, ?, ?) ;\n" +
                   "INSERT INTO ccp_inquiries (inquiryDate, fk_user_id, firstName, lastName, email, phoneNum, address, postalcode, city, note, fk_ccp_id)\n" +
                   "    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, LAST_INSERT_ID()) ;\n";
 
@@ -181,7 +181,109 @@ public class CustomCarportMapper {
 
     }
 
-    public CustomCarportInquiry getInquiryById(String searchInput) throws UserException{
+    public CustomCarportInquiry getInquiryById(int inquiryId) throws UserException{
+        CustomCarportInquiry customCarportInquiry = null;
+
+        try (Connection connection = database.connect()) {
+            String sql =
+                    " SELECT\n" +
+                            "    custom_carport_inquiry_id AS inquiry_id,\n" +
+                            "    inquiryDate,\n" +
+                            "    ccp_inquiry_statuses.status AS status,\n" +
+                            "    firstName, lastName, email, phoneNum, address, postalcode, city, note,\n" +
+                            "    ccp.ccp_id AS ccp_id,\n" +
+                            "    ccp.fk_ccpWidth AS ccpWidth,\n" +
+                            "    ccp.fk_ccpLength AS ccpLength,\n" +
+                            "    ccp.fk_ccpHeight AS ccpHeight,\n" +
+                            "    ccp.middlePillar AS middlePillar,\n" +
+                            "    ccp.fk_rafterSpacing AS rafterSpacing,\n" +
+                            "    ccp.fk_ccpRoofType_id AS roofType_id,\n" +
+                            "    ccp.fk_ccpRoofAngle AS roofAngle,\n" +
+                            "    ccp.fk_ccpRoofMaterial_id AS roofMaterial_id,\n" +
+                            "    ccp.price,\n" +
+                            "    ccp.fk_cts_id AS cts_id,\n" +
+                            "    cts.fk_ctsWidth AS ctsWidth,\n" +
+                            "    cts.fk_ctsLength AS ctsLength,\n" +
+                            "    cts.fk_cladding_id AS ctsCladding_id \n" +
+                            "FROM (((ccp_inquiries\n" +
+                            "    INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                            "    INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                            "    LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                            "WHERE custom_carport_inquiry_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, inquiryId);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    //CTS
+                    Toolshed toolshed = null;
+
+                    if(rs.getInt("cts_id") != 0){
+                        int cts_id = rs.getInt("cts_id");
+                        int ctsWidth = rs.getInt("ctsWidth");
+                        int ctsLength = rs.getInt("ctsLength");
+                        int ctsCladding_id = rs.getInt("ctsCladding_id");
+
+                        toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                    }
+
+                    // CCP
+                    CustomCarport customCarport = null;
+
+                    int ccp_id = rs.getInt("ccp_id");
+                    int ccpWidth = rs.getInt("ccpWidth");
+                    int ccpLength = rs.getInt("ccpLength");
+                    int ccpHeight = rs.getInt("ccpHeight");
+                    boolean middlePilar = rs.getBoolean("middlePillar");
+                    int rafterSpacing = rs.getInt("rafterSpacing");
+                    int roofType_id = rs.getInt("roofType_id");
+                    int roofAngle = rs.getInt("roofAngle");
+                    int roofMaterial_id = rs.getInt("roofMaterial_id");
+                    double price = rs.getDouble("price");
+
+                    customCarport = new CustomCarport(
+                            ccp_id, ccpWidth, ccpLength, ccpHeight, middlePilar, rafterSpacing, roofType_id, roofAngle,
+                            roofMaterial_id, toolshed, price);
+
+                    // Contact info
+                    ContactInfo contactInfo = null;
+
+                    String firstName = rs.getString("firstName");
+                    String lastName = rs.getString("lastName");
+                    String email = rs.getString("email");
+                    String phoneNum = rs.getString("phoneNum");
+                    String address = rs.getString("address");
+                    int postalcode = rs.getInt("postalcode");
+                    String city = rs.getString("city");
+
+                    contactInfo = new ContactInfo(firstName, lastName, address, postalcode, city, email, phoneNum);
+
+                    // Inquiries
+                    int inquiry_id = rs.getInt("inquiry_id");
+                    LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                    String inquiryStatus = rs.getString("status");
+                    String note = rs.getString("note");
+
+                    customCarportInquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, note, contactInfo,
+                            customCarport);
+
+                    return customCarportInquiry;
+                } else {
+                    throw new UserException("No corresponding inquiry was found in the database...");
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+
+
+    public CustomCarportInquiry getSearchInquiryById(String searchInput) throws UserException{
         CustomCarportInquiry customCarportInquiry = null;
 
         try (Connection connection = database.connect()) {
@@ -195,7 +297,7 @@ public class CustomCarportMapper {
                    "    ccp.fk_ccpWidth AS ccpWidth,\n" +
                    "    ccp.fk_ccpLength AS ccpLength,\n" +
                    "    ccp.fk_ccpHeight AS ccpHeight,\n" +
-                   "    ccp.middlePilar AS middlePilar,\n" +
+                   "    ccp.middlePillar AS middlePillar,\n" +
                    "    ccp.fk_rafterSpacing AS rafterSpacing,\n" +
                    "    ccp.fk_ccpRoofType_id AS roofType_id,\n" +
                    "    ccp.fk_ccpRoofAngle AS roofAngle,\n" +
@@ -212,7 +314,7 @@ public class CustomCarportMapper {
                    "WHERE custom_carport_inquiry_id = ?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, searchInput);
+                ps.setString(1, searchInput);
 
                 ResultSet rs = ps.executeQuery();
 
@@ -229,18 +331,45 @@ public class CustomCarportMapper {
                             toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
                         }
 
-                        // CCP data
-                        int ccp_id = rs.getInt("ccp_id");
-                        int ccpWidth = rs.getInt("ccpWidth");
-                        int ccpLength = rs.getInt("ccpLength");
-                        int ccpHeight = rs.getInt("ccpHeight");
-
-                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
-
                         // Inquiry data
                         int inquiry_id = rs.getInt("inquiry_id");
                         LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
                         String inquiryStatus = rs.getString("status");
+
+                    int ccp_id = rs.getInt("ccp_id");
+                    int ccpWidth = rs.getInt("ccpWidth");
+                    int ccpLength = rs.getInt("ccpLength");
+                    int ccpHeight = rs.getInt("ccpHeight");
+                    boolean middlePilar = rs.getBoolean("middlePillar");
+                    int rafterSpacing = rs.getInt("rafterSpacing");
+                    int roofType_id = rs.getInt("roofType_id");
+                    int roofAngle = rs.getInt("roofAngle");
+                    int roofMaterial_id = rs.getInt("roofMaterial_id");
+                    double price = rs.getDouble("price");
+
+                    CustomCarport customCarport = new CustomCarport(
+                           ccp_id, ccpWidth, ccpLength, ccpHeight, middlePilar, rafterSpacing, roofType_id, roofAngle,
+                           roofMaterial_id, toolshed, price);
+
+                    // Contact info
+                    ContactInfo contactInfo = null;
+
+                    String firstName = rs.getString("firstName");
+                    String lastName = rs.getString("lastName");
+                    String email = rs.getString("email");
+                    String phoneNum = rs.getString("phoneNum");
+                    String address = rs.getString("address");
+                    int postalcode = rs.getInt("postalcode");
+                    String city = rs.getString("city");
+
+                    contactInfo = new ContactInfo(firstName, lastName, address, postalcode, city, email, phoneNum);
+
+                    // Inquiries
+                    int inquiry_id = rs.getInt("inquiry_id");
+                    LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                    String inquiryStatus = rs.getString("status");
+                    String note = rs.getString("note");
+
 
                         CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
 
@@ -250,11 +379,18 @@ public class CustomCarportMapper {
                     return inquiry;
                 }else{
                     throw new UserException("Der var desv. Ingen forespørgsler som matchede det søgte id nummer ");
+
+                    return customCarportInquiry;
+                } else {
+                    throw new UserException("No corresponding inquiry was found in the database...");
+
                 }
             } catch (SQLException ex) {
                 throw new UserException("Connection to database could not be established");
             }
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-}
+    }
 
