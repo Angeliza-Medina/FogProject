@@ -553,6 +553,58 @@
                      <div class="cardHeadline_container">
                         <h2 class="cardHeadline">Plantegning</h2>
                      </div>
+
+                     <c:if test="${sessionScope.materialList == null}">
+                        <div class="calcFirstInfoBox">
+                           Beregn styklisten for at få genereret en plantegning
+                        </div>
+                     </c:if>
+
+                     <c:if test="${sessionScope.materialList != null}">
+                        <div id="sketchInfoBox" class="sketchInfo">
+                           <div id="server_ccpWidth" class="sketchInfo">
+                              ${sessionScope.sketchInfo.carport.width}
+                           </div>
+
+                           <div id="server_ccpLength" class="sketchInfo">
+                                 ${sessionScope.sketchInfo.carport.length}
+                           </div>
+
+                           <div id="server_rafterSpacing" class="sketchInfo">
+                                 ${sessionScope.sketchInfo.carport.rafterSpacing}
+                           </div>
+
+                           <div id="server_rafterThickness" class="sketchInfo">
+                                 ${sessionScope.sketchInfo.rafterThickness}
+                           </div>
+
+                           <c:if test="${sessionScope.sketchInfo.carport.toolshed != null}">
+                              <div id="server_toolshedPlacement" class="sketchInfo">
+                                    ${sessionScope.sketchInfo.carport.toolshed.placement}
+                              </div>
+
+                              <div id="server_toolshedWidth" class="sketchInfo">
+                                    ${sessionScope.sketchInfo.carport.toolshed.toolshedWidth}
+                              </div>
+
+                              <div id="server_toolshedLength" class="sketchInfo">
+                                    ${sessionScope.sketchInfo.carport.toolshed.toolshedLength}
+                              </div>
+                           </c:if>
+                        </div> <!-- #sketchInfoBox .sketchInfo -->
+
+                        <div id="sketchPrintBox" class="posRelative">
+                           <svg id="sketchSVG" class="posAbsolute" viewBox="0 0 1100 1100" preserveAspectRatio="xMinYMin meet">
+                              <!-- Is generated with js -->
+                           </svg>
+                        </div> <!-- #sketchPrintBox END -->
+
+                        <div class="materialListPrintBtn_container">
+                           <button type="button" id="sketchPrint_btn">
+                              Print
+                           </button>
+                        </div>
+                     </c:if>
                   </div> <!-- #calculatorCard .claculatorCard END -->
 
                   <div id="descCard" class="calculatorCard">
@@ -560,7 +612,9 @@
                         <h2 class="cardHeadline">Beskrivelse</h2>
                      </div>
                      <c:if test="${sessionScope.materialList == null}">
-                        Beregn styklisten for at se en samlet beskrivelse af bestillingen
+                        <div class="calcFirstInfoBox">
+                           Beregn styklisten for at se en samlet beskrivelse af bestillingen
+                        </div>
                      </c:if>
 
                      <c:if test="${sessionScope.materialList != null}">
@@ -641,5 +695,6 @@
 
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator.js"></script>
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_print.js"></script>
+      <script src="<%=request.getContextPath()%>/assets/js/sketch.js"></script>
    </body>
 </html>

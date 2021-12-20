@@ -77,10 +77,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          CustomCarportInquiry inquiry = (CustomCarportInquiry) session.getAttribute("inquiryById");
          inquiry.setCustomCarport(updatedCCP);
 
+         SketchInfo sketchInfo = new SketchInfo(updatedCCP, woodPieces.get(7).getThickness()); // Todo to get by id
+
          session.setAttribute("inquiryById", inquiry);
          session.setAttribute("materialList", materialList);
          session.setAttribute("totalPrice", totalPrice);
          session.setAttribute("recommendedPrice", recommendedPrice);
+         session.setAttribute("sketchInfo", sketchInfo);
 
          return REDIRECT_INDICATOR + super.pageToShow;
       }catch (UserException ex) {
