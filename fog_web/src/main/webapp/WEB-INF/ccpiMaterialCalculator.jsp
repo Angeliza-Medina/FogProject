@@ -335,12 +335,24 @@
                            <div class="radioBtns_container flexRow">
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
-                                 <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
+                                       <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                                    </c:if>
+
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
+                                       <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                                    </c:if>
                               </div>
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
-                                 <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
+                                    <input name="toolshedPlacement" value="right" type="radio" checked="checked" id="toolshedRight" class="formRadioBtn">
+                                 </c:if>
+
+                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
+                                    <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                                 </c:if>
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
                         </div> <!-- #toolshedSettings_container END -->
