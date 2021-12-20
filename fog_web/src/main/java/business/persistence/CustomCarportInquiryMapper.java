@@ -1,9 +1,6 @@
 package business.persistence;
 
-import business.entities.CustomCarport;
-import business.entities.CustomCarportInquiry;
-import business.entities.Toolshed;
-import business.entities.User;
+import business.entities.*;
 import business.exceptions.UserException;
 
 import java.sql.Connection;
@@ -11,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CustomCarportInquiryMapper {
 
@@ -21,7 +19,9 @@ public class CustomCarportInquiryMapper {
         this.database = database;
     }
 
-    public CustomCarportInquiry getSearchInquiryById(int search_input) throws UserException {
+    public ArrayList<CustomCarportInquiry> getSearchInquiryById(int search_input) throws UserException {
+        ArrayList<CustomCarportInquiry> inquiries = new ArrayList<>();
+
         try (Connection connection = database.connect()) {
             String sql =
                     "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
@@ -39,47 +39,52 @@ public class CustomCarportInquiryMapper {
                             "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
                             "WHERE custom_carport_inquiry_id = ?";
 
-
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, search_input);
 
-
                 ResultSet rs = ps.executeQuery();
 
-                Toolshed toolshed = null;
+                if (rs.next()) {
+                    do {
+                        // CTS data
+                        Toolshed toolshed = null;
 
-                if (rs.getInt("cts_id") != 0) {
-                    int cts_id = rs.getInt("cts_id");
-                    int ctsWidth = rs.getInt("ctsWidth");
-                    int ctsLength = rs.getInt("ctsLength");
-                    int ctsCladding_id = rs.getInt("ctsCladding_id");
-                    toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                        if (rs.getInt("cts_id") != 0) {
+                            int cts_id = rs.getInt("cts_id");
+                            int ctsWidth = rs.getInt("ctsWidth");
+                            int ctsLength = rs.getInt("ctsLength");
+                            int ctsCladding_id = rs.getInt("ctsCladding_id");
+                            toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                        }
 
+                        // CCP data
+                        int ccp_id = rs.getInt("ccp_id");
+                        int ccpWidth = rs.getInt("ccpWidth");
+                        int ccpLength = rs.getInt("ccpLength");
+                        int ccpHeight = rs.getInt("ccpHeight");
 
-                    // CCP data
-                    int ccp_id = rs.getInt("ccp_id");
-                    int ccpWidth = rs.getInt("ccpWidth");
-                    int ccpLength = rs.getInt("ccpLength");
-                    int ccpHeight = rs.getInt("ccpHeight");
+                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
 
-                    CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
+                        // Inquiry data
+                        int inquiry_id = rs.getInt("inquiry_id");
+                        LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                        String inquiryStatus = rs.getString("status");
 
-                    // Inquiry data
-                    int inquiry_id = rs.getInt("inquiry_id");
-                    LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
-                    String inquiryStatus = rs.getString("status");
+                        CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
 
-                    CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
+                        inquiries.add(inquiry);
+                    } while (rs.next());
 
-                    return inquiry;
+                    return inquiries;
                 } else {
-                    throw new UserException("Could not validate user");
+                    throw new UserException("Der var desv. ingen forespørgsler som matchede det søgte id nummer ");
                 }
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        } catch (SQLException ex) {
+            throw new UserException("Could not establish connection to our database at the moment...");
         }
     }
 }
