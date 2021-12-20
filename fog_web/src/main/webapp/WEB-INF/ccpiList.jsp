@@ -103,7 +103,7 @@
 
             <c:if test="${requestScope.error != null}">
                <div>
-                     ${requestScope.error}
+                  ${requestScope.error}
                </div>
             </c:if>
 

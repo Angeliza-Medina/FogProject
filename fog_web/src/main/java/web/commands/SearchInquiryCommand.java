@@ -24,27 +24,25 @@ public class SearchInquiryCommand extends CommandProtectedPage{
 
         String searchCategory = request.getParameter("searchCategory");
         String search_input = request.getParameter("search_input");
-        ArrayList<CustomCarportInquiry> ccpiArr = new ArrayList<>();
+        ArrayList<CustomCarportInquiry> ccpiList = new ArrayList<>();
         HttpSession session = request.getSession();
 
         try {
             if(searchCategory.equals("ccpiId")) {
                 int searchId = Integer.parseInt(search_input);
-                customCarportFacade.getSearchInquiryById(searchId);
-                ccpiArr = customCarportFacade.getSearchInquiryById(searchId);
+                ccpiList = customCarportFacade.getSearchInquiryById(searchId);
             } else if (searchCategory.equals("date")) {
 
             } else if (searchCategory.equals("lastName")) {
 
             }
 
-            session.setAttribute("cppiList", ccpiArr);
             session.setAttribute("error", null);
+            session.setAttribute("ccpiList", ccpiList);
 
             return REDIRECT_INDICATOR + super.pageToShow;
         } catch (UserException ex) {
-            session.setAttribute("ccpiList", ccpiArr);
-            System.out.println("Here");
+            session.setAttribute("ccpiList", ccpiList);
             session.setAttribute("error", ex.getMessage());
             return super.pageToShow;
         }
