@@ -5,6 +5,7 @@ import business.exceptions.UserException;
 import business.persistence.CustomCarportMapper;
 import business.persistence.Database;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomCarportFacade {
@@ -34,5 +35,13 @@ public class CustomCarportFacade {
    public ArrayList<CustomCarportInquiry> getSearchInquiryById(int searchInput) throws UserException{
        return customCarportMapper.getSearchInquiryById(searchInput);
    }
+
+    public ArrayList<CustomCarportInquiry> getSearchInquiryByLastName(String searchInputLastName) throws UserException{
+        return customCarportMapper.getSearchInquiryByLastName(searchInputLastName);
+    }
+
+    public ArrayList<CustomCarportInquiry> getSearchInquiryByDate(LocalDate searchInputDate) throws UserException{
+        return customCarportMapper.getSearchInquiryByDate(searchInputDate);
+    }
 
 }

@@ -35,10 +35,16 @@ public class SearchInquiryCommand extends CommandUnprotectedPage {
                 ccpiArr = customCarportFacade.getSearchInquiryById(searchId);
             }
             else if (searchCategory.equals("date")) {
+                LocalDate searchId = search_input;
+                customCarportFacade.getSearchInquiryById(searchId);
+                ccpiArr = customCarportFacade.getSearchInquiryById(searchId);
 
             }
 
             else if (searchCategory.equals("lastName")) {
+                String searchId = search_input;
+                customCarportFacade.getSearchInquiryById(searchId);
+                ccpiArr = customCarportFacade.getSearchInquiryByLastName(searchId);
 
             }
 

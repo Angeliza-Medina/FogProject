@@ -1,8 +1,9 @@
 package business.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class CustomCarportInquiry {
+public class CustomCarportInquiry extends ArrayList<CustomCarportInquiry> {
 
    // - Carport dimensions -
    private int ccpiId;
