@@ -335,6 +335,10 @@
                            <div class="radioBtns_container flexRow">
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
+                                       <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                                    </c:if>
+
                                     <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
                                        <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
                                     </c:if>
@@ -346,6 +350,10 @@
 
                               <div class="radioBtn_container flexRow">
                                  <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
+                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
+                                    <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                                 </c:if>
+
                                  <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
                                     <input name="toolshedPlacement" value="right" type="radio" checked="checked" id="toolshedRight" class="formRadioBtn">
                                  </c:if>
@@ -588,6 +596,16 @@
 
                            <div id="server_rafterThickness" class="sketchInfo">
                                  ${sessionScope.sketchInfo.rafterThickness}
+                           </div>
+
+                           <div id="server_hasToolshed" class="sketchInfo">
+                              <c:if test="${sessionScope.sketchInfo.carport.toolshed != null}">
+                                 true
+                              </c:if>
+
+                              <c:if test="${sessionScope.sketchInfo.carport.toolshed == null}">
+                                 false
+                              </c:if>
                            </div>
 
                            <c:if test="${sessionScope.sketchInfo.carport.toolshed != null}">

@@ -12,11 +12,13 @@ const sketchInfoBox_element = document.querySelector("#sketchInfoBox");
     let server_rafterThickness = parseInt(sketchInfoBox_element.querySelector("#server_rafterThickness").innerHTML.trim()) / 10;
 
     // Toolshed
+    let server_hasToolshed = sketchInfoBox_element.querySelector("#server_hasToolshed").innerHTML.trim();
+    let server_hasToolshedBoolean = (server_hasToolshed === "true");
     let server_toolshedPlacement;
     let server_toolshedWidth;
     let server_toolshedLength;
 
-    if(sketchInfoBox_element.querySelector("#server_toolshedPlacement") !== null){
+    if(server_hasToolshedBoolean){
         server_toolshedPlacement = sketchInfoBox_element.querySelector("#server_toolshedPlacement").innerHTML.trim();
         server_toolshedWidth = parseInt(sketchInfoBox_element.querySelector("#server_toolshedWidth").innerHTML.trim());
         server_toolshedLength = parseInt(sketchInfoBox_element.querySelector("#server_toolshedLength").innerHTML.trim());
@@ -40,14 +42,12 @@ let caportRafterDiff = 70;
 let carportWidth = server_ccpWidth - caportRafterDiff;
 let carportLength = server_ccpLength;
 
-let hasToolshed;
+let hasToolshed = server_hasToolshedBoolean;
 let isPlacedLeft;
-let toolshedWidth; // Get from server
-let toolshedLenght; // Get from server
+let toolshedWidth;
+let toolshedLenght;
 
-if(server_toolshedPlacement === null){
-    hasToolshed = false;
-}else{
+if(hasToolshed){
     hasToolshed = true;
     toolshedWidth = server_toolshedWidth;
     toolshedLenght = server_toolshedLength;
@@ -76,48 +76,48 @@ let hulbaandRight = document.createElementNS(svgNS, "line");
 
 // Meassurement line svg elements
 // Carport
-// Width
-let ccpWidthHLineTop = document.createElementNS(svgNS, "line");
-let ccpWidthHLineBottom = document.createElementNS(svgNS, "line");
-let ccpWidthLineTop = document.createElementNS(svgNS, "line");
-let ccpWidthLineBottom = document.createElementNS(svgNS, "line");
-let ccpWidthTxt = document.createElementNS(svgNS, "text");
+    // Width
+    let ccpWidthHLineTop = document.createElementNS(svgNS, "line");
+    let ccpWidthHLineBottom = document.createElementNS(svgNS, "line");
+    let ccpWidthLineTop = document.createElementNS(svgNS, "line");
+    let ccpWidthLineBottom = document.createElementNS(svgNS, "line");
+    let ccpWidthTxt = document.createElementNS(svgNS, "text");
 
-// Length
-let ccpLengthVLineLeft = document.createElementNS(svgNS, "line");
-let ccpLengthVLineRight = document.createElementNS(svgNS, "line");
-let ccpLengthLineLeft = document.createElementNS(svgNS, "line");
-let ccpLengthLineRight = document.createElementNS(svgNS, "line");
-let ccpLengthTxt = document.createElementNS(svgNS, "text");
+    // Length
+    let ccpLengthVLineLeft = document.createElementNS(svgNS, "line");
+    let ccpLengthVLineRight = document.createElementNS(svgNS, "line");
+    let ccpLengthLineLeft = document.createElementNS(svgNS, "line");
+    let ccpLengthLineRight = document.createElementNS(svgNS, "line");
+    let ccpLengthTxt = document.createElementNS(svgNS, "text");
 
 // Rafter
-// Width (Length)
-let rafterWidthHLineTop = document.createElementNS(svgNS, "line");
-let rafterWidthHLineBottom = document.createElementNS(svgNS, "line");
-let rafterWidthLineTop = document.createElementNS(svgNS, "line");
-let rafterWidthLineBottom = document.createElementNS(svgNS, "line");
-let rafterTxt = document.createElementNS(svgNS, "text");
+    // Width (Length)
+    let rafterWidthHLineTop = document.createElementNS(svgNS, "line");
+    let rafterWidthHLineBottom = document.createElementNS(svgNS, "line");
+    let rafterWidthLineTop = document.createElementNS(svgNS, "line");
+    let rafterWidthLineBottom = document.createElementNS(svgNS, "line");
+    let rafterTxt = document.createElementNS(svgNS, "text");
 
-// Spacing
-let rafterSpacingVLineLeft = document.createElementNS(svgNS, "line");
-let rafterSpacingVLineRight = document.createElementNS(svgNS, "line");
-let rafterSpacingLine = document.createElementNS(svgNS, "line");
-let rafterSpacingTxt = document.createElementNS(svgNS, "text");
+    // Spacing
+    let rafterSpacingVLineLeft = document.createElementNS(svgNS, "line");
+    let rafterSpacingVLineRight = document.createElementNS(svgNS, "line");
+    let rafterSpacingLine = document.createElementNS(svgNS, "line");
+    let rafterSpacingTxt = document.createElementNS(svgNS, "text");
 
 // Toolshed
-// Width
-let ctsWidthHLineTop;
-let ctsWidthHLineBottom;
-let ctsWidthLineTop;
-let ctsWidthLineBottom;
-let ctsWidthTxt;
+    // Width
+    let ctsWidthHLineTop;
+    let ctsWidthHLineBottom;
+    let ctsWidthLineTop;
+    let ctsWidthLineBottom;
+    let ctsWidthTxt;
 
-// Length
-let ctsLengthVLineLeft = document.createElementNS(svgNS, "line");
-let ctsLengthVLineRight = document.createElementNS(svgNS, "line");
-let ctsLengthLineLeft = document.createElementNS(svgNS, "line");
-let ctsLengthLineRight = document.createElementNS(svgNS, "line");
-let ctsLengthTxt = document.createElementNS(svgNS, "text");
+    // Length
+    let ctsLengthVLineLeft = document.createElementNS(svgNS, "line");
+    let ctsLengthVLineRight = document.createElementNS(svgNS, "line");
+    let ctsLengthLineLeft = document.createElementNS(svgNS, "line");
+    let ctsLengthLineRight = document.createElementNS(svgNS, "line");
+    let ctsLengthTxt = document.createElementNS(svgNS, "text");
 
 if(hasToolshed){
     // Width
@@ -185,19 +185,21 @@ sketchSVG_element.appendChild(rafterSpacingLine);
 sketchSVG_element.appendChild(rafterSpacingTxt);
 
 // Toolshed measurement lines
-// Width
-sketchSVG_element.appendChild(ctsWidthHLineTop);
-sketchSVG_element.appendChild(ctsWidthLineTop);
-sketchSVG_element.appendChild(ctsWidthLineBottom);
-sketchSVG_element.appendChild(ctsWidthHLineBottom);
-sketchSVG_element.appendChild(ctsWidthTxt);
+if(hasToolshed){
+    // Width
+    sketchSVG_element.appendChild(ctsWidthHLineTop);
+    sketchSVG_element.appendChild(ctsWidthLineTop);
+    sketchSVG_element.appendChild(ctsWidthLineBottom);
+    sketchSVG_element.appendChild(ctsWidthHLineBottom);
+    sketchSVG_element.appendChild(ctsWidthTxt);
 
 // Length
-sketchSVG_element.appendChild(ctsLengthVLineLeft);
-sketchSVG_element.appendChild(ctsLengthVLineRight);
-sketchSVG_element.appendChild(ctsLengthLineLeft);
-sketchSVG_element.appendChild(ctsLengthLineRight);
-sketchSVG_element.appendChild(ctsLengthTxt);
+    sketchSVG_element.appendChild(ctsLengthVLineLeft);
+    sketchSVG_element.appendChild(ctsLengthVLineRight);
+    sketchSVG_element.appendChild(ctsLengthLineLeft);
+    sketchSVG_element.appendChild(ctsLengthLineRight);
+    sketchSVG_element.appendChild(ctsLengthTxt);
+}
 
 function drawCarport(){
     carport.setAttribute("x", startX);
