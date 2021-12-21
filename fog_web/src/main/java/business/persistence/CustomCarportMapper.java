@@ -281,6 +281,7 @@ public class CustomCarportMapper {
         }
     }
 
+<<<<<<< HEAD
 
     public CustomCarportInquiry getSearchInquiryById(int searchInput) throws UserException {
         CustomCarportInquiry customCarportInquiry = null;
@@ -311,9 +312,30 @@ public class CustomCarportMapper {
                             "    INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
                             "    LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
                             "WHERE custom_carport_inquiry_id = ?";
+=======
+    public ArrayList<CustomCarportInquiry> getSearchInquiryById(int searchInput) throws UserException{
+        ArrayList<CustomCarportInquiry> inquiries = new ArrayList<>();
+
+        try (Connection connection = database.connect()) {
+            String sql =
+                   "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
+                          "       inquiryDate, ccp_inquiry_statuses.status AS status,\n" +
+                          "       ccp.ccp_id AS ccp_id, ccp.fk_ccpWidth AS ccpWidth,\n" +
+                          "       ccp.fk_ccpLength AS ccpLength,\n" +
+                          "       ccp.fk_ccpHeight AS ccpHeight,\n" +
+                          "       ccp.fk_cts_id AS cts_id,\n" +
+                          "       cts.fk_ctsWidth AS ctsWidth,\n" +
+                          "       cts.fk_ctsLength AS ctsLength, \n" +
+                          "       cts.fk_cladding_id AS ctsCladding_id \n" +
+                          "FROM (((ccp_inquiries\n" +
+                          "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                          "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                          "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                          "WHERE custom_carport_inquiry_id = ?";
+>>>>>>> ae41d03d13b5d2e8b7b984d695751ca2267bd153
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, searchInput);
+                ps.setInt(1, searchInput);
 
                 ResultSet rs = ps.executeQuery();
 
@@ -330,11 +352,20 @@ public class CustomCarportMapper {
                             toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
                         }
 
+                        // CCP data
+                        int ccp_id = rs.getInt("ccp_id");
+                        int ccpWidth = rs.getInt("ccpWidth");
+                        int ccpLength = rs.getInt("ccpLength");
+                        int ccpHeight = rs.getInt("ccpHeight");
+
+                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
+
                         // Inquiry data
                         int inquiry_id = rs.getInt("inquiry_id");
                         LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
                         String inquiryStatus = rs.getString("status");
 
+<<<<<<< HEAD
                         int ccp_id = rs.getInt("ccp_id");
                         int ccpWidth = rs.getInt("ccpWidth");
                         int ccpLength = rs.getInt("ccpLength");
@@ -482,11 +513,14 @@ public class CustomCarportMapper {
                         String note = rs.getString("note");
 
 
+=======
+>>>>>>> ae41d03d13b5d2e8b7b984d695751ca2267bd153
                         CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
 
-
+                        inquiries.add(inquiry);
                     } while (rs.next());
 
+<<<<<<< HEAD
                     return inquiry;
                 } else {
                     throw new UserException("Der var desv. Ingen forespørgsler som matchede det søgte id nummer ");
@@ -606,14 +640,21 @@ public class CustomCarportMapper {
                 } else{
                     throw new UserException("No corresponding inquiry was found in the database...");
 
+=======
+                    return inquiries;
+                } else {
+                    throw new UserException("Der var desv. ingen forespørgsler som matchede det søgte id nummer ");
+>>>>>>> ae41d03d13b5d2e8b7b984d695751ca2267bd153
                 }
             } catch (SQLException ex) {
-                throw new UserException("Connection to database could not be established");
+                throw new UserException(ex.getMessage());
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            throw new UserException("Could not establish connection to our database at the moment...");
         }
+
     }
+}
 
 }

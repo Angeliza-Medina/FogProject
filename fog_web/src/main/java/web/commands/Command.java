@@ -33,8 +33,8 @@ public abstract class Command {
         commands.put("sendInquiryCommand", new SendInquiryCommand(""));
         commands.put("getInquiryByIdCommand", new GetInquiryByIdCommand("", "admin"));
         commands.put("calcMaterialListCommand", new CalcMaterialListCommand("ccpiMaterialCalculator", "admin"));
-        commands.put("SearchInquiryCommand", new SearchInquiryCommand("SearchInquiryCommand"));
-        
+        commands.put("SearchInquiryCommand", new SearchInquiryCommand("ccpiList", "admin"));
+
         // Todo: Delete from here!!!
         commands.put("loginpage", new CommandUnprotectedPage("loginpage"));
         commands.put("logincommand", new LoginCommand(""));

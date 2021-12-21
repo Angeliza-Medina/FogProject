@@ -33,7 +33,7 @@
                <h2>Carport forespørgsler</h2>
             </div>
 
-            <div id="search_container"> <!-- Todo: Add functionality -->
+            <div id="search_container">
                <form action="${pageContext.request.contextPath}/fc/SearchInquiryCommand" method="GET" id="search_form" class="flexRow">
                   <div id="searchInput_container">
                      <input name="search_input" type="text" id="search_input">
@@ -103,7 +103,7 @@
 
             <c:if test="${requestScope.error != null}">
                <div>
-                     ${requestScope.error}
+                  ${requestScope.error}
                </div>
             </c:if>
 
