@@ -97,6 +97,12 @@ main{
   width: 30px;
   height: 1.5em;
 }
+
+.calcFirstInfoBox{
+  margin: 0 auto;
+  margin-top: 15px;
+  text-align: center;
+}
 /*----------------------------------- Customer card ---------------------------------*/
 #customerCardContent_container{
   width: 95%;
@@ -365,6 +371,40 @@ main{
 
 
 /*------------------------------------ Sketch card ----------------------------------*/
+.sketchInfo{
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#sketchPrintBox{
+  border: 1px solid var(--black);
+  display: block;
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  padding-bottom: 80%;
+  overflow: hidden;
+}
+
+#sketchSVG{
+  display: block;
+  top: 0;
+  left: 0;
+}
+
+#sketchPrint_btn{
+  width: 100%;
+  padding: 8px 10px;
+  font-family: chaletComprime;
+  font-size: 1.2em;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: var(--white);
+}
 /*---------------------------------- Sketch card END --------------------------------*/
 
 

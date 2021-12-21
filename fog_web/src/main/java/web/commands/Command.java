@@ -32,6 +32,7 @@ public abstract class Command {
         commands.put("getAllCCPOptionsCommand", new GetCCPOptionsCommand(""));
         commands.put("sendInquiryCommand", new SendInquiryCommand(""));
         commands.put("getInquiryByIdCommand", new GetInquiryByIdCommand("", "admin"));
+        commands.put("resetCcpiCalc", new ResetCcpiCalcCommand("ccpiList", "admin"));
         commands.put("calcMaterialListCommand", new CalcMaterialListCommand("ccpiMaterialCalculator", "admin"));
 
         

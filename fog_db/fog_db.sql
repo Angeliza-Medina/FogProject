@@ -633,15 +633,15 @@ DROP TABLE IF EXISTS `wood_pieces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wood_pieces` (
-  `wood_pieces_id` int NOT NULL AUTO_INCREMENT,
+  `wood_piece_id` int NOT NULL AUTO_INCREMENT,
   `productName` varchar(100) NOT NULL,
   `width` int NOT NULL,
   `thickness` int NOT NULL,
   `length` int NOT NULL,
   `price` double NOT NULL,
   `fk_unit_id` int NOT NULL,
-  PRIMARY KEY (`wood_pieces_id`),
-  UNIQUE KEY `wood_pieces_id_UNIQUE` (`wood_pieces_id`),
+  PRIMARY KEY (`wood_piece_id`),
+  UNIQUE KEY `wood_pieces_id_UNIQUE` (`wood_piece_id`),
   KEY `fk_unit_id1` (`fk_unit_id`),
   CONSTRAINT `fk_unit_id1` FOREIGN KEY (`fk_unit_id`) REFERENCES `units` (`unit_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -666,4 +666,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-16  0:28:08
+-- Dump completed on 2021-12-16 23:32:15
