@@ -162,7 +162,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       understernbraetFrontAndBack.setAmount(calcUnderSternBraedderFrontAndBack(ccp, understernbraetFrontAndBack));
 
       woodPiecesToList.add(understernbraetFrontAndBack);
-      System.out.println("1");
       //---------------------------- Understernbrædder for- og bagende END ----------------------------
 
 
@@ -172,7 +171,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       understernbraetSides.setAmount(calcUnderSternBraedderSides(ccp, understernbraetSides));
 
       woodPiecesToList.add(understernbraetSides);
-      System.out.println("2");
       //----------------------------- Understernbrædder til siderne END -------------------------------
 
 
@@ -182,7 +180,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       oversternbraetFront.setAmount(calcOverSternBraetFront(ccp, oversternbraetFront));
 
       woodPiecesToList.add(oversternbraetFront);
-      System.out.println("3");
       //----------------------------- Oversternbrædder til forenden END -------------------------------
 
 
@@ -192,7 +189,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       oversternbraetSides.setAmount(calcOverSternBraedderSides(ccp, oversternbraetSides));
 
       woodPiecesToList.add(oversternbraetSides);
-      System.out.println("4");
       //----------------------------- Oversternbrædder til siderne END --------------------------------
 
 
@@ -202,10 +198,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          z.setDesc("Til z på bagside af redskebsrummets dør");
          z.setAmount(1);
          woodPiecesToList.add(z);
-
-         System.out.println("5a");
       }
-      System.out.println("5");
       //------------------------------- Z til bagsiden af døren END -----------------------------------
 
 
@@ -217,9 +210,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          loesholtForGables.setAmount(calcLoesholterForGables(ccp, loesholtForGables));
 
          woodPiecesToList.add(loesholtForGables);
-         System.out.println("6a");
       }
-      System.out.println("6");
       //--------------------------- Løsholter til redskabrum gavle END --------------------------------
 
 
@@ -232,9 +223,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          loesholtForSides.setAmount(calcLoesholterForSides(ccp, loesholtForSides));
 
          woodPiecesToList.add(loesholtForSides);
-         System.out.println("7a");
       }
-      System.out.println("7");
       //--------------------------- Løsholter til redskabrum sider END --------------------------------
 
 
@@ -251,7 +240,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       remmeForCarportSides_toList.setAmount(calcRemForCCPSides(ccp, remmeForCarportSides_base));
 
       woodPiecesToList.add(remmeForCarportSides_toList);
-      System.out.println("8");
       //------------------------------ Remme til carportens sider END ---------------------------------
 
 
@@ -262,10 +250,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          remmeForToolshedSides.setAmount(calcRemForCTSSides(ccp.getToolshed(), remmeForToolshedSides));
 
          woodPiecesToList.add(remmeForToolshedSides);
-         System.out.println("9a");
       }
-
-      System.out.println("9");
       //--------------------------- Remme til redskabsrummets sider END -------------------------------
 
 
@@ -274,7 +259,6 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       spaer.setDesc("Spær, monteres på rem");
       spaer.setAmount(calcSpaer(ccp, spaer));
       woodPiecesToList.add(spaer);
-      System.out.println("10");
       //----------------------------------------- Spær END --------------------------------------------
 
 
@@ -594,7 +578,8 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       final int rafterSpacing = ccp.getRafterSpacing();
       double spaerThicknessIncm = (double) spaer.getThickness() / 10;
 
-      int amountNeeded = (int) Math.ceil(ccp.getLength() / (spaerThicknessIncm + rafterSpacing) + 1);
+      int piecesNeeded = (int) Math.ceil(ccp.getLength() / (spaerThicknessIncm + rafterSpacing));
+      int amountNeeded = (int) Math.ceil((double)piecesNeeded * ccp.getWidth() / spaer.getLength());
 
       return amountNeeded;
    }
