@@ -464,7 +464,7 @@
 
                                     <c:forEach items="${sessionScope.materialList.screws}" var="screw">
                                        <tr>
-                                          <td>${screw.productName}</td>
+                                          <td>${screw.productName} ${screw.piecesPrPack} stk.</td>
                                           <td></td>
                                           <td>${screw.amount}</td>
                                           <td>${screw.unit}</td>
