@@ -34,6 +34,7 @@ public abstract class Command {
         commands.put("getInquiryByIdCommand", new GetInquiryByIdCommand("", "admin"));
         commands.put("resetCcpiCalc", new ResetCcpiCalcCommand("ccpiList", "admin"));
         commands.put("calcMaterialListCommand", new CalcMaterialListCommand("ccpiMaterialCalculator", "admin"));
+        commands.put("searchInquiryCommand", new SearchInquiryCommand("ccpiList", "admin"));
 
         
         // Todo: Delete from here!!!

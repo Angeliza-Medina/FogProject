@@ -280,5 +280,210 @@ public class CustomCarportMapper {
             throw new UserException("Connection to database could not be established");
         }
     }
+
+    public ArrayList<CustomCarportInquiry> getSearchInquiryById(int searchInputId) throws UserException {
+        ArrayList<CustomCarportInquiry> inquiries = new ArrayList<>();
+
+        try (Connection connection = database.connect()) {
+            String sql =
+                   "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
+                          "       inquiryDate, ccp_inquiry_statuses.status AS status,\n" +
+                          "       ccp.ccp_id AS ccp_id, ccp.fk_ccpWidth AS ccpWidth,\n" +
+                          "       ccp.fk_ccpLength AS ccpLength,\n" +
+                          "       ccp.fk_ccpHeight AS ccpHeight,\n" +
+                          "       ccp.fk_cts_id AS cts_id,\n" +
+                          "       cts.fk_ctsWidth AS ctsWidth,\n" +
+                          "       cts.fk_ctsLength AS ctsLength, \n" +
+                          "       cts.fk_cladding_id AS ctsCladding_id \n" +
+                          "FROM (((ccp_inquiries\n" +
+                          "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                          "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                          "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                          "WHERE custom_carport_inquiry_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, searchInputId);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    do {
+                        // CTS data
+                        Toolshed toolshed = null;
+
+                        if (rs.getInt("cts_id") != 0) {
+                            int cts_id = rs.getInt("cts_id");
+                            int ctsWidth = rs.getInt("ctsWidth");
+                            int ctsLength = rs.getInt("ctsLength");
+                            int ctsCladding_id = rs.getInt("ctsCladding_id");
+                            toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                        }
+
+                        // CCP data
+                        int ccp_id = rs.getInt("ccp_id");
+                        int ccpWidth = rs.getInt("ccpWidth");
+                        int ccpLength = rs.getInt("ccpLength");
+                        int ccpHeight = rs.getInt("ccpHeight");
+
+                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
+
+                        // Inquiry data
+                        int inquiry_id = rs.getInt("inquiry_id");
+                        LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                        String inquiryStatus = rs.getString("status");
+
+                        CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
+
+                        inquiries.add(inquiry);
+                    } while (rs.next());
+
+                    return inquiries;
+                } else {
+                    throw new UserException("Der var desv. ingen forespørgsler som matchede det søgte id nummer ");
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException(ex.getMessage());
+        }
+    }
+
+    public ArrayList<CustomCarportInquiry> getSearchInquiryByLastName(String searchInputLastName) throws UserException {
+        ArrayList<CustomCarportInquiry> inquiries = new ArrayList<>();
+
+        try (Connection connection = database.connect()) {
+            String sql =
+                   "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
+                          "       inquiryDate, ccp_inquiry_statuses.status AS status,\n" +
+                          "       ccp.ccp_id AS ccp_id, ccp.fk_ccpWidth AS ccpWidth,\n" +
+                          "       ccp.fk_ccpLength AS ccpLength,\n" +
+                          "       ccp.fk_ccpHeight AS ccpHeight,\n" +
+                          "       ccp.fk_cts_id AS cts_id,\n" +
+                          "       cts.fk_ctsWidth AS ctsWidth,\n" +
+                          "       cts.fk_ctsLength AS ctsLength, \n" +
+                          "       cts.fk_cladding_id AS ctsCladding_id \n" +
+                          "FROM (((ccp_inquiries\n" +
+                          "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                          "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                          "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                          "WHERE lastName = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, searchInputLastName);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    do {
+                        // CTS data
+                        Toolshed toolshed = null;
+
+                        if (rs.getInt("cts_id") != 0) {
+                            int cts_id = rs.getInt("cts_id");
+                            int ctsWidth = rs.getInt("ctsWidth");
+                            int ctsLength = rs.getInt("ctsLength");
+                            int ctsCladding_id = rs.getInt("ctsCladding_id");
+                            toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                        }
+
+                        // CCP data
+                        int ccp_id = rs.getInt("ccp_id");
+                        int ccpWidth = rs.getInt("ccpWidth");
+                        int ccpLength = rs.getInt("ccpLength");
+                        int ccpHeight = rs.getInt("ccpHeight");
+
+                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
+
+                        // Inquiry data
+                        int inquiry_id = rs.getInt("inquiry_id");
+                        LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                        String inquiryStatus = rs.getString("status");
+
+                        CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
+
+                        inquiries.add(inquiry);
+                    } while (rs.next());
+
+                    return inquiries;
+                } else {
+                    throw new UserException("Der var desv. ingen forespørgsler som matchede det søgte efternavn");
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException(ex.getMessage());
+        }
+    }
+
+    public ArrayList<CustomCarportInquiry> getSearchInquiryByDate(LocalDate searchInputDate) throws UserException {
+        ArrayList<CustomCarportInquiry> inquiries = new ArrayList<>();
+
+        try (Connection connection = database.connect()) {
+            String sql =
+                   "SELECT custom_carport_inquiry_id AS inquiry_id,\n" +
+                          "       inquiryDate, ccp_inquiry_statuses.status AS status,\n" +
+                          "       ccp.ccp_id AS ccp_id, ccp.fk_ccpWidth AS ccpWidth,\n" +
+                          "       ccp.fk_ccpLength AS ccpLength,\n" +
+                          "       ccp.fk_ccpHeight AS ccpHeight,\n" +
+                          "       ccp.fk_cts_id AS cts_id,\n" +
+                          "       cts.fk_ctsWidth AS ctsWidth,\n" +
+                          "       cts.fk_ctsLength AS ctsLength, \n" +
+                          "       cts.fk_cladding_id AS ctsCladding_id \n" +
+                          "FROM (((ccp_inquiries\n" +
+                          "   INNER JOIN ccp_inquiry_statuses ON ccp_inquiries.fk_status_id = ccp_inquiry_statuses.status_id)\n" +
+                          "   INNER JOIN ccp ON ccp_inquiries.fk_ccp_id = ccp.ccp_id)\n" +
+                          "   LEFT JOIN cts ON ccp.fk_cts_id = cts.cts_id)\n" +
+                          "WHERE inquiryDate = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setDate(1, Date.valueOf(searchInputDate));
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    do {
+                        // CTS data
+                        Toolshed toolshed = null;
+
+                        if (rs.getInt("cts_id") != 0) {
+                            int cts_id = rs.getInt("cts_id");
+                            int ctsWidth = rs.getInt("ctsWidth");
+                            int ctsLength = rs.getInt("ctsLength");
+                            int ctsCladding_id = rs.getInt("ctsCladding_id");
+                            toolshed = new Toolshed(cts_id, ctsWidth, ctsLength, ctsCladding_id);
+                        }
+
+                        // CCP data
+                        int ccp_id = rs.getInt("ccp_id");
+                        int ccpWidth = rs.getInt("ccpWidth");
+                        int ccpLength = rs.getInt("ccpLength");
+                        int ccpHeight = rs.getInt("ccpHeight");
+
+                        CustomCarport customCarport = new CustomCarport(ccp_id, ccpWidth, ccpLength, ccpHeight, toolshed);
+
+                        // Inquiry data
+                        int inquiry_id = rs.getInt("inquiry_id");
+                        LocalDate inquiryDate = rs.getDate("inquiryDate").toLocalDate();
+                        String inquiryStatus = rs.getString("status");
+
+                        CustomCarportInquiry inquiry = new CustomCarportInquiry(inquiry_id, inquiryDate, inquiryStatus, customCarport);
+
+                        inquiries.add(inquiry);
+                    } while (rs.next());
+
+                    return inquiries;
+                } else {
+                    throw new UserException("Der var desv. ingen forespørgsler som matchede den søgte dato");
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException(ex.getMessage());
+        }
+    }
+
 }
 
