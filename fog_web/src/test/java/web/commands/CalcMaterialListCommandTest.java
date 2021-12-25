@@ -122,6 +122,26 @@ class CalcMaterialListCommandTest {
    }
 
 
+   @Test
+   public void testCalcRemForCTSSides(){
+      WoodPiece rem = calcCommand.getWoodpieceById(9, woodPieces);
+
+      int amount = calcCommand.calcRemForCTSSides(ccpDemo.getToolshed(), rem);
+
+      assertEquals(1, amount);
+   }
+
+   @Test
+   public void testCalcSpaer(){
+      WoodPiece spaer = calcCommand.getWoodpieceById(8, woodPieces);
+
+      int amount = calcCommand.calcSpaer(ccpDemo, spaer);
+
+      assertEquals(14, amount);
+   }
+
+
+
 
 
 //   @Test
