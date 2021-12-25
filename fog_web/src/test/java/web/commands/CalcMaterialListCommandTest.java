@@ -174,6 +174,31 @@ class CalcMaterialListCommandTest {
       assertEquals(2, amount);
    }
 
+   @Test
+   public void testCalcScrewsForPlateRoofs(){
+      Screw bundskruer = calcCommand.getScrewById(1, screws);
+
+      int amount = calcCommand.calcScrewsForPlateRoofs(ccpDemo, bundskruer);
+
+      assertEquals(3, amount);
+   }
+
+   @Test
+   public void testCalcHulbaand(){
+      int amount = calcCommand.calcHulbaand(ccpDemo);
+
+      assertEquals(1, amount);
+   }
+
+   @Test
+   public void testCalcUniConnector(){
+      WoodPiece spaer = calcCommand.getWoodpieceById(8, woodPieces);
+
+      int amount = calcCommand.calcUniConnector(ccpDemo, spaer);
+
+      assertEquals(14, amount);
+   }
+
 
 
 
