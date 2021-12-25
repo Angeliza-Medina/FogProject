@@ -103,6 +103,23 @@ class CalcMaterialListCommandTest {
       assertEquals(12, amount);
    }
 
+   @Test
+   public void testCalcLoesholterForSides(){
+      WoodPiece loesholt = calcCommand.getWoodpieceById(7, woodPieces);
+
+      int amount = calcCommand.calcLoesholterForSides(ccpDemo, loesholt);
+
+      assertEquals(4, amount);
+   }
+
+   @Test
+   public void testCalcRemForCCPSides(){
+      WoodPiece rem = calcCommand.getWoodpieceById(8, woodPieces);
+
+      int amount = calcCommand.calcRemForCCPSides(ccpDemo, rem);
+
+      assertEquals(2, amount);
+   }
 
 
 
