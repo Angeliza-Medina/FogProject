@@ -66,6 +66,15 @@ class CalcMaterialListCommandTest {
       assertEquals(4, amount);
    }
 
+   @Test
+   public void testCalcUnderSternBraetSides(){
+      WoodPiece understernbraet = calcCommand.getWoodpieceById(2, woodPieces);
+
+      int amount = calcCommand.calcUnderSternBraedderSides(ccpDemo, understernbraet);
+
+      assertEquals(4, amount);
+   }
+
 
 
 
