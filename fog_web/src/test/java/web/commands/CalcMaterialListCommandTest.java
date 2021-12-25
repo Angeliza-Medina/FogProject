@@ -140,6 +140,14 @@ class CalcMaterialListCommandTest {
       assertEquals(14, amount);
    }
 
+   @Test
+   public void testCalcStolpe(){
+      WoodPiece stolpe = calcCommand.getWoodpieceById(10, woodPieces);
+
+      int amount = calcCommand.calcStolpe(ccpDemo, stolpe);
+
+      assertEquals(11, amount);
+   }
 
 
 
