@@ -85,6 +85,15 @@ class CalcMaterialListCommandTest {
       assertEquals(2, amount);
    }
 
+   @Test
+   public void testCalcOverSternBraedderSides(){
+      WoodPiece oversternbraet = calcCommand.getWoodpieceById(4, woodPieces);
+
+      int amount = calcCommand.calcOverSternBraedderSides(ccpDemo, oversternbraet);
+
+      assertEquals(4, amount);
+   }
+
 
 
 
