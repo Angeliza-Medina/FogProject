@@ -1,6 +1,6 @@
 package business.entities;
 
-public class Toolshed {
+public class    Toolshed {
     private int cts_id;
     private int toolshedWidth;
     private int toolshedLength;

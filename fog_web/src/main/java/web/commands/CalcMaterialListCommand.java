@@ -45,7 +45,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       }
 
       CustomCarport updatedCCP = new CustomCarport(
-             carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
+              carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
       );
 
       try{
@@ -59,12 +59,8 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
          if(updatedCCP.getToolshed() != null){
             cladding = materialListFacade.getCladdingById(updatedCCP.getToolshed().getToolshedCladdingId());
-         }
-
-         if(updatedCCP.getToolshed() != null){
             doorComponents = materialListFacade.getAllDoorComponents();
          }
-
 
          // Create and calc. the materialList
          MaterialList materialList = calcMaterialList(updatedCCP, woodPieces, cladding, roofMaterials, screws, woodConnectors, doorComponents);
@@ -93,7 +89,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       }
    }
 
-   private WoodPiece getWoodpieceById(int id, ArrayList<WoodPiece> woodPieces){
+   WoodPiece getWoodpieceById(int id, ArrayList<WoodPiece> woodPieces){
       WoodPiece searchedComponent = null;
 
       for(WoodPiece component : woodPieces){
@@ -107,7 +103,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return searchedComponent;
    }
 
-   private CTSCladdingOption getCladdingById(int id, ArrayList<CTSCladdingOption> claddings){
+   CTSCladdingOption getCladdingById(int id, ArrayList<CTSCladdingOption> claddings){
       CTSCladdingOption searchedComponent = null;
 
       for(CTSCladdingOption component : claddings){
@@ -121,7 +117,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return searchedComponent;
    }
 
-   private RoofMaterialOption getRoofMaterialById(int id, ArrayList<RoofMaterialOption> roofMaterials){
+   RoofMaterialOption getRoofMaterialById(int id, ArrayList<RoofMaterialOption> roofMaterials){
       RoofMaterialOption searchedComponent = null;
 
       for(RoofMaterialOption component : roofMaterials){
@@ -135,7 +131,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return searchedComponent;
    }
 
-   private WoodConnector getWoodConnectorById(int id, ArrayList<WoodConnector> woodConnectors){
+   WoodConnector getWoodConnectorById(int id, ArrayList<WoodConnector> woodConnectors){
       WoodConnector searchedComponent = null;
 
       for(WoodConnector component : woodConnectors){
@@ -149,7 +145,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return searchedComponent;
    }
 
-   private Screw getScrewById(int id, ArrayList<Screw> screws){
+   Screw getScrewById(int id, ArrayList<Screw> screws){
       Screw searchedComponent = null;
 
       for(Screw component : screws){
@@ -163,7 +159,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return searchedComponent;
    }
 
-   private CTSDoorComponent getDoorComponentById(int id, ArrayList<CTSDoorComponent> doorComponents){
+   CTSDoorComponent getDoorComponentById(int id, ArrayList<CTSDoorComponent> doorComponents){
       CTSDoorComponent searchedComponent = null;
 
       for(CTSDoorComponent component : doorComponents){
@@ -224,13 +220,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
    // Method that calls all the different calculation methods and saves the results in multiple ArrayLists
    private MaterialList calcMaterialList(
-          CustomCarport ccp,
-          ArrayList<WoodPiece> woodPieces,
-          CTSCladdingOption cladding,
-          ArrayList<RoofMaterialOption> roofMaterials,
-          ArrayList<Screw> screws,
-          ArrayList<WoodConnector> woodConnectors,
-          ArrayList<CTSDoorComponent> doorComponents
+           CustomCarport ccp,
+           ArrayList<WoodPiece> woodPieces,
+           CTSCladdingOption cladding,
+           ArrayList<RoofMaterialOption> roofMaterials,
+           ArrayList<Screw> screws,
+           ArrayList<WoodConnector> woodConnectors,
+           ArrayList<CTSDoorComponent> doorComponents
    ) throws UserException {
       // Sublists for the material list
       ArrayList<WoodPiece> woodPiecesToList = new ArrayList<>();
@@ -315,10 +311,10 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       WoodPiece remmeForCarportSides_base = getWoodpieceById(8, woodPieces);
 
       WoodPiece remmeForCarportSides_toList = new WoodPiece(
-             remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
-             remmeForCarportSides_base.getUnit(), remmeForCarportSides_base.getPrice(),
-             "Remme til sider, sadles ned i stolperne", remmeForCarportSides_base.getWidth(),
-             remmeForCarportSides_base.getThickness(), remmeForCarportSides_base.getLength()
+              remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
+              remmeForCarportSides_base.getUnit(), remmeForCarportSides_base.getPrice(),
+              "Remme til sider, sadles ned i stolperne", remmeForCarportSides_base.getWidth(),
+              remmeForCarportSides_base.getThickness(), remmeForCarportSides_base.getLength()
       );
 
       remmeForCarportSides_toList.setAmount(calcRemForCCPSides(ccp, remmeForCarportSides_base));
@@ -489,7 +485,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       if(ccp.getToolshed() != null){
          Screw screwsForOutterCladding = getScrewById(5, screws);
          screwsForOutterCladding.setDesc("Til montering af yderste beklædning");
-         screwsForOutterCladding.setAmount(calcScrewsForOutterCladding(spaer, screwsForOutterCladding));
+         screwsForOutterCladding.setAmount(calcScrewsForOutterCladding(ccp.getToolshed(),cladding, screwsForOutterCladding));
          screwsToList.add(screwsForOutterCladding);
       }
       //--------------------------- Skruer til yderste beklædning END ---------------------------------
@@ -499,7 +495,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       if(ccp.getToolshed() != null){
          Screw screwsForInnerCladding = getScrewById(6, screws);
          screwsForInnerCladding.setDesc("Til montering af inderste beklædning");
-         screwsForInnerCladding.setAmount(calcScrewsForInnerCladding(spaer, screwsForInnerCladding));
+         screwsForInnerCladding.setAmount(calcScrewsForInnerCladding(ccp.getToolshed(),cladding, screwsForInnerCladding));
          screwsToList.add(screwsForInnerCladding);
       }
       //--------------------------- Skruer til inderste beklædning END --------------------------------
@@ -533,7 +529,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       //----------------------------------- Vinkelbeslag END ------------------------------------------
 
       MaterialList materialList = new MaterialList(
-             woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
+              woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
       );
 
       return  materialList;
@@ -541,7 +537,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
 
    // ----------------------------------- Material calculations -----------------------------------
-   private int calcUnderSternBraedderFrontAndBack(CustomCarport ccp, WoodPiece understernbraet){
+   int calcUnderSternBraedderFrontAndBack(CustomCarport ccp, WoodPiece understernbraet){
       final int sidesToCalculate = 2;
 
       int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / understernbraet.getLength()) * sidesToCalculate;
@@ -549,7 +545,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcUnderSternBraedderSides(CustomCarport ccp, WoodPiece understernbraet){
+   int calcUnderSternBraedderSides(CustomCarport ccp, WoodPiece understernbraet){
       final int sidesToCalculate = 2;
 
       int amountNeeded = (int) Math.ceil((double) ccp.getLength() / understernbraet.getLength()) * sidesToCalculate;
@@ -557,13 +553,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcOverSternBraetFront (CustomCarport ccp, WoodPiece overSternBraet){
+   int calcOverSternBraetFront (CustomCarport ccp, WoodPiece overSternBraet){
       int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / overSternBraet.getLength());
 
       return amountNeeded;
    }
 
-   private int calcOverSternBraedderSides(CustomCarport ccp, WoodPiece overSternBraetSides){
+   int calcOverSternBraedderSides(CustomCarport ccp, WoodPiece overSternBraetSides){
       final int sidesToCalculate = 2;
 
       int amountNeeded = (int) Math.ceil((double) ccp.getLength() / overSternBraetSides.getLength()) * sidesToCalculate;
@@ -571,7 +567,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcLoesholterForGables (CustomCarport ccp, WoodPiece loesholt){
+   int calcLoesholterForGables (CustomCarport ccp, WoodPiece loesholt){
       /*
          Calculating on the assumption that:
          - The top løsholt is placed 30 cm below the top pilar
@@ -595,7 +591,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcLoesholterForSides (CustomCarport ccp, WoodPiece loesholt){
+   int calcLoesholterForSides (CustomCarport ccp, WoodPiece loesholt){
      /*
          Calculating on the assumption that:
          - The top løsholt is placed 30 cm below the top pilar
@@ -620,7 +616,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcRemForCCPSides (CustomCarport ccp, WoodPiece rem){
+   int calcRemForCCPSides (CustomCarport ccp, WoodPiece rem){
       int lengthToCover = ccp.getLength();
       if (ccp.getToolshed() != null) {
          lengthToCover -= ccp.getToolshed().getToolshedLength();
@@ -631,13 +627,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcRemForCTSSides (Toolshed cts, WoodPiece rem){
+   int calcRemForCTSSides (Toolshed cts, WoodPiece rem){
       int amountNeeded = (int) Math.ceil((double) cts.getToolshedLength() / rem.getLength());
 
       return amountNeeded;
    }
 
-   private int calcSpaer(CustomCarport ccp, WoodPiece spaer){
+   int calcSpaer(CustomCarport ccp, WoodPiece spaer){
       final int rafterSpacing = ccp.getRafterSpacing();
       double spaerThicknessIncm = (double) spaer.getThickness() / 10;
 
@@ -647,7 +643,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcStolpe(CustomCarport ccp, WoodPiece stolpe){
+   int calcStolpe(CustomCarport ccp, WoodPiece stolpe){
       int amountOfPilars = 4;
 
       if (ccp.getToolshed() != null) {
@@ -671,7 +667,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcBraeddebeklaedning (Toolshed cts, CTSCladdingOption braeddebeklaedning){
+   int calcBraeddebeklaedning (Toolshed cts, CTSCladdingOption braeddebeklaedning){
       final int doorWidth = 70;
       final double braeddebeklaedningSpacing = 1.6;
 
@@ -684,19 +680,19 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcVandbraetOnSides(CustomCarport ccp, WoodPiece vandbraet){
+   int calcVandbraetOnSides(CustomCarport ccp, WoodPiece vandbraet){
       int amountNeeded = (int) Math.ceil(((double) ccp.getLength() / vandbraet.getLength())) * 2;
 
       return amountNeeded;
    }
 
-   private int calcVandbraetOnFront(CustomCarport ccp, WoodPiece vandbraet){
+   int calcVandbraetOnFront(CustomCarport ccp, WoodPiece vandbraet){
       int amountNeeded = (int) Math.ceil((double) ccp.getWidth() / vandbraet.getLength());
 
       return amountNeeded;
    }
 
-   private int calcFlatRoofOverCCP(CustomCarport ccp, RoofMaterialOption roofMaterial){
+   int calcFlatRoofOverCCP(CustomCarport ccp, RoofMaterialOption roofMaterial){
       int toolshedLength = 0;
 
       if (ccp.getToolshed() != null) {
@@ -711,7 +707,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcFlatRoofOverCTS(CustomCarport ccp, RoofMaterialOption roofMaterial ){
+   int calcFlatRoofOverCTS(CustomCarport ccp, RoofMaterialOption roofMaterial ){
       int piecesNeededHorizontally = (int) Math.ceil((double) ccp.getWidth() / roofMaterial.getMaterialWidth());
       int piecesNeededVertically = (int) Math.ceil((double) ccp.getToolshed().getToolshedLength() / roofMaterial.getMaterialLength());
 
@@ -724,7 +720,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
    // Todo: make calc. for angled roofs (3 methods)
 
-   private int calcScrewsForPlateRoofs(CustomCarport ccp, Screw screw){
+   int calcScrewsForPlateRoofs(CustomCarport ccp, Screw screw){
       /*
          Assuming you need 12 screws for every m2
       */
@@ -738,7 +734,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcHulbaand (CustomCarport ccp){
+   int calcHulbaand (CustomCarport ccp){
       /*
          Assuming that all hulbånd comes in 10m length
       */
@@ -759,13 +755,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcUniConnector (CustomCarport ccp, WoodPiece spaer){
+   int calcUniConnector (CustomCarport ccp, WoodPiece spaer){
       int amountNeeded = (int) Math.ceil((double)ccp.getLength() / ((double)spaer.getThickness() / 10 + ccp.getRafterSpacing()));
 
       return amountNeeded;
    }
 
-   private int calcScrewsForSternAndVandbraet(CustomCarport ccp, Screw screwsForSternAndVandbraet){
+   int calcScrewsForSternAndVandbraet(CustomCarport ccp, Screw screwsForSternAndVandbraet){
       int ccpOutlineInM = (int) Math.ceil((ccp.getWidth() * 2) + ((double) ccp.getLength() * 2) / 100);
       int screwsPerM = 8;
 
@@ -774,7 +770,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcBeslagSkruer(CustomCarport ccp, WoodPiece spaer, Screw beslagSkruer){
+   int calcBeslagSkruer(CustomCarport ccp, WoodPiece spaer, Screw beslagSkruer){
       int widthToCover = ccp.getLength() - spaer.getWidth() + ccp.getRafterSpacing();
 
       if (ccp.getToolshed() != null) {
@@ -793,25 +789,25 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcBraeddebolt (CustomCarport ccp, Screw braeddebolt){
+   int calcBraeddebolt (CustomCarport ccp, Screw braeddebolt){
       final int amountPerPillar = 2;
 
       int amountOfPillars = 4;
 
       if (ccp.getToolshed() != null) {
-         amountOfPillars += 6;
+         amountOfPillars += 4;
       }
 
       int amountNeeded = (amountOfPillars * amountPerPillar / braeddebolt.getPiecesPrPack());
 
       if(ccp.getToolshed() != null){
-         amountNeeded += 2;
+         amountNeeded += 4; // Pillars between ccp and cts uses 4 bolts
       }
 
       return amountNeeded;
    }
 
-   private int calcfirkantskiver(CustomCarport ccp){
+   int calcfirkantskiver(CustomCarport ccp){
       int amountOfPillars = 4;
 
       if (ccp.getToolshed() != null) {
@@ -827,19 +823,32 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       return amountNeeded;
    }
 
-   private int calcScrewsForOutterCladding(WoodPiece spaer, Screw screwsForOutterCladding){
-      int amountNeeded = (int)Math.ceil((double)spaer.getAmount() * 3 / screwsForOutterCladding.getPiecesPrPack());
+   int calcScrewsForOutterCladding(Toolshed cts, CTSCladdingOption braeddebeklaedning, Screw screwsForOutterCladding){
+      final int doorWidth = 70;
+      final double braeddebeklaedningSpacing = 1.6;
+
+      double outlineLengthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth - (10 + braeddebeklaedningSpacing);
+      int firstLayer = (int) Math.ceil(outlineLengthToCover / ((double) braeddebeklaedning.getWidth() / 10 + braeddebeklaedningSpacing));
+      int secondLayer = (int) Math.ceil((double) firstLayer / 2);
+
+      int amountNeeded = (int)Math.ceil((double) secondLayer * 6 / screwsForOutterCladding.getPiecesPrPack());
 
       return amountNeeded;
    }
 
-   private int calcScrewsForInnerCladding(WoodPiece spaer, Screw screwsForInnerCladding){
-      int amountNeeded = (int)Math.ceil((double)spaer.getAmount() * 3 / screwsForInnerCladding.getPiecesPrPack());
+   int calcScrewsForInnerCladding(Toolshed cts, CTSCladdingOption braeddebeklaedning, Screw screwsForInnerCladding){
+      final int doorWidth = 70;
+      final double braeddebeklaedningSpacing = 1.6;
+
+      double outlineLengthToCover = (cts.getToolshedWidth() * 2) + (cts.getToolshedLength() * 2) - doorWidth - (10 + braeddebeklaedningSpacing);
+      int firstLayer = (int) Math.ceil(outlineLengthToCover / ((double) braeddebeklaedning.getWidth() / 10 + braeddebeklaedningSpacing));
+
+      int amountNeeded = (int)Math.ceil((double) firstLayer * 4 / screwsForInnerCladding.getPiecesPrPack());
 
       return amountNeeded;
    }
 
-   private int calcVinkelbeslag(WoodPiece loesholtForGables, WoodPiece loesholtForSides){
+   int calcVinkelbeslag(WoodPiece loesholtForGables, WoodPiece loesholtForSides){
       int amountOfLoesholter = loesholtForGables.getAmount() + loesholtForSides.getAmount();
       int amountNeeded = amountOfLoesholter * 2;
 

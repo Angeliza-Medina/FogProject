@@ -71,11 +71,11 @@ public class CCPOptionMapper {
 
       try (Connection connection = database.connect()) {
          String sql = "SELECT " +
-                "roofMaterial_id, fk_roofType_id, material, materialWidth, materialLength, price, units.unit AS unit " +
-                "FROM ccp_roof_material_options\n" +
-                  "INNER JOIN units ON ccp_roof_material_options.fk_unit_id = units.unit_id " +
-                "GROUP BY material " +
-                "ORDER BY roofMaterial_id";
+                 "roofMaterial_id, fk_roofType_id, material, materialWidth, materialLength, price, units.unit AS unit " +
+                 "FROM ccp_roof_material_options\n" +
+                 "INNER JOIN units ON ccp_roof_material_options.fk_unit_id = units.unit_id " +
+                 "GROUP BY roofMaterial_id, fk_roofType_id, material, materialWidth, materialLength, price, units.unit " +
+                 "ORDER BY roofMaterial_id";
 
          Statement statement = connection.createStatement();
          ResultSet rs = statement.executeQuery(sql);
@@ -92,7 +92,7 @@ public class CCPOptionMapper {
                String desc = "";
 
                RoofMaterialOption roofMaterialOption = new RoofMaterialOption(
-               id, material, unit, price, desc, roofType, materialWidth, materialLength);
+                       id, material, unit, price, desc, roofType, materialWidth, materialLength);
 
 //               RoofMaterialOption roofMaterialOption = new RoofMaterialOption(id, roofType, material, materialWidth, materialLength, price);
                roofMaterialOptions.add(roofMaterialOption);
