@@ -94,6 +94,15 @@ class CalcMaterialListCommandTest {
       assertEquals(4, amount);
    }
 
+   @Test
+   public void testCalcLoesholterForGables(){
+      WoodPiece loesholt = calcCommand.getWoodpieceById(6, woodPieces);
+
+      int amount = calcCommand.calcLoesholterForGables(ccpDemo, loesholt);
+
+      assertEquals(12, amount);
+   }
+
 
 
 
