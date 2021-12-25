@@ -1,15 +1,75 @@
 package web.commands;
 
 import business.entities.*;
+import business.exceptions.UserException;
+import business.persistence.Database;
+import business.services.MaterialListFacade;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalcMaterialListCommandTest {
-   CalcMaterialListCommand calcCommand = new CalcMaterialListCommand("", "admin");
-   Toolshed ctsDemo = new Toolshed(530, 210, 1);
-   CustomCarport ccpDemo = new CustomCarport(
-          600, 780, 210, false, 55, 1, 0, 0, ctsDemo);
+   private final static String USER = "root";
+
+   private final static String PASSWORD = "kisshu25";
+   private final static String URL = "jdbc:mysql://localhost:3306/new_fog?serverTimezone=CET&allowMultiQueries=true";
+
+   public static Database database;
+
+   private static MaterialListFacade materialListFacade;
+
+   static ArrayList<WoodPiece> woodPieces;
+   static CTSCladdingOption cladding;
+   static ArrayList<RoofMaterialOption> roofMaterials;
+   static ArrayList<Screw> screws;
+   static ArrayList<WoodConnector> woodConnectors;
+   static ArrayList<CTSDoorComponent> doorComponents;
+
+   private final static CalcMaterialListCommand calcCommand = new CalcMaterialListCommand("", "admin");
+   private final static Toolshed ctsDemo = new Toolshed(600, 210, 8);
+   private final static CustomCarport ccpDemo = new CustomCarport(
+           600, 780, 210, false, 55, 1, 1, 0, ctsDemo);
+
+   @BeforeAll
+   public static void setUpClass() throws ClassNotFoundException {
+
+      try{
+         database = new Database(USER, PASSWORD, URL);
+         materialListFacade = new MaterialListFacade(database);
+
+         // Get all needed materialList components from the db
+         woodPieces = materialListFacade.getAllWoodPieces();
+         cladding = null;
+         roofMaterials = materialListFacade.getAllRoofMaterial();
+         screws = materialListFacade.getAllScrews();
+         woodConnectors = materialListFacade.getAllWoodConnectors();
+         doorComponents = null;
+
+         if (ccpDemo.getToolshed() != null) {
+            cladding = materialListFacade.getCladdingById(ccpDemo.getToolshed().getToolshedCladdingId());
+            doorComponents = materialListFacade.getAllDoorComponents();
+         }
+      }catch(UserException | ClassNotFoundException ex){
+         System.out.println(ex.getMessage());
+      }
+   }
+
+   @Test
+   public void testCalcUnderSternBraetFrontAndBack(){
+      WoodPiece understernBraet = calcCommand.getWoodpieceById(1, woodPieces);
+
+      int amount = calcCommand.calcUnderSternBraedderFrontAndBack(ccpDemo, understernBraet);
+
+      assertEquals(4, amount);
+   }
+
+
+
+
+
 
 //   @Test
 //   public void testCalcUnderSternBraetFrontAndBack(){
