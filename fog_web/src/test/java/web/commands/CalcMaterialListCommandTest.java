@@ -149,6 +149,31 @@ class CalcMaterialListCommandTest {
       assertEquals(11, amount);
    }
 
+   @Test
+   public void testCalcBraeddebeklaedning(){
+      int amount = calcCommand.calcBraeddebeklaedning(ccpDemo.getToolshed(), cladding);
+
+      assertEquals(200, amount);
+   }
+
+   @Test
+   public void testCalcVandbraetOnSides(){
+      WoodPiece vandbraet = calcCommand.getWoodpieceById(12, woodPieces);
+
+      int amount = calcCommand.calcVandbraetOnSides(ccpDemo, vandbraet);
+
+      assertEquals(4, amount);
+   }
+
+   @Test
+   public void testCalcVandbraetOnFront(){
+      WoodPiece vandbraet = calcCommand.getWoodpieceById(13, woodPieces);
+
+      int amount = calcCommand.calcVandbraetOnFront(ccpDemo, vandbraet);
+
+      assertEquals(2, amount);
+   }
+
 
 
 
