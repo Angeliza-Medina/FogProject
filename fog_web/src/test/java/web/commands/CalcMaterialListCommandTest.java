@@ -228,6 +228,32 @@ class CalcMaterialListCommandTest {
       assertEquals(18, amount);
    }
 
+   @Test
+   public void testCalcfirkantskiver(){
+      int amount = calcCommand.calcfirkantskiver(ccpDemo);
+
+      assertEquals(12, amount);
+   }
+
+   @Test
+   public void testCalcScrewsForOutterCladding(){
+      Screw screwsForOutterCladding = calcCommand.getScrewById(5, screws);
+
+      int amount = calcCommand.calcScrewsForOutterCladding(ctsDemo, cladding, screwsForOutterCladding);
+
+      assertEquals(2, amount);
+   }
+
+   @Test
+   public void testCalcScrewsForInnerCladding(){
+      Screw screwsForInnerCladding = calcCommand.getScrewById(6, screws);
+
+      int amount = calcCommand.calcScrewsForInnerCladding(ctsDemo, cladding, screwsForInnerCladding);
+
+      assertEquals(2, amount);
+   }
+
+
 
 
 //   @Test
