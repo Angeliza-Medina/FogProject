@@ -200,6 +200,34 @@ class CalcMaterialListCommandTest {
    }
 
 
+   @Test
+   public void testCalcScrewsForSternAndVandbraet(){
+      Screw screwsForSternAndVandbraet = calcCommand.getScrewById(2, screws);
+
+      int amount = calcCommand.calcScrewsForSternAndVandbraet(ccpDemo, screwsForSternAndVandbraet);
+
+      assertEquals(1, amount);
+   }
+
+   @Test
+   public void testCalcBeslagSkruer(){
+      WoodPiece spaer = calcCommand.getWoodpieceById(8, woodPieces);
+      Screw beslagSkruer = calcCommand.getScrewById(3, screws);
+
+      int amount = calcCommand.calcBeslagSkruer(ccpDemo, spaer, beslagSkruer);
+
+      assertEquals(3, amount);
+   }
+
+   @Test
+   public void testCalcBraeddebolt(){
+      Screw braeddebolt = calcCommand.getScrewById(4, screws);
+
+      int amount = calcCommand.calcBraeddebolt(ccpDemo, braeddebolt);
+
+      assertEquals(18, amount);
+   }
+
 
 
 //   @Test
