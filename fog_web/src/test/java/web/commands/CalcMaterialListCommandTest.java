@@ -253,6 +253,18 @@ class CalcMaterialListCommandTest {
       assertEquals(2, amount);
    }
 
+   @Test
+   public void testCalcVinkelbeslag(){
+      WoodPiece loesholtForGables = calcCommand.getWoodpieceById(6, woodPieces);
+      loesholtForGables.setAmount(12);
+      WoodPiece loesholtForSides = calcCommand.getWoodpieceById(7, woodPieces);
+      loesholtForSides.setAmount(4);
+
+      int amount = calcCommand.calcVinkelbeslag(loesholtForGables, loesholtForSides);
+
+      assertEquals(32, amount);
+   }
+
 
 
 
