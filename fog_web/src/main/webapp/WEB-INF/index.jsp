@@ -84,12 +84,6 @@
             </div> <!-- #customCarportLinkBtns_container END -->
          </main>
 
-         <c:if test="${requestScope.error != null}"> <!-- Delete later -->
-            <div>
-                  ${requestScope.error}
-            </div>
-         </c:if>
-
          <!-- footer include -->
          <%@include file="includes/footer.txt"%>
       </div> <!-- #wrapper END -->
