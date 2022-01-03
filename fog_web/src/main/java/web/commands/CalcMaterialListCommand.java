@@ -861,3 +861,17 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
    // --------------------------------- Material calculations END ---------------------------------
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
