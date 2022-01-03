@@ -5,15 +5,6 @@ public class RoofMaterialOption extends MaterialListComponent{
    private int materialWidth;
    private int materialLength;
 
-//   public RoofMaterialOption(int id, int roofType, String material, int materialWidth, int materialLength, double price) {
-//      this.id = id;
-//      this.roofType = roofType;
-//      this.material = material;
-//      this.materialWidth = materialWidth;
-//      this.materialLength = materialLength;
-//      this.price = price;
-//   }
-
    public RoofMaterialOption(
           int productId, String productName, String unit, double price, String desc,
           int roofType, int materialWidth, int materialLength)
