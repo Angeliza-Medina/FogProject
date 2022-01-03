@@ -13,29 +13,6 @@ public class UserMapper {
         this.database = database;
     }
 
-    // Todo: Delete from here!!!
-    public void createUser(User user) throws UserException {
-        try (Connection connection = database.connect()) {
-            String sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
-
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, user.getEmail());
-                ps.setString(2, user.getPassword());
-                ps.setString(3, user.getRole());
-                ps.executeUpdate();
-                ResultSet ids = ps.getGeneratedKeys();
-                ids.next();
-                int id = ids.getInt(1);
-                user.setId(id);
-            } catch (SQLException ex) {
-                throw new UserException(ex.getMessage());
-            }
-        } catch (SQLException ex) {
-            throw new UserException(ex.getMessage());
-        }
-    }
-    // Todo: To here!!!
-
     public User login(String email, String password) throws UserException {
         try (Connection connection = database.connect()) {
             String sql = "SELECT users.user_id, roles.role, users.email, users.firstName, users.lastName, users.password\n" +
