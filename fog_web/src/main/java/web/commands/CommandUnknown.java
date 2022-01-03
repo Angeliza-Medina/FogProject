@@ -11,7 +11,7 @@ public class CommandUnknown extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException
     {
-        String msg = "Unknown command. Contact IT";
+        String msg = "Ukendt ressource. Kontakt IT support for hjælp.";
         throw new UserException(msg);
     }
 
