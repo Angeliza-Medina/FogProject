@@ -40,8 +40,12 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          int toolshedLength = Integer.parseInt(request.getParameter("toolshedLength"));
          int claddingId = Integer.parseInt(request.getParameter("toolshedCladdingId"));
 
-         cts = new Toolshed(toolshedWidth, toolshedLength, claddingId);
-         cts.setPlacement(request.getParameter("toolshedPlacement"));
+         if(toolshedWidth != 0 && toolshedLength != 0 && claddingId != 0 && request.getParameter("toolshedPlacement") != null){
+            cts = new Toolshed(toolshedWidth, toolshedLength, claddingId);
+            cts.setPlacement(request.getParameter("toolshedPlacement"));
+         }else{
+            hasToolshed = false;
+         }
       }
 
       CustomCarport updatedCCP = new CustomCarport(
@@ -400,11 +404,11 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
          }
 
          if(ccp.getToolshed() != null){
-            roofMaterial_toList.get(0).setDesc("Tagplader, monteres på spær");
             roofMaterial_toList.get(0).setAmount(calcFlatRoofOverCTS(ccp, roofMaterial_toList.get(0)));
          }
 
          if(roofMaterial_toList.size() > 1){
+            roofMaterial_toList.get(0).setDesc("Tagplader, monteres på spær");
             roofMaterial_toList.get(1).setDesc("Tagplader, monteres på spær");
             roofMaterial_toList.get(1).setAmount(calcFlatRoofOverCCP(ccp, roofMaterial_toList.get(1)));
          }

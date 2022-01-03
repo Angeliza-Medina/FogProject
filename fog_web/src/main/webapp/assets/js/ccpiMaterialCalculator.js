@@ -3,7 +3,7 @@
 // Elements
 const allBtnContainer_elements = document.querySelectorAll(".calculatorBtn_container");
 const allCard_elements = document.querySelectorAll(".calculatorCard");
-const main_element = document.querySelector("main")
+const main_element = document.querySelector("main");
 
 const buttonContainerIds =
     ["customerSectionBtn_container", "carportSectionBtn_container", "roofSectionBtn_container",
@@ -86,7 +86,7 @@ function bringCardToFront(element){
     if(element === allBtnContainer_elements[i]){
       getCorrespondingCard(allCard_elements[i]);
       makeCardVisible(allCard_elements[i]);
-      // main_element.style.height = allCard_elements[i].offsetHeight + 200 + 'px';
+
       break;
     }
   }

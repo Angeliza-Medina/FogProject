@@ -293,76 +293,78 @@
                               </div>
                            </div> <!-- .radioBtns_container . flexRow END -->
 
-                           <label for="toolshedWidth" class="formLabel">Redskabsrum bredde:</label>
-                           <select name="toolshedWidth" id="toolshedWidth" class="formSelect_element">
-                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsWidthOptions}" var="ctsWidthOption">
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth == ctsWidthOption}">
-                                    <option selected value="${ctsWidthOption}">${ctsWidthOption}</option>
-                                 </c:if>
-
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth != ctsWidthOption}">
-                                    <option value="${ctsWidthOption}">${ctsWidthOption}</option>
-                                 </c:if>
-                              </c:forEach>
-                           </select>
-
-                           <label for="toolshedLength" class="formLabel">Redskabsrum længde:</label>
-                           <select name="toolshedLength" id="toolshedLength" class="formSelect_element">
-                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsLengthOptions}" var="ctsLengthOption">
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedLength == ctsLengthOption}">
-                                    <option selected value="${ctsLengthOption}">${ctsLengthOption}</option>
-                                 </c:if>
-
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedLength != ctsLengthOption}">
-                                    <option value="${ctsLengthOption}">${ctsLengthOption}</option>
-                                 </c:if>
-                              </c:forEach>
-                           </select>
-
-                           <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
-                           <select name="toolshedCladdingId" id="toolshedCladding" class="formSelect_element">
-                              <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId == claddingOption.id}">
-                                    <option selected value="${claddingOption.id}">${claddingOption.cladding}</option>
-                                 </c:if>
-
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId != claddingOption.id}">
-                                    <option value="${claddingOption.id}">${claddingOption.cladding}</option>
-                                 </c:if>
-                              </c:forEach>
-                           </select>
-
-                           <div class="radioBtns_container flexRow">
-                              <div class="radioBtn_container flexRow">
-                                 <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
-                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                       <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                           <div id="toolshedOptions_container">
+                              <label for="toolshedWidth" class="formLabel">Redskabsrum bredde:</label>
+                              <select name="toolshedWidth" id="toolshedWidth" class="formSelect_element ctsSelect_element">
+                                 <c:forEach items="${sessionScope.ccpOptionListContainer.ctsWidthOptions}" var="ctsWidthOption">
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth == ctsWidthOption}">
+                                       <option selected value="${ctsWidthOption}">${ctsWidthOption}</option>
                                     </c:if>
 
-                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
-                                       <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedWidth != ctsWidthOption}">
+                                       <option value="${ctsWidthOption}">${ctsWidthOption}</option>
+                                    </c:if>
+                                 </c:forEach>
+                              </select>
+
+                              <label for="toolshedLength" class="formLabel">Redskabsrum længde:</label>
+                              <select name="toolshedLength" id="toolshedLength" class="formSelect_element ctsSelect_element">
+                                 <c:forEach items="${sessionScope.ccpOptionListContainer.ctsLengthOptions}" var="ctsLengthOption">
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedLength == ctsLengthOption}">
+                                       <option selected value="${ctsLengthOption}">${ctsLengthOption}</option>
+                                    </c:if>
+
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedLength != ctsLengthOption}">
+                                       <option value="${ctsLengthOption}">${ctsLengthOption}</option>
+                                    </c:if>
+                                 </c:forEach>
+                              </select>
+
+                              <label for="toolshedCladding" class="formLabel">Bræddebeklædning:</label>
+                              <select name="toolshedCladdingId" id="toolshedCladding" class="formSelect_element ctsSelect_element">
+                                 <c:forEach items="${sessionScope.ccpOptionListContainer.ctsCladdingOptions}" var="claddingOption">
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId == claddingOption.id}">
+                                       <option selected value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                    </c:if>
+
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.toolshedCladdingId != claddingOption.id}">
+                                       <option value="${claddingOption.id}">${claddingOption.cladding}</option>
+                                    </c:if>
+                                 </c:forEach>
+                              </select>
+
+                              <div id="ctsLeftRightBtns_container" class="radioBtns_container flexRow">
+                                 <div class="radioBtn_container flexRow">
+                                    <label class="formRadioLabel" for="toolshedLeft">Placér redskabsrummet til venstre</label>
+                                       <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
+                                          <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                                       </c:if>
+
+                                       <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
+                                          <input name="toolshedPlacement" value="left" type="radio" checked="checked" id="toolshedLeft" class="formRadioBtn">
+                                       </c:if>
+
+                                       <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
+                                          <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                                       </c:if>
+                                 </div>
+
+                                 <div class="radioBtn_container flexRow">
+                                    <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
+                                       <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
                                     </c:if>
 
                                     <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
-                                       <input name="toolshedPlacement" value="left" type="radio" id="toolshedLeft" class="formRadioBtn">
+                                       <input name="toolshedPlacement" value="right" type="radio" checked="checked" id="toolshedRight" class="formRadioBtn">
                                     </c:if>
-                              </div>
 
-                              <div class="radioBtn_container flexRow">
-                                 <label class="formRadioLabel" for="toolshedRight">Placér redskabsrummet til højre</label>
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed == null}">
-                                    <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
-                                 </c:if>
-
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('right')}">
-                                    <input name="toolshedPlacement" value="right" type="radio" checked="checked" id="toolshedRight" class="formRadioBtn">
-                                 </c:if>
-
-                                 <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
-                                    <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
-                                 </c:if>
-                              </div>
-                           </div> <!-- .radioBtns_container . flexRow END -->
+                                    <c:if test="${sessionScope.inquiryById.customCarport.toolshed.placement.equals('left')}">
+                                       <input name="toolshedPlacement" value="right" type="radio" id="toolshedRight" class="formRadioBtn">
+                                    </c:if>
+                                 </div>
+                              </div> <!-- .radioBtns_container . flexRow END -->
+                           </div>
                         </div> <!-- #toolshedSettings_container END -->
 
                         <div>
@@ -723,6 +725,7 @@
          <%@include file="includes/admin_footer.txt"%>
       </div> <!-- #wrapper END -->
 
+      <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_ctsOptions.js"></script>
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator.js"></script>
       <script src="<%=request.getContextPath()%>/assets/js/ccpiMaterialCalculator_print.js"></script>
       <script src="<%=request.getContextPath()%>/assets/js/sketch.js"></script>
