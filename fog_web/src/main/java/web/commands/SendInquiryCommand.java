@@ -9,6 +9,7 @@ import business.services.CustomCarportFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SendInquiryCommand extends CommandUnprotectedPage{
    CustomCarportFacade customCarportFacade;
@@ -52,12 +53,17 @@ public class SendInquiryCommand extends CommandUnprotectedPage{
          CustomCarport customCarport = new CustomCarport(carportWidth, carportLength, carportHeight, roofTypeID, roofAngle, roofMaterialID, toolshed);
          CustomCarportInquiry cpi = new CustomCarportInquiry(userID, customCarport, contactInfo, note);
 
+         HttpSession session = request.getSession();
+         String statusMsg = "Din forespørgsel er nu blevet sendt!";
+
          if(cpi.getCustomCarport().getToolshed().getToolshedLength() == 0){
             // When no toolshed was incl.
             customCarportFacade.sendInquiryToDB2(cpi);
+            session.setAttribute("statusMsg", statusMsg);
          }else{
             // When a toolshed was incl.
             customCarportFacade.sendInquiryToDB1(cpi);
+            session.setAttribute("statusMsg", statusMsg);
          }
 
          String pageToShow =  pageToGoTo;

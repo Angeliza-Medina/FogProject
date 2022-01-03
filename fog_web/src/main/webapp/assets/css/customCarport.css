@@ -196,4 +196,11 @@ main{
   background-color: var(--lightGrey);
 }
 
+#formStatusMsg_container{
+  font-size: 1em;
+  margin: 5%;
+  color: var(--green);
+  background-color: var(--lightGrey);
+}
+
 /*------------------------------------- Form END ------------------------------------*/

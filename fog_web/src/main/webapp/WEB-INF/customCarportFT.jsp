@@ -249,6 +249,14 @@
 
                         <button type="submit" id="formSubmit_btn">Send forespørgsel</button>
 
+                        <c:if test="${sessionScope.statusMsg != null}">
+                           <div id="formStatusMsg_container">
+                                 ${sessionScope.statusMsg}
+                           </div>
+
+                           <%session.removeAttribute("statusMsg");%>
+                        </c:if>
+
                         <c:if test="${requestScope.error != null}">
                            <div id="formSumbit_container">
                                  ${requestScope.error}
