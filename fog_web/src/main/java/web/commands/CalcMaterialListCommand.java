@@ -45,7 +45,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       }
 
       CustomCarport updatedCCP = new CustomCarport(
-              carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
+             carportWidth, carportLength, carportHeight, addMiddlePost, rafterSpacing, roofTypeId, roofMaterialId, roofAngle, cts
       );
 
       try{
@@ -220,13 +220,13 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
 
    // Method that calls all the different calculation methods and saves the results in multiple ArrayLists
    private MaterialList calcMaterialList(
-           CustomCarport ccp,
-           ArrayList<WoodPiece> woodPieces,
-           CTSCladdingOption cladding,
-           ArrayList<RoofMaterialOption> roofMaterials,
-           ArrayList<Screw> screws,
-           ArrayList<WoodConnector> woodConnectors,
-           ArrayList<CTSDoorComponent> doorComponents
+          CustomCarport ccp,
+          ArrayList<WoodPiece> woodPieces,
+          CTSCladdingOption cladding,
+          ArrayList<RoofMaterialOption> roofMaterials,
+          ArrayList<Screw> screws,
+          ArrayList<WoodConnector> woodConnectors,
+          ArrayList<CTSDoorComponent> doorComponents
    ) throws UserException {
       // Sublists for the material list
       ArrayList<WoodPiece> woodPiecesToList = new ArrayList<>();
@@ -311,10 +311,10 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       WoodPiece remmeForCarportSides_base = getWoodpieceById(8, woodPieces);
 
       WoodPiece remmeForCarportSides_toList = new WoodPiece(
-              remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
-              remmeForCarportSides_base.getUnit(), remmeForCarportSides_base.getPrice(),
-              "Remme til sider, sadles ned i stolperne", remmeForCarportSides_base.getWidth(),
-              remmeForCarportSides_base.getThickness(), remmeForCarportSides_base.getLength()
+             remmeForCarportSides_base.getProductId(), remmeForCarportSides_base.getProductName(),
+             remmeForCarportSides_base.getUnit(), remmeForCarportSides_base.getPrice(),
+             "Remme til sider, sadles ned i stolperne", remmeForCarportSides_base.getWidth(),
+             remmeForCarportSides_base.getThickness(), remmeForCarportSides_base.getLength()
       );
 
       remmeForCarportSides_toList.setAmount(calcRemForCCPSides(ccp, remmeForCarportSides_base));
@@ -404,7 +404,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
             roofMaterial_toList.get(0).setAmount(calcFlatRoofOverCTS(ccp, roofMaterial_toList.get(0)));
          }
 
-         if(roofMaterial_toList.size() > 1 && ccp.getToolshed() != null){
+         if(roofMaterial_toList.size() > 1){
             roofMaterial_toList.get(1).setDesc("Tagplader, monteres på spær");
             roofMaterial_toList.get(1).setAmount(calcFlatRoofOverCCP(ccp, roofMaterial_toList.get(1)));
          }
@@ -529,7 +529,7 @@ public class CalcMaterialListCommand extends CommandProtectedPage{
       //----------------------------------- Vinkelbeslag END ------------------------------------------
 
       MaterialList materialList = new MaterialList(
-              woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
+             woodPiecesToList, claddingToList, roofMaterialsToList, screwsToList, woodConnectorsToList, doorComponentsToList
       );
 
       return  materialList;

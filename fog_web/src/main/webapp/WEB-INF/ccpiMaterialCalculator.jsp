@@ -377,6 +377,30 @@
                      </div>
 
                      <div id="calculatorCardContent_container">
+                        <div class=" calculatorCardBtns_container flexRow">
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" class="calculatorCardBtn">Beregn stykliste</button>
+                           </div>
+
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" formaction="saveInquiryChanges" class="calculatorCardBtn">Gem ændringer</button>
+                           </div>
+                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
+
+                        <div class="calculatorCardBtns_container flexRow">
+                           <div class="calculatorCardBtn_container">
+                              <button  type="submit" formaction="setInquiryAsCompleted" class="calculatorCardBtn">
+                                 Afslut <i class="calculatorCardIcon far fa-check-circle"></i>
+                              </button>
+                           </div>
+
+                           <div class="calculatorCardBtn_container">
+                              <button type="submit" formaction="setInquiryAsCancelled" class="calculatorCardBtn">
+                                 Annuller <i class="calculatorCardIcon far fa-times-circle"></i>
+                              </button>
+                           </div>
+                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
+
                         <c:if test="${sessionScope.materialList != null}">
                            <div id="materialList_container">
                               <!-- Only show when a material list is saved to the session -->
@@ -542,30 +566,6 @@
                               </div>
                            </div> <!-- #pricing_container END -->
                         </c:if>
-
-                        <div class=" calculatorCardBtns_container flexRow">
-                           <div class="calculatorCardBtn_container">
-                              <button type="submit" class="calculatorCardBtn">Beregn stykliste</button>
-                           </div>
-
-                           <div class="calculatorCardBtn_container">
-                              <button type="submit" formaction="saveInquiryChanges" class="calculatorCardBtn">Gem ændringer</button>
-                           </div>
-                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
-
-                        <div class="calculatorCardBtns_container flexRow">
-                           <div class="calculatorCardBtn_container">
-                              <button  type="submit" formaction="setInquiryAsCompleted" class="calculatorCardBtn">
-                                 Afslut <i class="calculatorCardIcon far fa-check-circle"></i>
-                              </button>
-                           </div>
-
-                           <div class="calculatorCardBtn_container">
-                              <button type="submit" formaction="setInquiryAsCancelled" class="calculatorCardBtn">
-                                 Annuller <i class="calculatorCardIcon far fa-times-circle"></i>
-                              </button>
-                           </div>
-                        </div> <!-- .calculatorCardBtns_container .flexRow END -->
                      </div> <!-- #calculatorCardContent_container END -->
                   </div> <!-- #calculatorCard .calculatorCard-->
 
