@@ -93,6 +93,14 @@ header{
     font-size: 1.4em;
 }
 
+#headerNavBtm_container a{
+    color: var(--white);
+}
+
+#headerNavBtm_container a:visited{
+    color: var(--white);
+}
+
 #navBtm_section{
     width: 60%;
 }
