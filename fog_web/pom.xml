@@ -15,6 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- TODO: Add the URL to your own tomcat server. Used to deploy your WAR-file -->
+        <!-- IMPORTANT-2: Observe we are NOT using /manager/html but /manager/text for script uploads -->
+        <remote.server>http://164.92.241.246:8081/manager/text</remote.server>
+
+
     </properties>
 
 
